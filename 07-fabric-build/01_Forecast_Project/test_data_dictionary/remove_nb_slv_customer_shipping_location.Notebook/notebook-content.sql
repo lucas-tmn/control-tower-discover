@@ -1,0 +1,168 @@
+-- Fabric notebook source
+
+-- METADATA ********************
+
+-- META {
+-- META   "kernel_info": {
+-- META     "name": "synapse_pyspark"
+-- META   },
+-- META   "dependencies": {
+-- META     "lakehouse": {
+-- META       "default_lakehouse": "62a3081e-4093-4f46-856c-f50aa58732fa",
+-- META       "default_lakehouse_name": "SupplyChain_Lakehouse",
+-- META       "default_lakehouse_workspace_id": "c8d9fc83-18b6-4e1d-8264-0b49eed36fe0",
+-- META       "known_lakehouses": [
+-- META         {
+-- META           "id": "62a3081e-4093-4f46-856c-f50aa58732fa"
+-- META         }
+-- META       ]
+-- META     }
+-- META   }
+-- META }
+
+-- CELL ********************
+
+-- MAGIC %%sql
+-- MAGIC /* SILVER LAYER: CUSTOMER SHIPPING LOCATION - DIM TABLE
+-- MAGIC    Target: dbo.slv_customer_shipping_location
+-- MAGIC    Logic: CUSTOMER SHIPPING LOCATION - DIM TABLE
+-- MAGIC */
+-- MAGIC 
+-- MAGIC CREATE OR REPLACE TABLE dbo.slv_customer_shipping_location AS
+-- MAGIC SELECT
+-- MAGIC     -- Keys & Identifiers
+-- MAGIC     TRIM(cslCustomerNumber)                              AS id_customer,
+-- MAGIC     TRIM(cslShiptoNumber)                                AS code_ship_to,
+-- MAGIC     CAST(cslMapicsSequenceNumber AS INT)                  AS num_mapics_sequence,
+-- MAGIC     TRIM(cslName)                                        AS name_ship_to,
+-- MAGIC 
+-- MAGIC     -- Address
+-- MAGIC     TRIM(csmShpa1)                                       AS name_address_1,
+-- MAGIC     TRIM(csmShpa2)                                       AS name_address_2,
+-- MAGIC     TRIM(csmShpa3)                                       AS name_address_3,
+-- MAGIC     TRIM(csmShpzp)                                       AS code_zip,
+-- MAGIC     TRIM(csmShpst)                                       AS code_state,
+-- MAGIC     TRIM(csmShpco)                                       AS code_country,
+-- MAGIC     TRIM(csmCounty)                                      AS code_county,
+-- MAGIC 
+-- MAGIC     -- Contact
+-- MAGIC     TRIM(csmPhone)                                       AS code_phone,
+-- MAGIC     TRIM(csmFaxTn)                                       AS code_fax,
+-- MAGIC     TRIM(csmContact)                                     AS name_contact,
+-- MAGIC     TRIM(csmWebsite)                                     AS code_website,
+-- MAGIC     TRIM(csmEmail)                                       AS code_email,
+-- MAGIC     TRIM(csmCsPhone)                                     AS code_cs_phone,
+-- MAGIC     TRIM(csmcsFax)                                       AS code_cs_fax,
+-- MAGIC     TRIM(csmcsContact)                                   AS name_cs_contact,
+-- MAGIC     TRIM(csmcsEmail)                                     AS code_cs_email,
+-- MAGIC 
+-- MAGIC     -- Sales & Pricing Codes
+-- MAGIC     TRIM(cslCommissionCode)                              AS code_commission,
+-- MAGIC     TRIM(cslFreightCode)                                 AS code_freight,
+-- MAGIC     TRIM(cslPriceCode)                                   AS code_price,
+-- MAGIC     TRIM(cslDiscountCode)                                AS code_discount,
+-- MAGIC     CAST(cslCommissionSplit AS DECIMAL(10,4))             AS pct_commission_split,
+-- MAGIC 
+-- MAGIC     -- Warehouse & Territory
+-- MAGIC     TRIM(cslDefaultWarehouse)                            AS code_default_warehouse,
+-- MAGIC     TRIM(cslShippingTerritory)                           AS code_shipping_territory,
+-- MAGIC 
+-- MAGIC     -- Business & Ship Type
+-- MAGIC     TRIM(cslBusinessType)                                AS code_business_type,
+-- MAGIC     TRIM(cslShipType)                                    AS code_ship_type,
+-- MAGIC 
+-- MAGIC     -- Transcom
+-- MAGIC     TRIM(cslTranscomPrimaryID)                           AS id_transcom_primary,
+-- MAGIC     TRIM(cslTranscomAlternateID)                         AS id_transcom_alternate,
+-- MAGIC 
+-- MAGIC     -- Comments & Memo
+-- MAGIC     TRIM(cslComment1)                                    AS name_comment_1,
+-- MAGIC     TRIM(cslComment2)                                    AS name_comment_2,
+-- MAGIC     TRIM(cslMemo)                                        AS name_memo,
+-- MAGIC     TRIM(csmDirections)                                  AS name_directions,
+-- MAGIC     TRIM(csmCrossStreet)                                 AS name_cross_street,
+-- MAGIC 
+-- MAGIC     -- CRM & IDs
+-- MAGIC     TRIM(cslCrmID)                                       AS id_crm,
+-- MAGIC     TRIM(cslBuyerAddressID)                              AS id_buyer_address,
+-- MAGIC     TRIM(cslPartyLocationID)                             AS id_party_location,
+-- MAGIC     TRIM(cslRouteAddressID)                              AS id_route_address,
+-- MAGIC     TRIM(cslReturnAddressID)                             AS id_return_address,
+-- MAGIC     TRIM(cslReturnAddressName)                           AS name_return_address,
+-- MAGIC 
+-- MAGIC     -- MSA & Region
+-- MAGIC     TRIM(csmMsa_Fips)                                    AS code_msa_fips,
+-- MAGIC     TRIM(csmRMCityNumber)                                AS code_rm_city,
+-- MAGIC 
+-- MAGIC     -- Tax
+-- MAGIC     TRIM(cslTaxExempt)                                   AS code_tax_exempt,
+-- MAGIC 
+-- MAGIC     -- Customer Segment
+-- MAGIC     CAST(cslCustomerSegment AS INT)                      AS num_customer_segment,
+-- MAGIC 
+-- MAGIC     -- Default Order Types
+-- MAGIC     TRIM(cslDefaultOrderType1)                           AS code_default_order_type_1,
+-- MAGIC     TRIM(cslDefaultOrderType2)                           AS code_default_order_type_2,
+-- MAGIC     TRIM(cslDefaultOrderType3)                           AS code_default_order_type_3,
+-- MAGIC     TRIM(cslDefaultOrderType4)                           AS code_default_order_type_4,
+-- MAGIC 
+-- MAGIC     -- Shipping & Delivery
+-- MAGIC     CAST(csmShled AS INT)                                AS num_ship_lead_days,
+-- MAGIC     TRIM(cslDeliveryUnitOfMeasure)                       AS code_delivery_uom,
+-- MAGIC     CAST(cslDeliveryUnitOfMeasureFence AS DECIMAL(10,2)) AS val_delivery_uom_fence,
+-- MAGIC     TRIM(cslExpressShippingMethod)                       AS code_express_shipping_method,
+-- MAGIC     CAST(cslExpressHandlingCharge AS DECIMAL(10,3))      AS pct_express_handling_charge,
+-- MAGIC     CAST(cslExpressMinimum AS DECIMAL(10,2))             AS amt_express_minimum,
+-- MAGIC     CAST(cslExpressMaximum AS DECIMAL(10,2))             AS amt_express_maximum,
+-- MAGIC     TRIM(cslExpressServiceContractNumber)                 AS code_express_service_contract,
+-- MAGIC 
+-- MAGIC     -- Flags
+-- MAGIC     CASE WHEN TRIM(cslBlockRepOrderEntry) = '1' THEN true ELSE false END AS is_block_rep_order_entry,
+-- MAGIC     TRIM(cslAllowFax)                                    AS code_allow_fax,
+-- MAGIC     TRIM(cslDirectConsumer)                              AS code_direct_consumer,
+-- MAGIC     TRIM(cslDirectIncludeShipto)                         AS code_direct_include_shipto,
+-- MAGIC     TRIM(cslExportsLCLConsolidationFlag)                 AS code_exports_lcl_consolidation,
+-- MAGIC     TRIM(cslExportsDocumentCountry)                      AS code_exports_document_country,
+-- MAGIC     TRIM(cslExportsProductOnPallets)                     AS code_exports_product_on_pallets,
+-- MAGIC     TRIM(cslExportsAppointmentsRequired)                 AS code_exports_appointments_required,
+-- MAGIC     TRIM(cslHasDock)                                     AS code_has_dock,
+-- MAGIC     TRIM(cslUseNegotiatedFreightRate)                    AS code_use_negotiated_freight_rate,
+-- MAGIC     TRIM(cslUseStandardFreightRate)                      AS code_use_standard_freight_rate,
+-- MAGIC     TRIM(cslDoNotRepriceOrders)                          AS code_do_not_reprice_orders,
+-- MAGIC     TRIM(cslPricingUseOfflineFiles)                      AS code_pricing_use_offline_files,
+-- MAGIC 
+-- MAGIC     -- Language
+-- MAGIC     TRIM(cslDefaultLanguage)                             AS code_default_language,
+-- MAGIC 
+-- MAGIC     -- Dates
+-- MAGIC     CAST(cslTerritoryEffectivityDate AS TIMESTAMP)       AS dt_territory_effectivity,
+-- MAGIC     TRIM(cslHasDockUserDate)                             AS name_has_dock_user_date,
+-- MAGIC     CAST(cslLastStatusChangeDate AS TIMESTAMP)           AS dt_last_status_change,
+-- MAGIC 
+-- MAGIC     -- Status & Record
+-- MAGIC     TRIM(acrec)                                          AS code_record_status,
+-- MAGIC     TRIM(csmAppcd)                                       AS code_app,
+-- MAGIC 
+-- MAGIC     -- Audit flags
+-- MAGIC     CAST(csmChgAddr AS INT)                              AS num_change_address,
+-- MAGIC     CAST(csmChgShip AS INT)                              AS num_change_ship,
+-- MAGIC     CAST(csmChgShipExt AS INT)                           AS num_change_ship_ext,
+-- MAGIC     CAST(csmChgCust AS INT)                              AS num_change_customer,
+-- MAGIC     CAST(commAudit AS INT)                               AS num_commission_audit,
+-- MAGIC     CAST(commAudit2 AS INT)                              AS num_commission_audit_2,
+-- MAGIC 
+-- MAGIC     -- Source audit
+-- MAGIC     TRIM(usra)                                           AS name_created_by,
+-- MAGIC     CAST(dtea AS TIMESTAMP)                              AS ts_created,
+-- MAGIC     TRIM(usrc)                                           AS name_modified_by,
+-- MAGIC     CAST(dtec AS TIMESTAMP)                              AS ts_modified
+-- MAGIC 
+-- MAGIC FROM dbo.brz_customers__shippinglocations
+-- MAGIC WHERE cslCustomerNumber IS NOT NULL
+
+-- METADATA ********************
+
+-- META {
+-- META   "language": "sparksql",
+-- META   "language_group": "synapse_pyspark"
+-- META }

@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Notebook",
+    "displayName": "remove_nb_slv_customer_grouping"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "2a9756c4-b500-8377-47fb-3933c083dccc"
+  }
+}

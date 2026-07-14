@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Notebook",
+    "displayName": "remove_nb_slv_open_order_header"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "8b18dcad-7141-93ec-45d1-d1dd3632bbc9"
+  }
+}

@@ -1,0 +1,131 @@
+pattern,model,report_table
+latest-snapshot,Act+Fcst by WNK & MILL Prod Resource,ActDemand
+item-wh-composite-key,Act+Fcst by WNK & MILL Prod Resource,ActDemand
+fiscal-indicator-window,Act+Fcst by WNK & MILL Prod Resource,ActDemand
+latest-snapshot,Act+Fcst by WNK & MILL Prod Resource,Fcast
+rslf-prol-futo-unpivot,Act+Fcst by WNK & MILL Prod Resource,Fcast
+item-wh-composite-key,Act+Fcst by WNK & MILL Prod Resource,Fcast
+latest-snapshot,Act+Fcst by WNK & MILL Prod Resource,ProdCapacity
+latest-snapshot,Act+Fcst by WNK & MILL Prod Resource,VendorShipped
+fiscal-indicator-window,Act+Fcst by WNK & MILL Prod Resource,VendorShipped
+latest-snapshot,Act+Fcst by WNK & MILL Prod Resource,z_ItemWHProdResource
+item-wh-composite-key,Act+Fcst by WNK & MILL Prod Resource,z_ItemWHProdResource
+latest-snapshot,Act+Fcst vs Manufacturing,ActDemand
+item-wh-composite-key,Act+Fcst vs Manufacturing,ActDemand
+fiscal-indicator-window,Act+Fcst vs Manufacturing,ActDemand
+latest-snapshot,Act+Fcst vs Manufacturing,Fcast
+rslf-prol-futo-unpivot,Act+Fcst vs Manufacturing,Fcast
+item-wh-composite-key,Act+Fcst vs Manufacturing,Fcast
+latest-snapshot,Act+Fcst vs Manufacturing,ProdCapacity
+latest-snapshot,Act+Fcst vs Manufacturing,VendorShipped
+fiscal-indicator-window,Act+Fcst vs Manufacturing,VendorShipped
+latest-snapshot,Act+Fcst vs Manufacturing,z_ItemWHProdResource
+item-wh-composite-key,Act+Fcst vs Manufacturing,z_ItemWHProdResource
+latest-snapshot,AFT_SI-SS_PSW,Current
+latest-snapshot,AFT_SI-SS_PSW,Old Snap
+latest-snapshot,AFT_SI-SS_PSW,Past Week
+latest-snapshot,AFT_SI-SS_PSW,PO
+latest-snapshot,Amazon POS Sales and Forecast,AMZNFC
+fiscal-indicator-window,Amazon POS Sales and Forecast,AMZNWholesale
+latest-snapshot,Demand Review,Fcst_Average_Promo
+rslf-prol-futo-unpivot,Demand Review,Fcst_Average_Promo
+fiscal-indicator-window,Demand Review,Fcst_Average_Promo
+fiscal-indicator-window,Demand Review,Fcst_Container
+latest-snapshot,Demand Review,Fcst_Current_Published
+fiscal-indicator-window,Demand Review,Fcst_Published_CurMonth_30d
+latest-snapshot,Demand Review,Fcst_Snapshots
+rslf-prol-futo-unpivot,Demand Review,Fcst_Snapshots
+fiscal-indicator-window,Demand Review,Fcst_Snapshots
+rslf-prol-futo-unpivot,Demand Review,ItWhAccy
+fiscal-indicator-window,Demand Review,ItWhAccy
+fiscal-indicator-window,Demand Review,Orders_Current_Month_Futo
+marketable-sku-conversion,Demand Review,OrdHist
+fiscal-indicator-window,Demand Review,OrdHist
+fiscal-indicator-window,Demand Review,Placement_History
+fiscal-indicator-window,Demand Review,Placements_ABC
+latest-snapshot,Demand Review,TargetConsumption
+rslf-prol-futo-unpivot,Demand Review,TargetConsumption
+fiscal-indicator-window,Demand Review,TargetConsumption
+latest-snapshot,Demand Review,Week_2_ATP
+fiscal-indicator-window,Demand Review,Week_2_ATP
+latest-snapshot,DvC  - WanekMillenium,Production Resource Master
+latest-snapshot,DvC  - WanekMillenium,PSW
+latest-snapshot,DvC  - WanekMillenium,SISS Timeline
+rslf-prol-futo-unpivot,Forecast Accuracy (Cust_ItWh),CustItWHAccy
+fiscal-indicator-window,Forecast Accuracy (Cust_ItWh),CustItWHAccy
+fiscal-indicator-window,Forecast Accuracy (Cust_ItWh),Month End Status Snapshots
+rslf-prol-futo-unpivot,Forecast Accuracy (ItWh),ItWHAccy
+fiscal-indicator-window,Forecast Accuracy (ItWh),ItWHAccy
+fiscal-indicator-window,Forecast Accuracy (ItWh),Month End Status Snapshots
+latest-snapshot,GF Act+Fcst,L1ACTD
+fiscal-indicator-window,GF Act+Fcst,L1ACTD
+latest-snapshot,GF Act+Fcst,L1Fcst
+rslf-prol-futo-unpivot,GF Act+Fcst,L1Fcst
+marketable-sku-conversion,GF Act+Fcst,OrderHist
+fiscal-indicator-window,GF Act+Fcst,OrderHist
+warehouse-normalization,GF Act+Fcst,z_WarehouseMaster
+latest-snapshot,Inv Management,SI at US Warehouse
+fiscal-indicator-window,Inventory Health,ATPInStock
+rslf-prol-futo-unpivot,Inventory Health,InvHealth
+fiscal-indicator-window,Inventory Health,InvHealth
+fiscal-indicator-window,Inventory Transactions and Item Balance Detail,Inventory Transaction History
+fiscal-indicator-window,Inventory Transactions and Item Balance Detail,Item Balance
+fiscal-indicator-window,On Time % by Customer,On Time (day)
+fiscal-indicator-window,On Time % by Customer,On Time (week)
+fiscal-indicator-window,On Time % by Customer,WH335OnTime
+latest-snapshot,Plan Drop 1,Query1
+marketable-sku-conversion,Product Review (NEW),Actuals
+fiscal-indicator-window,Product Review (NEW),Actuals
+fiscal-indicator-window,Product Review (NEW),AnnualCurFcst
+fiscal-indicator-window,Product Review (NEW),AnnualWrkFcst_Snapshots
+rslf-prol-futo-unpivot,Product Review (NEW),CustItAccy
+fiscal-indicator-window,Product Review (NEW),CustItAccy
+latest-snapshot,Product Review (NEW),FC by Customer Group
+rslf-prol-futo-unpivot,Product Review (NEW),FC by Customer Group
+rslf-prol-futo-unpivot,Product Review (NEW),Hist Weekly FC
+fiscal-indicator-window,Product Review (NEW),Hist Weekly FC
+marketable-sku-conversion,Product Review (NEW),OrdHist
+fiscal-indicator-window,Product Review (NEW),OrdHist
+fiscal-indicator-window,Product Review (NEW),Placements ABC
+fiscal-indicator-window,Product Review (NEW),PlacementsOverTime
+latest-snapshot,Product Review (NEW),Week_2_ATP
+fiscal-indicator-window,Product Review (NEW),Week_2_ATP
+latest-snapshot,Product Review (NEW),WeeklyForecast
+rslf-prol-futo-unpivot,Product Review (NEW),WeeklyForecast
+fiscal-indicator-window,Product Review (NEW),WeeklyForecast
+latest-snapshot,Production Capacity Vs Forecast,Forecast
+rslf-prol-futo-unpivot,Production Capacity Vs Forecast,Forecast
+fiscal-indicator-window,Production Capacity Vs Forecast,Forecast
+latest-snapshot,Production Capacity Vs Forecast,PlandSupply
+item-wh-composite-key,Production Capacity Vs Forecast,PlandSupply
+fiscal-indicator-window,Production Capacity Vs Forecast,Receipts
+latest-snapshot,Rolling Report - Wanek Millen,Firm and Roll
+fiscal-indicator-window,Rolling Report - Wanek Millen,Firm and Roll
+latest-snapshot,Safety Stock Analysis,GFIO
+item-wh-composite-key,Safety Stock Analysis,GFIO
+latest-snapshot,Safety Stock Analysis,InvGoal
+rslf-prol-futo-unpivot,Safety Stock Analysis,InvGoal
+fiscal-indicator-window,Safety Stock Analysis,InvGoal
+latest-snapshot,Safety Stock Analysis,InvHist
+item-wh-composite-key,Safety Stock Analysis,InvHist
+fiscal-indicator-window,Safety Stock Analysis,InvHist
+fiscal-indicator-window,Safety Stock Analysis,InvTurns
+latest-snapshot,Safety Stock Analysis,z_ItemWHMaster
+item-wh-composite-key,Safety Stock Analysis,z_ItemWHMaster
+warehouse-normalization,Safety Stock Analysis,z_WarehouseMaster
+fiscal-indicator-window,Supply Plan Detail Accuracy,SPDsnapshots
+latest-snapshot,Supply Plan Detail,SupplyPlanDetail
+fiscal-indicator-window,Top Negatives,SPD2
+marketable-sku-conversion,Weekly Trend Analysis,Actuals
+fiscal-indicator-window,Weekly Trend Analysis,Actuals
+rslf-prol-futo-unpivot,Weekly Trend Analysis,FcstAccuracy
+fiscal-indicator-window,Weekly Trend Analysis,FcstAccuracy
+latest-snapshot,Weekly Trend Analysis,Forecast
+rslf-prol-futo-unpivot,Weekly Trend Analysis,Forecast
+fiscal-indicator-window,Weekly Trend Analysis,Forecast
+latest-snapshot,Weekly Trend Analysis,FutOrd
+rslf-prol-futo-unpivot,Weekly Trend Analysis,FutOrd
+fiscal-indicator-window,Weekly Trend Analysis,FutOrd
+warehouse-normalization,Weekly Trend Analysis,z_WarehouseMaster
+latest-snapshot,When to Disco v2,When to Disco
+fiscal-indicator-window,When to Disco v2,When to Disco

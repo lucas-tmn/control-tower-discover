@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Notebook",
+    "displayName": "remove_nb_ref_customer_shipping_location"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "78623515-de6f-8f7e-43f8-e66c0137fdf0"
+  }
+}

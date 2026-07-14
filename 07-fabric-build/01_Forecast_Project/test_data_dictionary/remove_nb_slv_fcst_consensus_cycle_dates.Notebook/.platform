@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Notebook",
+    "displayName": "remove_nb_slv_fcst_consensus_cycle_dates"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "0d6a768c-133d-ae4a-4a4a-a928e2c4b62f"
+  }
+}

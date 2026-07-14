@@ -1,0 +1,222 @@
+{
+  "properties": {
+    "activities": [
+      {
+        "name": "usp_Load_Dim_Calendar",
+        "type": "SqlServerStoredProcedure",
+        "dependsOn": [],
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureOutput": false,
+          "secureInput": false
+        },
+        "typeProperties": {
+          "storedProcedureName": "[dbo].[usp_Load_Dim_Calendar]"
+        },
+        "linkedService": {
+          "name": "SupplyChain_Warehouse",
+          "properties": {
+            "annotations": [],
+            "type": "DataWarehouse",
+            "typeProperties": {
+              "endpoint": "7woj2wroypauvkpn72b56t46ju-qp6ntsfwdaou5atebne65u3p4a.datawarehouse.fabric.microsoft.com",
+              "artifactId": "e146ffe2-d907-46a7-9b7e-3e739a31b24e",
+              "workspaceId": "c8d9fc83-18b6-4e1d-8264-0b49eed36fe0"
+            }
+          }
+        }
+      },
+      {
+        "name": "usp_Load_Dim_Customer_Grouping",
+        "type": "SqlServerStoredProcedure",
+        "dependsOn": [],
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureOutput": false,
+          "secureInput": false
+        },
+        "typeProperties": {
+          "storedProcedureName": "[dbo].[usp_Load_Dim_Customer_Grouping]"
+        },
+        "linkedService": {
+          "name": "SupplyChain_Warehouse",
+          "properties": {
+            "annotations": [],
+            "type": "DataWarehouse",
+            "typeProperties": {
+              "endpoint": "7woj2wroypauvkpn72b56t46ju-qp6ntsfwdaou5atebne65u3p4a.datawarehouse.fabric.microsoft.com",
+              "artifactId": "e146ffe2-d907-46a7-9b7e-3e739a31b24e",
+              "workspaceId": "c8d9fc83-18b6-4e1d-8264-0b49eed36fe0"
+            }
+          }
+        }
+      },
+      {
+        "name": "usp_Load_Dim_Forecast_Horizon",
+        "type": "SqlServerStoredProcedure",
+        "dependsOn": [],
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureOutput": false,
+          "secureInput": false
+        },
+        "typeProperties": {
+          "storedProcedureName": "[dbo].[usp_Load_Dim_Forecast_Horizon]"
+        },
+        "linkedService": {
+          "name": "SupplyChain_Warehouse",
+          "properties": {
+            "annotations": [],
+            "type": "DataWarehouse",
+            "typeProperties": {
+              "endpoint": "7woj2wroypauvkpn72b56t46ju-qp6ntsfwdaou5atebne65u3p4a.datawarehouse.fabric.microsoft.com",
+              "artifactId": "e146ffe2-d907-46a7-9b7e-3e739a31b24e",
+              "workspaceId": "c8d9fc83-18b6-4e1d-8264-0b49eed36fe0"
+            }
+          }
+        }
+      },
+      {
+        "name": "usp_Load_Dim_Product",
+        "type": "SqlServerStoredProcedure",
+        "dependsOn": [],
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureOutput": false,
+          "secureInput": false
+        },
+        "typeProperties": {
+          "storedProcedureName": "[dbo].[usp_Load_Dim_Product]"
+        },
+        "linkedService": {
+          "name": "SupplyChain_Warehouse",
+          "properties": {
+            "annotations": [],
+            "type": "DataWarehouse",
+            "typeProperties": {
+              "endpoint": "7woj2wroypauvkpn72b56t46ju-qp6ntsfwdaou5atebne65u3p4a.datawarehouse.fabric.microsoft.com",
+              "artifactId": "e146ffe2-d907-46a7-9b7e-3e739a31b24e",
+              "workspaceId": "c8d9fc83-18b6-4e1d-8264-0b49eed36fe0"
+            }
+          }
+        }
+      },
+      {
+        "name": "usp_Load_Dim_Warehouse",
+        "type": "SqlServerStoredProcedure",
+        "dependsOn": [],
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureOutput": false,
+          "secureInput": false
+        },
+        "typeProperties": {
+          "storedProcedureName": "[dbo].[usp_Load_Dim_Warehouse]"
+        },
+        "linkedService": {
+          "name": "SupplyChain_Warehouse",
+          "properties": {
+            "annotations": [],
+            "type": "DataWarehouse",
+            "typeProperties": {
+              "endpoint": "7woj2wroypauvkpn72b56t46ju-qp6ntsfwdaou5atebne65u3p4a.datawarehouse.fabric.microsoft.com",
+              "artifactId": "e146ffe2-d907-46a7-9b7e-3e739a31b24e",
+              "workspaceId": "c8d9fc83-18b6-4e1d-8264-0b49eed36fe0"
+            }
+          }
+        }
+      },
+      {
+        "name": "usp_Load_Fact_Flat_Forecast_Actual",
+        "type": "SqlServerStoredProcedure",
+        "dependsOn": [],
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureOutput": false,
+          "secureInput": false
+        },
+        "typeProperties": {
+          "storedProcedureName": "[dbo].[usp_Load_Fact_Flat_Forecast_Actual]"
+        },
+        "linkedService": {
+          "name": "SupplyChain_Warehouse",
+          "properties": {
+            "annotations": [],
+            "type": "DataWarehouse",
+            "typeProperties": {
+              "endpoint": "7woj2wroypauvkpn72b56t46ju-qp6ntsfwdaou5atebne65u3p4a.datawarehouse.fabric.microsoft.com",
+              "artifactId": "e146ffe2-d907-46a7-9b7e-3e739a31b24e",
+              "workspaceId": "c8d9fc83-18b6-4e1d-8264-0b49eed36fe0"
+            }
+          }
+        }
+      },
+      {
+        "name": "usp_Load_Fact_Forecast_KPI",
+        "type": "SqlServerStoredProcedure",
+        "dependsOn": [],
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureOutput": false,
+          "secureInput": false
+        },
+        "typeProperties": {
+          "storedProcedureName": "[dbo].[usp_Load_Fact_Forecast_KPI]"
+        },
+        "linkedService": {
+          "name": "SupplyChain_Warehouse",
+          "properties": {
+            "annotations": [],
+            "type": "DataWarehouse",
+            "typeProperties": {
+              "endpoint": "7woj2wroypauvkpn72b56t46ju-qp6ntsfwdaou5atebne65u3p4a.datawarehouse.fabric.microsoft.com",
+              "artifactId": "e146ffe2-d907-46a7-9b7e-3e739a31b24e",
+              "workspaceId": "c8d9fc83-18b6-4e1d-8264-0b49eed36fe0"
+            }
+          }
+        }
+      },
+      {
+        "name": "usp_Load_DQ_Forecast_Accuracy",
+        "type": "SqlServerStoredProcedure",
+        "dependsOn": [],
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureOutput": false,
+          "secureInput": false
+        },
+        "typeProperties": {
+          "storedProcedureName": "[dbo].[usp_Load_DQ_Forecast_Accuracy]"
+        },
+        "linkedService": {
+          "name": "SupplyChain_Warehouse",
+          "properties": {
+            "annotations": [],
+            "type": "DataWarehouse",
+            "typeProperties": {
+              "endpoint": "7woj2wroypauvkpn72b56t46ju-qp6ntsfwdaou5atebne65u3p4a.datawarehouse.fabric.microsoft.com",
+              "artifactId": "e146ffe2-d907-46a7-9b7e-3e739a31b24e",
+              "workspaceId": "c8d9fc83-18b6-4e1d-8264-0b49eed36fe0"
+            }
+          }
+        }
+      }
+    ]
+  }
+}

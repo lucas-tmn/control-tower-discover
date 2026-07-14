@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Dataflow",
+    "displayName": "df_brz_SalesHistory_AFI_InvoiceHeader"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "875c6698-69ee-92d0-41dc-9a83cebf159d"
+  }
+}

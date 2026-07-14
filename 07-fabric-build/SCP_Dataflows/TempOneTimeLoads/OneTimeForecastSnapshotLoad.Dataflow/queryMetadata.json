@@ -1,0 +1,40 @@
+{
+  "formatVersion": "202502",
+  "computeEngineSettings": {
+    "allowModernEvaluationEngine": true
+  },
+  "name": "OneTimeForecastSnapshotLoad",
+  "queryGroups": [],
+  "documentLocale": "en-US",
+  "queriesMetadata": {
+    "DefaultDestination": {
+      "queryId": "4abdea84-a639-4e38-ab62-5d023a2570d8",
+      "queryName": "DefaultDestination",
+      "isHidden": true,
+      "loadEnabled": false
+    },
+    "brz_OneTimeForecastHistoryLoad": {
+      "queryId": "cf1add05-3da1-4edb-ad82-e3f12d35bbeb",
+      "queryName": "brz_OneTimeForecastHistoryLoad",
+      "loadEnabled": false
+    },
+    "brz_OneTimeForecastHistoryLoad_DataDestination": {
+      "queryId": "2812f993-d746-4490-8594-c9e37eafcd92",
+      "queryName": "brz_OneTimeForecastHistoryLoad_DataDestination",
+      "isHidden": true,
+      "loadEnabled": false
+    }
+  },
+  "connections": [
+    {
+      "path": "Lakehouse",
+      "kind": "Lakehouse",
+      "connectionId": "{\"ClusterId\":\"e6436dba-643f-44c3-ad6f-51a8cbc45b81\",\"DatasourceId\":\"e33aec57-72c1-42a2-bf06-ac619adeca06\"}"
+    },
+    {
+      "path": "ashley-edw.database.windows.net;ashley_edw",
+      "kind": "SQL",
+      "connectionId": "{\"ClusterId\":\"e6436dba-643f-44c3-ad6f-51a8cbc45b81\",\"DatasourceId\":\"69eee39f-e9d0-4ebc-aa11-69332bcd7f38\"}"
+    }
+  ]
+}

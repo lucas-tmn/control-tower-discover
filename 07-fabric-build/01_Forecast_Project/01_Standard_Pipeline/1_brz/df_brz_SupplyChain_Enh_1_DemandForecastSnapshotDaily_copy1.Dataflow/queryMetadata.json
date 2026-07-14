@@ -1,0 +1,44 @@
+{
+  "formatVersion": "202502",
+  "computeEngineSettings": {
+    "allowModernEvaluationEngine": true
+  },
+  "name": "df_brz_SupplyChain_Enh_1_DemandForecast",
+  "queryGroups": [],
+  "documentLocale": "en-GB",
+  "queriesMetadata": {
+    "brz_supplychain_enh_1__demandforecastsnapshotdaily": {
+      "queryId": "0b324981-1457-4541-b50a-28ddf96f4ff5",
+      "queryName": "brz_supplychain_enh_1__demandforecastsnapshotdaily",
+      "loadEnabled": false
+    },
+    "brz_supplychain_enh_1__demandforecastsnapshotdaily_DataDestination": {
+      "queryId": "b5dc4bd4-2ff0-473f-9bfe-912ed54b263d",
+      "queryName": "brz_supplychain_enh_1__demandforecastsnapshotdaily_DataDestination",
+      "isHidden": true,
+      "loadEnabled": false
+    }
+  },
+  "connections": [
+    {
+      "path": "PowerPlatformDataflows",
+      "kind": "PowerPlatformDataflows",
+      "connectionId": "{\"ClusterId\":\"e6436dba-643f-44c3-ad6f-51a8cbc45b81\",\"DatasourceId\":\"fbbf42a5-9815-4a16-befc-f436131ba526\"}"
+    },
+    {
+      "path": "https://masterashley.sharepoint.com/sites/SCPGlobalTeam",
+      "kind": "SharePoint",
+      "connectionId": "{\"ClusterId\":\"e6436dba-643f-44c3-ad6f-51a8cbc45b81\",\"DatasourceId\":\"b9011473-8381-419b-9816-5f446a1ff8d8\"}"
+    },
+    {
+      "path": "Lakehouse",
+      "kind": "Lakehouse",
+      "connectionId": "{\"ClusterId\":\"e6436dba-643f-44c3-ad6f-51a8cbc45b81\",\"DatasourceId\":\"1a64c7b8-2c7a-445a-bd7f-ca0fc0b98e9b\"}"
+    },
+    {
+      "path": "ashley-edw.database.windows.net;ashley_edw",
+      "kind": "SQL",
+      "connectionId": "{\"ClusterId\":\"e6436dba-643f-44c3-ad6f-51a8cbc45b81\",\"DatasourceId\":\"7fc28ad1-4794-4f79-b432-a2ddce590e1c\"}"
+    }
+  ]
+}

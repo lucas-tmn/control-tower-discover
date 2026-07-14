@@ -1,0 +1,133 @@
+-- Fabric notebook source
+
+-- METADATA ********************
+
+-- META {
+-- META   "kernel_info": {
+-- META     "name": "synapse_pyspark"
+-- META   },
+-- META   "dependencies": {
+-- META     "lakehouse": {
+-- META       "default_lakehouse": "62a3081e-4093-4f46-856c-f50aa58732fa",
+-- META       "default_lakehouse_name": "SupplyChain_Lakehouse",
+-- META       "default_lakehouse_workspace_id": "c8d9fc83-18b6-4e1d-8264-0b49eed36fe0",
+-- META       "known_lakehouses": [
+-- META         {
+-- META           "id": "62a3081e-4093-4f46-856c-f50aa58732fa"
+-- META         }
+-- META       ]
+-- META     }
+-- META   }
+-- META }
+
+-- CELL ********************
+
+-- MAGIC %%sql
+-- MAGIC /* 
+-- MAGIC    SILVER TABLE: NAIVE FORECAST MONTHLY (Rolling)
+-- MAGIC    Target: dbo.slv_naive_forecast_monthly
+-- MAGIC 
+-- MAGIC    Logic:
+-- MAGIC      For each fiscal month M, Naive Forecast =
+-- MAGIC        actual demand of month M-1, adjusted for 4-4-5 week count
+-- MAGIC        = (actual_qty_M-1 / num_weeks_M-1) × num_weeks_M
+-- MAGIC 
+-- MAGIC    Sources:
+-- MAGIC      - slv_actual_demand_monthly       (actual demand by month)
+-- MAGIC      - ref_calendar                    (fiscal week counts)
+-- MAGIC    Grain:  id_item_sku × code_warehouse × code_customer_group
+-- MAGIC            × num_fsc_month_year
+-- MAGIC    Range:  3 fiscal years back → 1 fiscal year forward
+-- MAGIC */
+-- MAGIC 
+-- MAGIC CREATE OR REPLACE TABLE dbo.slv_naive_forecast_monthly AS
+-- MAGIC 
+-- MAGIC WITH
+-- MAGIC /* ── Fiscal weeks per month ── */
+-- MAGIC month_weeks AS (
+-- MAGIC     SELECT
+-- MAGIC         dt_fsc_month_first,
+-- MAGIC         COUNT(DISTINCT dt_fsc_week_first)                AS num_weeks
+-- MAGIC     FROM dbo.ref_calendar
+-- MAGIC     GROUP BY dt_fsc_month_first
+-- MAGIC ),
+-- MAGIC 
+-- MAGIC /* ── Actual demand aggregated to monthly grain ── */
+-- MAGIC actuals_monthly AS (
+-- MAGIC     SELECT
+-- MAGIC         id_item_sku,
+-- MAGIC         code_warehouse,
+-- MAGIC         code_customer_group,
+-- MAGIC         dt_fsc_month_first,
+-- MAGIC         dt_fsc_month_last,
+-- MAGIC         SUM(qty_demand)                                  AS qty_actual
+-- MAGIC     FROM dbo.slv_actual_demand_monthly
+-- MAGIC     GROUP BY
+-- MAGIC         id_item_sku,
+-- MAGIC         code_warehouse,
+-- MAGIC         code_customer_group,
+-- MAGIC         dt_fsc_month_first,
+-- MAGIC         dt_fsc_month_last
+-- MAGIC ),
+-- MAGIC 
+-- MAGIC /* ── Attach week counts + get prior month actual via LAG ── */
+-- MAGIC actuals_with_lag AS (
+-- MAGIC     SELECT
+-- MAGIC         A.id_item_sku,
+-- MAGIC         A.code_warehouse,
+-- MAGIC         A.code_customer_group,
+-- MAGIC         A.dt_fsc_month_first,
+-- MAGIC         A.dt_fsc_month_last,
+-- MAGIC         A.qty_actual,
+-- MAGIC         MW.num_weeks,
+-- MAGIC         LAG(A.qty_actual) OVER (
+-- MAGIC             PARTITION BY A.id_item_sku, A.code_warehouse, A.code_customer_group
+-- MAGIC             ORDER BY A.dt_fsc_month_first
+-- MAGIC         )                                                AS qty_actual_prior,
+-- MAGIC         LAG(MW.num_weeks) OVER (
+-- MAGIC             PARTITION BY A.id_item_sku, A.code_warehouse, A.code_customer_group
+-- MAGIC             ORDER BY A.dt_fsc_month_first
+-- MAGIC         )                                                AS num_weeks_prior
+-- MAGIC     FROM actuals_monthly                                 AS A
+-- MAGIC     INNER JOIN month_weeks                               AS MW
+-- MAGIC         ON  MW.dt_fsc_month_first = A.dt_fsc_month_first
+-- MAGIC ),
+-- MAGIC 
+-- MAGIC current_fiscal AS (
+-- MAGIC     SELECT num_fsc_year
+-- MAGIC     FROM dbo.ref_calendar
+-- MAGIC     WHERE dt_date = CURRENT_DATE()
+-- MAGIC     LIMIT 1
+-- MAGIC )
+-- MAGIC 
+-- MAGIC SELECT
+-- MAGIC     L.id_item_sku,
+-- MAGIC     L.code_warehouse,
+-- MAGIC     L.code_customer_group,
+-- MAGIC     L.dt_fsc_month_first,
+-- MAGIC     L.dt_fsc_month_last,
+-- MAGIC     CAST(
+-- MAGIC         L.qty_actual_prior / L.num_weeks_prior * L.num_weeks
+-- MAGIC         AS INT
+-- MAGIC     )                                                    AS qty_demand,
+-- MAGIC     'Naive Forecast'                                     AS code_status,
+-- MAGIC     'Naive Forecast'                                     AS name_version
+-- MAGIC 
+-- MAGIC FROM actuals_with_lag                                    AS L
+-- MAGIC INNER JOIN dbo.ref_calendar                              AS CAL
+-- MAGIC     ON  CAL.dt_date = L.dt_fsc_month_first
+-- MAGIC CROSS JOIN current_fiscal                                AS CF
+-- MAGIC 
+-- MAGIC WHERE
+-- MAGIC     L.qty_actual_prior IS NOT NULL
+-- MAGIC     AND L.num_weeks_prior > 0
+-- MAGIC     AND L.code_warehouse NOT IN ('C', 'CNW', 'C35', '55')
+-- MAGIC     AND CAL.num_fsc_month_year >= (CF.num_fsc_year - 3) * 100
+-- MAGIC     AND CAL.num_fsc_month_year <= (CF.num_fsc_year + 1) * 100 + 1299
+
+-- METADATA ********************
+
+-- META {
+-- META   "language": "sparksql",
+-- META   "language_group": "synapse_pyspark"
+-- META }

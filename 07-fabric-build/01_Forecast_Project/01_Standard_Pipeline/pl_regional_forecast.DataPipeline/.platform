@@ -1,0 +1,12 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "DataPipeline",
+    "displayName": "pl_regional_forecast",
+    "description": "Child pipeline. Accepts REGION parameter. Set concurrency=3 on UI."
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "8c1d0fc7-a4ce-8714-4fb9-15c87370cb2a"
+  }
+}

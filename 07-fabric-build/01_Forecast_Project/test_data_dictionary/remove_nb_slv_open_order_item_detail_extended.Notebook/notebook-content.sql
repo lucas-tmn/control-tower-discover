@@ -1,0 +1,147 @@
+-- Fabric notebook source
+
+-- METADATA ********************
+
+-- META {
+-- META   "kernel_info": {
+-- META     "name": "synapse_pyspark"
+-- META   },
+-- META   "dependencies": {
+-- META     "lakehouse": {
+-- META       "default_lakehouse": "62a3081e-4093-4f46-856c-f50aa58732fa",
+-- META       "default_lakehouse_name": "SupplyChain_Lakehouse",
+-- META       "default_lakehouse_workspace_id": "c8d9fc83-18b6-4e1d-8264-0b49eed36fe0",
+-- META       "known_lakehouses": [
+-- META         {
+-- META           "id": "62a3081e-4093-4f46-856c-f50aa58732fa"
+-- META         }
+-- META       ]
+-- META     }
+-- META   }
+-- META }
+
+-- CELL ********************
+
+-- MAGIC %%sql
+-- MAGIC /* SILVER LAYER: OPEN SALES ORDER ITEM DETAIL EXTENDED - FACT TABLE
+-- MAGIC    Target: dbo.slv_open_order_item_detail_extended
+-- MAGIC    Source: dbo.brz_wholesale_codis_afi__extorit
+-- MAGIC    Logic: OPEN ORDER ITEM DETAIL EXTENDED - FACT TABLE
+-- MAGIC */
+-- MAGIC 
+-- MAGIC CREATE OR REPLACE TABLE dbo.slv_open_order_item_detail_extended AS
+-- MAGIC SELECT
+-- MAGIC     -- Keys & Identifiers
+-- MAGIC     TRIM(IORD)                                          AS id_order,
+-- MAGIC     CAST(ISEQ AS INT)                                   AS num_item_sequence,
+-- MAGIC     TRIM(IITEM)                                         AS id_item_sku,
+-- MAGIC     CAST(IEXCID AS INT)                                 AS id_exception,
+-- MAGIC     CAST(IGRPID AS INT)                                 AS id_group,
+-- MAGIC     CAST(IGRPNO AS INT)                                 AS num_group,
+-- MAGIC 
+-- MAGIC     -- Salesperson
+-- MAGIC     CAST(ISLSN1 AS INT)                                 AS id_salesperson_1,
+-- MAGIC     CAST(ISLSN2 AS INT)                                 AS id_salesperson_2,
+-- MAGIC 
+-- MAGIC     -- Pricing & Discount
+-- MAGIC     CAST(IPRICE AS DECIMAL(14,4))                       AS amt_fob_price,
+-- MAGIC     CAST(IDSCNT AS DECIMAL(12,2))                       AS amt_discount,
+-- MAGIC     CAST(IDFIDC AS DECIMAL(12,2))                       AS amt_discount_fid,
+-- MAGIC     CAST(IFRGHT AS DECIMAL(12,2))                       AS amt_freight,
+-- MAGIC     CAST(IHDFRT AS DECIMAL(12,2))                       AS amt_handling_freight,
+-- MAGIC     CAST(ITDSCT AS DECIMAL(14,4))                       AS pct_total_discount,
+-- MAGIC     CAST(IFOBPR AS DECIMAL(12,2))                       AS amt_fob_price_base,
+-- MAGIC     CAST(IREDUS AS STRING)                              AS code_reduce,
+-- MAGIC     CAST(ICMADJ AS DECIMAL(12,2))                       AS amt_commission_adjustment,
+-- MAGIC     CAST(IPALLW AS DECIMAL(14,4))                       AS amt_price_allowance,
+-- MAGIC     CAST(ICONPR AS DECIMAL(12,2))                       AS amt_contract_price,
+-- MAGIC     CAST(ICOOPA AS DECIMAL(12,2))                       AS amt_coop_allowance,
+-- MAGIC 
+-- MAGIC     -- Quantities
+-- MAGIC     CAST(IATPQY AS DECIMAL(12,3))                       AS qty_atp,
+-- MAGIC     CAST(IATPQS AS DECIMAL(12,3))                       AS qty_atp_shipped,
+-- MAGIC     CAST(IATPWH AS DECIMAL(12,3))                       AS qty_atp_warehouse,
+-- MAGIC 
+-- MAGIC     -- Codes & Classification
+-- MAGIC     TRIM(IDSCCD)                                        AS code_discount,
+-- MAGIC     TRIM(IDSCSC)                                        AS code_discount_schedule,
+-- MAGIC     TRIM(ICOMCD)                                        AS code_commission,
+-- MAGIC     TRIM(IPRCCD)                                        AS code_price,
+-- MAGIC     TRIM(IFRTCD)                                        AS code_freight_type,
+-- MAGIC     TRIM(IGBCOD)                                        AS code_global,
+-- MAGIC     TRIM(IORDST)                                        AS code_order_status,
+-- MAGIC 
+-- MAGIC     -- Routing & Shipping
+-- MAGIC     TRIM(IRTECD)                                        AS code_route,
+-- MAGIC     TRIM(IFSLSC)                                        AS code_first_sales_class,
+-- MAGIC     TRIM(ICSLSC)                                        AS code_current_sales_class,
+-- MAGIC     TRIM(IARVLMD)                                       AS code_arrival_mode,
+-- MAGIC     TRIM(IPRCSTS)                                       AS code_price_status,
+-- MAGIC     TRIM(ICUS)                                          AS id_customer,
+-- MAGIC     TRIM(ISTATE)                                        AS code_state,
+-- MAGIC     TRIM(IWHSOP)                                        AS code_warehouse_operation,
+-- MAGIC 
+-- MAGIC     -- Trip & Control
+-- MAGIC     CAST(ITRIP AS INT)                                  AS num_trip,
+-- MAGIC     CAST(IDROP AS INT)                                  AS num_drop,
+-- MAGIC     CAST(ICNTL AS INT)                                  AS num_control,
+-- MAGIC     CAST(IPRI AS INT)                                   AS num_priority,
+-- MAGIC     TRIM(ISTAT)                                         AS code_status,
+-- MAGIC     TRIM(IREF)                                          AS code_reference,
+-- MAGIC     CAST(IORDPRTY AS INT)                               AS num_order_priority,
+-- MAGIC 
+-- MAGIC     -- Scheduling Counts
+-- MAGIC     CAST(IPRGCNT AS INT)                                AS num_progress_count,
+-- MAGIC     CAST(ISCHCNT AS INT)                                AS num_schedule_count,
+-- MAGIC     CAST(ICNLCNT AS INT)                                AS num_cancel_count,
+-- MAGIC     CAST(IFRZCNT AS INT)                                AS num_freeze_count,
+-- MAGIC     CAST(ICDKCNT AS INT)                                AS num_cross_dock_count,
+-- MAGIC 
+-- MAGIC     -- Line Rule & Comments
+-- MAGIC     TRIM(ILNRL)                                         AS code_line_rule,
+-- MAGIC     TRIM(IERRCM)                                        AS code_error_comment,
+-- MAGIC     CAST(ISLCM1 AS DECIMAL(14,4))                       AS val_sales_comment_1,
+-- MAGIC     CAST(ISLCM2 AS DECIMAL(14,4))                       AS val_sales_comment_2,
+-- MAGIC 
+-- MAGIC     -- Dates
+-- MAGIC     to_date(CAST(IPRMDT AS STRING), 'yyyyMMdd')         AS dt_promise,
+-- MAGIC     to_date(CAST(IOISDT AS STRING), 'yyyyMMdd')         AS dt_original_issue,
+-- MAGIC     to_date(CAST(IMRDDT AS STRING), 'yyyyMMdd')         AS dt_merge,
+-- MAGIC     to_date(CAST(IREDRT AS STRING), 'yyyyMMdd')         AS dt_reduce,
+-- MAGIC     to_date(CAST(IARDTE AS STRING), 'yyyyMMdd')         AS dt_arrival,
+-- MAGIC     CAST(IORINV AS INT)                                 AS num_original_invoice,
+-- MAGIC 
+-- MAGIC     -- Delivery Dates
+-- MAGIC     to_date(CAST(IORGDLV AS STRING), 'yyyyMMdd')        AS dt_delivery_original,
+-- MAGIC     to_date(CAST(ICNFDLV AS STRING), 'yyyyMMdd')        AS dt_delivery_confirmed,
+-- MAGIC     to_date(CAST(IFRZDLV AS STRING), 'yyyyMMdd')        AS dt_delivery_frozen,
+-- MAGIC     to_date(CAST(IFINDLV AS STRING), 'yyyyMMdd')        AS dt_delivery_final,
+-- MAGIC     CAST(IPRTY AS INT)                                  AS num_delivery_priority,
+-- MAGIC 
+-- MAGIC     -- Package
+-- MAGIC     TRIM(IPKGID)                                        AS id_package,
+-- MAGIC     CAST(IPKGDA AS DECIMAL(12,3))                       AS val_package_data,
+-- MAGIC     CAST(IPKGPRC AS DECIMAL(12,2))                      AS amt_package_price,
+-- MAGIC     TRIM(IITMSTS)                                       AS code_item_status,
+-- MAGIC     CAST(`IPKITM$` AS DECIMAL(12,2))                    AS amt_package_item,
+-- MAGIC     CAST(IPKITMDS AS DECIMAL(12,3))                     AS val_package_item_discount,
+-- MAGIC     TRIM(IACHORITM)                                     AS code_anchor_item,
+-- MAGIC     TRIM(IPKGDES)                                       AS name_package_description,
+-- MAGIC 
+-- MAGIC     -- Flags
+-- MAGIC     TRIM(IPDISD)                                        AS code_price_discount,
+-- MAGIC     TRIM(IPRCDT)                                        AS code_price_date,
+-- MAGIC     TRIM(IOCOMR)                                        AS code_original_commission,
+-- MAGIC 
+-- MAGIC     -- Job
+-- MAGIC     TRIM(IJOBID)                                        AS id_job
+-- MAGIC 
+-- MAGIC FROM dbo.brz_wholesale_codis_afi__extorit
+-- MAGIC WHERE IORD IS NOT NULL
+
+-- METADATA ********************
+
+-- META {
+-- META   "language": "sparksql",
+-- META   "language_group": "synapse_pyspark"
+-- META }

@@ -1,0 +1,12 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Dataflow",
+    "displayName": "SharepointDaily",
+    "description": "Data from various Sharepoint locations that require a once daily refresh. "
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "b13a4fbc-3e4e-b42e-44ee-1159cee16a32"
+  }
+}

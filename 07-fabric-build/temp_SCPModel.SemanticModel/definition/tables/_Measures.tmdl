@@ -1,0 +1,148 @@
+table _Measures
+	lineageTag: b6b2f51d-bfa2-4360-a225-c5929bf6e3f7
+
+	/// Expected remaining Shippable Inventory at week end
+	measure 'SI Qty' = CALCULATE(SUM(SupplyPlanDetailToday[SI]))
+		formatString: #,0
+		displayFolder: SupplyPlan
+		lineageTag: 33e6f6fc-ae06-48b1-9f77-86af2e4925d5
+
+	/// Current On Hand Quantity at time of the Supply Plan extract
+	/// 
+	measure 'On Hand Qty' = CALCULATE(SUM(SupplyPlanDetailToday[Beginning Balance]),FiscalCal[Fiscal Week Indicator] =0)
+		formatString: #,0
+		displayFolder: SupplyPlan
+		lineageTag: c66c423f-69db-49db-93b3-921a6ff68d63
+
+	/// Quantity projected to be fulfilled in the related week based on available supply against forecasted demand
+	measure 'Projected Fill Qty' = CALCULATE(SUM(SupplyPlanDetailToday[Demand Fulfillment]))
+		formatString: #,0
+		displayFolder: SupplyPlan
+		lineageTag: 3af2f74f-442c-4f4a-af6a-94048685e583
+
+	/// Quantity on firm customer orders
+	measure 'Firm Demands' = CALCULATE(SUM(SupplyPlanDetailToday[Firm Demands]))
+		formatString: #,0
+		displayFolder: SupplyPlan
+		lineageTag: c8b4006e-47aa-44a5-8227-ea8380c7c5f5
+
+	/// Remaining forecast in the fiscal week after Firm Demands are subtracted
+	measure 'Net Fcst' = CALCULATE(SUM(SupplyPlanDetailToday[Net Forecast]))
+		formatString: #,0
+		displayFolder: SupplyPlan
+		lineageTag: 38a128b2-c2f2-4bdb-8dba-42937e81a0dd
+
+	measure 'PO Firm' = CALCULATE(SUM(SupplyPlanDetailToday[PO - Firm]))
+		formatString: #,0
+		displayFolder: SupplyPlan
+		lineageTag: 902c7ca4-07b6-43b5-acb5-f9937867c84e
+
+	measure 'PO Plan' = CALCULATE(SUM(SupplyPlanDetailToday[PO - Plan]))
+		formatString: #,0
+		displayFolder: SupplyPlan
+		lineageTag: c69f6bfa-3833-49b5-b051-d54c057840da
+
+	measure 'Prod Firm' = CALCULATE(SUM(SupplyPlanDetailToday[Prod - Firm]))
+		formatString: #,0
+		displayFolder: SupplyPlan
+		lineageTag: 0aba1527-d512-4f00-9c1e-9f5a01abe6e7
+
+	measure 'Prod Plan' = CALCULATE(SUM(SupplyPlanDetailToday[Prod - Plan]))
+		formatString: #,0
+		displayFolder: SupplyPlan
+		lineageTag: 6b0074a9-e86c-410f-b3a5-de7245d719bd
+
+	measure 'Promo Lift' = CALCULATE(SUM(SupplyPlanDetailToday[Promo Lift]))
+		formatString: #,0
+		displayFolder: SupplyPlan
+		lineageTag: 9002b1c7-448e-49cf-ba83-97ac994e0042
+
+	measure SI-SS = CALCULATE(SUM(SupplyPlanDetailToday[SI -SS]))
+		formatString: #,0
+		displayFolder: SupplyPlan
+		lineageTag: ae7edba7-012e-430d-b286-77302fe35bab
+
+	measure 'SI Neg' = CALCULATE(SUM(SupplyPlanDetailToday[SI Neg]))
+		formatString: #,0
+		displayFolder: SupplyPlan
+		lineageTag: 415004ad-0de4-40a9-87f3-41c4b453225e
+
+	measure 'SS Target' = CALCULATE(SUM(SupplyPlanDetailToday[SS]))
+		formatString: #,0
+		displayFolder: SupplyPlan
+		lineageTag: e09bce70-944c-4298-b931-5d19e94f5f17
+
+	measure 'SP Refresh' = CALCULATE(MAX(SupplyPlanDetailToday[Snapshot Date]))
+		formatString: mm/dd/yyyy
+		displayFolder: SupplyPlan
+		lineageTag: f3d379cc-f634-4da5-b657-d73443c543fa
+
+		annotation PBI_FormatHint = {"isCustom":true}
+
+	measure 'TI Firm' = CALCULATE(SUM(SupplyPlanDetailToday[TI - Firm]))
+		formatString: #,0
+		displayFolder: SupplyPlan
+		lineageTag: 375bd8bf-4d2b-417c-8d50-918e4ae46102
+
+	measure 'TI InTrans' = CALCULATE(SUM(SupplyPlanDetailToday[TI - In Trans]))
+		formatString: #,0
+		displayFolder: SupplyPlan
+		lineageTag: 269ac147-593f-48d5-ba29-871bafcacef3
+
+	measure 'TI Plan' = CALCULATE(SUM(SupplyPlanDetailToday[TI - Plan]))
+		formatString: #,0
+		displayFolder: SupplyPlan
+		lineageTag: 6557dba4-f305-47fc-9647-3702da0eb6e3
+
+	measure 'TO Plan' = CALCULATE(SUM(SupplyPlanDetailToday[TO - Plan]))
+		formatString: #,0
+		displayFolder: SupplyPlan
+		lineageTag: 7a52403d-2a5a-4453-a05d-d066bb44a6a5
+
+	measure 'TO Firm' = CALCULATE(SUM(SupplyPlanDetailToday[TO - Firm]))
+		formatString: #,0
+		displayFolder: SupplyPlan
+		lineageTag: f28766cc-ef01-4f69-9c8f-975325b4e1d0
+
+	measure 'Total Dmd' = CALCULATE(SUM(SupplyPlanDetailToday[Total Demand]))
+		formatString: #,0
+		displayFolder: SupplyPlan
+		lineageTag: ee61fcdf-ff7f-4fc0-ba62-f00d94882573
+
+	measure 'Total PO' = CALCULATE(SUM(SupplyPlanDetailToday[Total PO]))
+		formatString: #,0
+		displayFolder: SupplyPlan
+		lineageTag: ee944db2-8e3f-4839-8882-5d1ba698a46c
+
+	measure 'Total Prod' = CALCULATE(SUM(SupplyPlanDetailToday[Total Prod]))
+		formatString: #,0
+		displayFolder: SupplyPlan
+		lineageTag: d432c727-f92f-4099-b38e-ce244b406123
+
+	measure 'Total TI' = CALCULATE(SUM(SupplyPlanDetailToday[Total TI]))
+		formatString: #,0
+		displayFolder: SupplyPlan
+		lineageTag: 90ff0211-a811-4096-94b6-894cfbe04579
+
+	measure 'Total TO' = CALCULATE(SUM(SupplyPlanDetailToday[Total TO]))
+		formatString: #,0
+		displayFolder: SupplyPlan
+		lineageTag: 8421b713-512a-461a-8c8d-5e37557163dd
+
+	column Column
+		formatString: 0
+		lineageTag: fe4b5da0-9cf4-4a01-b33a-74cc6880984e
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Column]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition _Measures = calculated
+		mode: import
+		source = Row("Column", BLANK())
+
+	annotation PBI_Id = a44dbeb02e42446e926898151aca6c71
+
+	annotation 436ba87b-9c83-4389-a31b-ebd06a36be98 = {"Expression":""}
+

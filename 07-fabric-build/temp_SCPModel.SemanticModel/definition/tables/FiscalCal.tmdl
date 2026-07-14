@@ -1,0 +1,468 @@
+table FiscalCal
+	lineageTag: a95c0a7f-5d1b-464a-8899-9d73be0df2bb
+	sourceLineageTag: [dbo].[FiscalCal]
+
+	column 'Transaction Date'
+		dataType: dateTime
+		formatString: Short Date
+		sourceProviderType: date
+		lineageTag: 9131b92b-c892-4c3b-94d7-50c5ed170ec8
+		sourceLineageTag: Transaction Date
+		summarizeBy: none
+		sourceColumn: Transaction Date
+
+		changedProperty = DataType
+
+		changedProperty = FormatString
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Integer Date'
+		dataType: int64
+		formatString: 0
+		sourceProviderType: int
+		lineageTag: f7fb91c8-5f00-4b9a-b82c-5e32cc4bbad2
+		sourceLineageTag: Integer Date
+		summarizeBy: none
+		sourceColumn: Integer Date
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Mapics Date'
+		dataType: int64
+		formatString: 0
+		sourceProviderType: int
+		lineageTag: 2d52a750-d744-4b4d-839e-e5ad1583711e
+		sourceLineageTag: Mapics Date
+		summarizeBy: none
+		sourceColumn: Mapics Date
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Day of Week'
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 4dfc3ec2-3035-4c4a-b644-03ad1223c36a
+		sourceLineageTag: Day of Week
+		summarizeBy: none
+		sourceColumn: Day of Week
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Fiscal Week Num'
+		dataType: int64
+		formatString: 0
+		sourceProviderType: bigint
+		lineageTag: 3672b095-4bbd-4694-be60-07a1f80adcb7
+		sourceLineageTag: Fiscal Week Num
+		summarizeBy: none
+		sourceColumn: Fiscal Week Num
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'FW Desc'
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: e7dd1d9d-8b79-49f9-a4ad-b25b07094cf8
+		sourceLineageTag: FW Desc
+		summarizeBy: none
+		sourceColumn: FW Desc
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Fiscal Quarter Indicator'
+		dataType: int64
+		formatString: 0
+		sourceProviderType: int
+		lineageTag: 33b1d5ac-e61c-4655-ac36-a75b214efe96
+		sourceLineageTag: Fiscal Quarter Indicator
+		summarizeBy: none
+		sourceColumn: Fiscal Quarter Indicator
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Fiscal Year Indicator'
+		dataType: int64
+		formatString: 0
+		sourceProviderType: int
+		lineageTag: 83100633-1cd8-4362-9991-51934eff5a62
+		sourceLineageTag: Fiscal Year Indicator
+		summarizeBy: none
+		sourceColumn: Fiscal Year Indicator
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Calendar Month Num'
+		dataType: int64
+		formatString: 0
+		sourceProviderType: bigint
+		lineageTag: 640229da-69df-4ee8-8c9c-ca86ffe248e8
+		sourceLineageTag: Calendar Month Num
+		summarizeBy: none
+		sourceColumn: Calendar Month Num
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Calendar Quarter Num'
+		dataType: int64
+		formatString: 0
+		sourceProviderType: bigint
+		lineageTag: 42ef16d4-0b69-4ef3-a221-db98d7336064
+		sourceLineageTag: Calendar Quarter Num
+		summarizeBy: none
+		sourceColumn: Calendar Quarter Num
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Calendar Year'
+		dataType: int64
+		formatString: 0
+		sourceProviderType: smallint
+		lineageTag: 387041ca-bcac-420e-ba6f-d6e0d27102f5
+		sourceLineageTag: Calendar Year
+		summarizeBy: none
+		sourceColumn: Calendar Year
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Fiscal Day Indicator'
+		dataType: int64
+		formatString: 0
+		sourceProviderType: int
+		lineageTag: 905d070b-729b-4f7b-9632-797a907bf09f
+		sourceLineageTag: Fiscal Day Indicator
+		summarizeBy: none
+		sourceColumn: Fiscal Day Indicator
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Fiscal Week Indicator'
+		dataType: int64
+		formatString: 0
+		sourceProviderType: int
+		lineageTag: bb1f2def-53eb-4df6-8f61-3800039087d9
+		sourceLineageTag: Fiscal Week Indicator
+		summarizeBy: none
+		sourceColumn: Fiscal Week Indicator
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Fiscal Month Indicator'
+		dataType: int64
+		formatString: 0
+		sourceProviderType: int
+		lineageTag: a160ff80-b7cb-4dca-ae47-0e5b9afbdcc2
+		sourceLineageTag: Fiscal Month Indicator
+		summarizeBy: none
+		sourceColumn: Fiscal Month Indicator
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Fiscal Year Start'
+		dataType: dateTime
+		formatString: Short Date
+		sourceProviderType: date
+		lineageTag: 735bf2aa-1d96-401e-912f-b91041263838
+		sourceLineageTag: Fiscal Year Start
+		summarizeBy: none
+		sourceColumn: Fiscal Year Start
+
+		changedProperty = DataType
+
+		changedProperty = FormatString
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Fiscal Year End'
+		dataType: dateTime
+		formatString: Short Date
+		sourceProviderType: date
+		lineageTag: 3bae82d7-f2fc-4a9d-8804-e906b3d86a93
+		sourceLineageTag: Fiscal Year End
+		summarizeBy: none
+		sourceColumn: Fiscal Year End
+
+		changedProperty = DataType
+
+		changedProperty = FormatString
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Holiday Indicator'
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 83ba4e69-590e-47f3-acf1-60e25634bbd1
+		sourceLineageTag: Holiday Indicator
+		summarizeBy: none
+		sourceColumn: Holiday Indicator
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Holiday Name'
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 001ca3b8-78b5-4bfb-8eba-32cb97455516
+		sourceLineageTag: Holiday Name
+		summarizeBy: none
+		sourceColumn: Holiday Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column WeekdayWeekend
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: cd98e6fe-3741-4c34-8b2b-42c4bf4f7c68
+		sourceLineageTag: WeekdayWeekend
+		summarizeBy: none
+		sourceColumn: WeekdayWeekend
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Calendar Week Num'
+		dataType: int64
+		formatString: 0
+		sourceProviderType: bigint
+		lineageTag: 4a547182-e8e3-4b11-9214-d2f0df38efab
+		sourceLineageTag: Calendar Week Num
+		summarizeBy: none
+		sourceColumn: Calendar Week Num
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Fiscal Year'
+		dataType: int64
+		formatString: 0
+		sourceProviderType: smallint
+		lineageTag: 3ea934d7-f935-4618-b148-520ac56fb821
+		sourceLineageTag: Fiscal Year
+		summarizeBy: none
+		sourceColumn: Fiscal Year
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'FY Desc'
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 90583649-9e0e-4eb0-bf01-5676b1ba5bad
+		sourceLineageTag: FY Desc
+		summarizeBy: none
+		sourceColumn: FY Desc
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Fiscal Week Start'
+		dataType: dateTime
+		formatString: Short Date
+		sourceProviderType: date
+		lineageTag: ce5dbac4-cdc6-4ad6-b830-a2d9efff6054
+		sourceLineageTag: Fiscal Week Start
+		summarizeBy: none
+		sourceColumn: Fiscal Week Start
+
+		changedProperty = DataType
+
+		changedProperty = FormatString
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Fiscal Week End'
+		dataType: dateTime
+		formatString: Short Date
+		sourceProviderType: date
+		lineageTag: 5028995a-2019-41ac-825b-6473e13bc00b
+		sourceLineageTag: Fiscal Week End
+		summarizeBy: none
+		sourceColumn: Fiscal Week End
+
+		changedProperty = DataType
+
+		changedProperty = FormatString
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Fiscal Month Start'
+		dataType: dateTime
+		formatString: Short Date
+		sourceProviderType: date
+		lineageTag: 2b9748c8-a924-4781-80fa-b89a518b2b94
+		sourceLineageTag: Fiscal Month Start
+		summarizeBy: none
+		sourceColumn: Fiscal Month Start
+
+		changedProperty = DataType
+
+		changedProperty = FormatString
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Fiscal Month End'
+		dataType: dateTime
+		formatString: Short Date
+		sourceProviderType: date
+		lineageTag: 88a5bf14-e58c-4476-bfdd-9f8ed29ab426
+		sourceLineageTag: Fiscal Month End
+		summarizeBy: none
+		sourceColumn: Fiscal Month End
+
+		changedProperty = DataType
+
+		changedProperty = FormatString
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Fiscal Month Calendar Start'
+		dataType: dateTime
+		formatString: Short Date
+		sourceProviderType: date
+		lineageTag: 237b472b-d1fa-47c6-9648-35807d17ebea
+		sourceLineageTag: Fiscal Month Calendar Start
+		summarizeBy: none
+		sourceColumn: Fiscal Month Calendar Start
+
+		changedProperty = DataType
+
+		changedProperty = FormatString
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Fiscal Quarter Num'
+		dataType: int64
+		formatString: 0
+		sourceProviderType: bigint
+		lineageTag: 0e737266-29c5-4e36-8162-db794d0f38a6
+		sourceLineageTag: Fiscal Quarter Num
+		summarizeBy: none
+		sourceColumn: Fiscal Quarter Num
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'FQ Desc'
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 7cbcd24e-5b4e-4691-955d-25355833125d
+		sourceLineageTag: FQ Desc
+		summarizeBy: none
+		sourceColumn: FQ Desc
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Fiscal Year Half Num'
+		dataType: int64
+		formatString: 0
+		sourceProviderType: smallint
+		lineageTag: a6331254-ae9b-448d-afac-ba6f00e22ab6
+		sourceLineageTag: Fiscal Year Half Num
+		summarizeBy: none
+		sourceColumn: Fiscal Year Half Num
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Fiscal Half Num'
+		dataType: int64
+		formatString: 0
+		sourceProviderType: bigint
+		lineageTag: 7b866a9e-37af-40da-b070-340583a70509
+		sourceLineageTag: Fiscal Half Num
+		summarizeBy: none
+		sourceColumn: Fiscal Half Num
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'FH Desc'
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: ba6c7e8e-b5c7-4df0-b0b8-70027ad13603
+		sourceLineageTag: FH Desc
+		summarizeBy: none
+		sourceColumn: FH Desc
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Fiscal Year Week Num'
+		dataType: int64
+		formatString: 0
+		sourceProviderType: int
+		lineageTag: cab5f205-1c74-4ab1-a339-2ac188c0fcd1
+		sourceLineageTag: Fiscal Year Week Num
+		summarizeBy: none
+		sourceColumn: Fiscal Year Week Num
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Fiscal Month Num'
+		dataType: int64
+		formatString: 0
+		sourceProviderType: bigint
+		lineageTag: 0bad122c-6029-4b0b-aa3f-157235fad496
+		sourceLineageTag: Fiscal Month Num
+		summarizeBy: none
+		sourceColumn: Fiscal Month Num
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'FM Desc'
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 4ffa58e7-27d7-4c7a-acac-63f91021209a
+		sourceLineageTag: FM Desc
+		summarizeBy: none
+		sourceColumn: FM Desc
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Fiscal Month Name'
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 165723e5-abc2-4f52-b0c8-fc81a9e98633
+		sourceLineageTag: Fiscal Month Name
+		summarizeBy: none
+		sourceColumn: Fiscal Month Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Fiscal Year Month Num'
+		dataType: int64
+		formatString: 0
+		sourceProviderType: int
+		lineageTag: 598425cd-2e1d-4978-b507-85acd8b8ff40
+		sourceLineageTag: Fiscal Year Month Num
+		summarizeBy: none
+		sourceColumn: Fiscal Year Month Num
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Fiscal Month Year Desc'
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 090756da-f08d-43c9-9317-9455ed758868
+		sourceLineageTag: Fiscal Month Year Desc
+		summarizeBy: none
+		sourceColumn: Fiscal Month Year Desc
+
+		annotation SummarizationSetBy = Automatic
+
+	partition FiscalCal = entity
+		mode: directLake
+		source
+			entityName: FiscalCal
+			schemaName: dbo
+			expressionSource: DatabaseQuery
+
+	annotation PBI_ResultType = Table
+

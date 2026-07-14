@@ -1,0 +1,330 @@
+table SupplyPlanDetailToday
+	lineageTag: 3b898d61-5057-43eb-92f1-a2ef71cbf06b
+	sourceLineageTag: [dbo].[SupplyPlanDetailToday]
+
+	column 'Item SKU'
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 8659419a-7407-40c5-95a4-0192b6121277
+		sourceLineageTag: Item SKU
+		summarizeBy: none
+		sourceColumn: Item SKU
+
+		annotation SummarizationSetBy = Automatic
+
+	column Warehouse
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: f329c344-8d46-4164-a098-07657f16dd62
+		sourceLineageTag: Warehouse
+		summarizeBy: none
+		sourceColumn: Warehouse
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Week Ending'
+		dataType: dateTime
+		formatString: General Date
+		sourceProviderType: date
+		lineageTag: f3f572a7-1fad-4544-bd2d-eb5ed096d498
+		sourceLineageTag: Week Ending
+		summarizeBy: none
+		sourceColumn: Week Ending
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Beginning Balance'
+		dataType: int64
+		formatString: 0
+		sourceProviderType: bigint
+		lineageTag: 88058d4a-dd1c-4456-a847-d5dd56efa29c
+		sourceLineageTag: Beginning Balance
+		summarizeBy: sum
+		sourceColumn: Beginning Balance
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Prod - Firm'
+		dataType: int64
+		formatString: 0
+		sourceProviderType: bigint
+		lineageTag: a9ae1b0e-84f4-4685-913f-9755d6d025b3
+		sourceLineageTag: Prod - Firm
+		summarizeBy: sum
+		sourceColumn: Prod - Firm
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Prod - Plan'
+		dataType: int64
+		formatString: 0
+		sourceProviderType: bigint
+		lineageTag: 11ba9cdb-4b2b-44d2-878a-8ea5fc041aa3
+		sourceLineageTag: Prod - Plan
+		summarizeBy: sum
+		sourceColumn: Prod - Plan
+
+		annotation SummarizationSetBy = Automatic
+
+	column SS
+		dataType: int64
+		formatString: 0
+		sourceProviderType: bigint
+		lineageTag: 39fbcd64-87d2-454a-bcff-c93e8fd5034c
+		sourceLineageTag: SS
+		summarizeBy: sum
+		sourceColumn: SS
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'SI -SS'
+		dataType: int64
+		formatString: 0
+		sourceProviderType: bigint
+		lineageTag: 55d1e690-721f-4ee0-b9be-72e8b56ae55c
+		sourceLineageTag: SI -SS
+		summarizeBy: sum
+		sourceColumn: SI -SS
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'SI Neg'
+		dataType: int64
+		formatString: 0
+		sourceProviderType: bigint
+		lineageTag: 3a4f5e25-a2c4-4931-9c95-6d9a408341fe
+		sourceLineageTag: SI Neg
+		summarizeBy: sum
+		sourceColumn: SI Neg
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Demand Fulfillment'
+		dataType: int64
+		formatString: 0
+		sourceProviderType: bigint
+		lineageTag: e308828c-522a-42f5-b7ed-82d758825351
+		sourceLineageTag: Demand Fulfillment
+		summarizeBy: sum
+		sourceColumn: Demand Fulfillment
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Snapshot Date'
+		dataType: dateTime
+		formatString: General Date
+		sourceProviderType: date
+		lineageTag: be464a35-df4b-4712-ba1c-9142f154a948
+		sourceLineageTag: Snapshot Date
+		summarizeBy: none
+		sourceColumn: Snapshot Date
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Total Prod'
+		dataType: int64
+		formatString: 0
+		sourceProviderType: bigint
+		lineageTag: 1c5d7d48-2a7a-4ef8-b966-f426a046a359
+		sourceLineageTag: Total Prod
+		summarizeBy: sum
+		sourceColumn: Total Prod
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Total PO'
+		dataType: int64
+		formatString: 0
+		sourceProviderType: bigint
+		lineageTag: 92f4a16e-84c3-4b57-9bb5-84e760a3c15a
+		sourceLineageTag: Total PO
+		summarizeBy: sum
+		sourceColumn: Total PO
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Total TI'
+		dataType: int64
+		formatString: 0
+		sourceProviderType: bigint
+		lineageTag: 5f940dcc-6227-47c4-9d8e-9535367cae34
+		sourceLineageTag: Total TI
+		summarizeBy: sum
+		sourceColumn: Total TI
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Total Demand'
+		dataType: int64
+		formatString: 0
+		sourceProviderType: bigint
+		lineageTag: 5fc66bae-b6da-4882-a771-4af0f97fdb31
+		sourceLineageTag: Total Demand
+		summarizeBy: sum
+		sourceColumn: Total Demand
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Total TO'
+		dataType: int64
+		formatString: 0
+		sourceProviderType: bigint
+		lineageTag: ceb008f5-db9c-4b56-93a7-c070b6e9d9af
+		sourceLineageTag: Total TO
+		summarizeBy: sum
+		sourceColumn: Total TO
+
+		annotation SummarizationSetBy = Automatic
+
+	column SI
+		dataType: int64
+		formatString: 0
+		sourceProviderType: bigint
+		lineageTag: 6b87f3c6-9472-41f8-8638-ee359ef65fd8
+		sourceLineageTag: SI
+		summarizeBy: sum
+		sourceColumn: SI
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Promo Lift'
+		dataType: int64
+		formatString: 0
+		sourceProviderType: bigint
+		lineageTag: 1dff0890-b4e9-4f62-822d-f1e3605bad8d
+		sourceLineageTag: Promo Lift
+		summarizeBy: sum
+		sourceColumn: Promo Lift
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Net Forecast'
+		dataType: int64
+		formatString: 0
+		sourceProviderType: bigint
+		lineageTag: 9831872b-2e7b-47ec-aa30-4c11a9397d72
+		sourceLineageTag: Net Forecast
+		summarizeBy: sum
+		sourceColumn: Net Forecast
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'TO - Firm'
+		dataType: int64
+		formatString: 0
+		sourceProviderType: bigint
+		lineageTag: 41d3072a-30ce-403c-96a5-47ed479738ec
+		sourceLineageTag: TO - Firm
+		summarizeBy: sum
+		sourceColumn: TO - Firm
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'TO - Plan'
+		dataType: int64
+		formatString: 0
+		sourceProviderType: bigint
+		lineageTag: 7c70d048-8b1a-485a-aed6-3af7261faedd
+		sourceLineageTag: TO - Plan
+		summarizeBy: sum
+		sourceColumn: TO - Plan
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Total Receipts'
+		dataType: int64
+		formatString: 0
+		sourceProviderType: bigint
+		lineageTag: 848d9611-f559-4748-a182-493483f9b446
+		sourceLineageTag: Total Receipts
+		summarizeBy: sum
+		sourceColumn: Total Receipts
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Total Est Shipments'
+		dataType: int64
+		formatString: 0
+		sourceProviderType: bigint
+		lineageTag: 39a2d7e7-e699-44d8-879e-cc160517a04e
+		sourceLineageTag: Total Est Shipments
+		summarizeBy: sum
+		sourceColumn: Total Est Shipments
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'PO - Firm'
+		dataType: int64
+		formatString: 0
+		sourceProviderType: bigint
+		lineageTag: 6edfe83e-c429-438f-9aa2-e6f8c903a80f
+		sourceLineageTag: PO - Firm
+		summarizeBy: sum
+		sourceColumn: PO - Firm
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'PO - Plan'
+		dataType: int64
+		formatString: 0
+		sourceProviderType: bigint
+		lineageTag: 74a8425b-768b-476b-80f7-5d35d13c6400
+		sourceLineageTag: PO - Plan
+		summarizeBy: sum
+		sourceColumn: PO - Plan
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'TI - In Trans'
+		dataType: int64
+		formatString: 0
+		sourceProviderType: bigint
+		lineageTag: d728642c-dfad-4aca-a35a-5a03caafbe4c
+		sourceLineageTag: TI - In Trans
+		summarizeBy: sum
+		sourceColumn: TI - In Trans
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'TI - Firm'
+		dataType: int64
+		formatString: 0
+		sourceProviderType: bigint
+		lineageTag: 229bdb24-29fc-4dac-acda-8f5335eb8859
+		sourceLineageTag: TI - Firm
+		summarizeBy: sum
+		sourceColumn: TI - Firm
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'TI - Plan'
+		dataType: int64
+		formatString: 0
+		sourceProviderType: bigint
+		lineageTag: 2df1294e-b872-4ca8-b16b-188280cd6d6e
+		sourceLineageTag: TI - Plan
+		summarizeBy: sum
+		sourceColumn: TI - Plan
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Firm Demands'
+		dataType: int64
+		formatString: 0
+		sourceProviderType: bigint
+		lineageTag: d2dd9d01-ddcf-46f0-9855-2fda13139d9e
+		sourceLineageTag: Firm Demands
+		summarizeBy: sum
+		sourceColumn: Firm Demands
+
+		annotation SummarizationSetBy = Automatic
+
+	partition SupplyPlanDetailToday = entity
+		mode: directLake
+		source
+			entityName: SupplyPlanDetailToday
+			schemaName: dbo
+			expressionSource: DatabaseQuery
+
+	annotation PBI_ResultType = Table
+

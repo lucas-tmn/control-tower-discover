@@ -1,0 +1,34 @@
+{
+  "formatVersion": "202502",
+  "computeEngineSettings": {
+    "allowModernEvaluationEngine": true
+  },
+  "name": "df_SupplyChain_Enh__DemandForecastSnapshot",
+  "queryGroups": [],
+  "documentLocale": "en-US",
+  "queriesMetadata": {
+    "DemandForecastSnapshot(SupplyChain_Enh)": {
+      "queryId": "21d52998-80f3-4491-817f-bff93f75ffde",
+      "queryName": "DemandForecastSnapshot(SupplyChain_Enh)",
+      "loadEnabled": false
+    },
+    "DemandForecastSnapshot(SupplyChain_Enh)_DataDestination": {
+      "queryId": "ddbacb3c-80ff-42bf-a0f5-3ae59e1cdc06",
+      "queryName": "DemandForecastSnapshot(SupplyChain_Enh)_DataDestination",
+      "isHidden": true,
+      "loadEnabled": false
+    }
+  },
+  "connections": [
+    {
+      "path": "ashley-edw.database.windows.net;ASHLEY_EDW",
+      "kind": "SQL",
+      "connectionId": "{\"ClusterId\":\"e6436dba-643f-44c3-ad6f-51a8cbc45b81\",\"DatasourceId\":\"67192c57-5e5c-4ad4-8801-858e75656fe4\"}"
+    },
+    {
+      "path": "Lakehouse",
+      "kind": "Lakehouse",
+      "connectionId": "{\"ClusterId\":\"e6436dba-643f-44c3-ad6f-51a8cbc45b81\",\"DatasourceId\":\"b4311980-3d3b-49be-bd11-7e2f8e424e19\"}"
+    }
+  ]
+}

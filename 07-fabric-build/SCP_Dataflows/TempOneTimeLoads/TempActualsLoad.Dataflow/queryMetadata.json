@@ -1,0 +1,34 @@
+{
+  "formatVersion": "202502",
+  "computeEngineSettings": {
+    "allowModernEvaluationEngine": true
+  },
+  "name": "TempActualsLoad",
+  "queryGroups": [],
+  "documentLocale": "en-US",
+  "queriesMetadata": {
+    "brz_Actuals": {
+      "queryId": "78219a0b-006b-4850-82d7-6aaa164152ae",
+      "queryName": "brz_Actuals",
+      "loadEnabled": false
+    },
+    "brz_Actuals_DataDestination": {
+      "queryId": "307ac276-0696-4ffb-8cb9-594b7e741d3d",
+      "queryName": "brz_Actuals_DataDestination",
+      "isHidden": true,
+      "loadEnabled": false
+    }
+  },
+  "connections": [
+    {
+      "path": "ashley-edw.database.windows.net;ashley_edw",
+      "kind": "SQL",
+      "connectionId": "{\"ClusterId\":\"e6436dba-643f-44c3-ad6f-51a8cbc45b81\",\"DatasourceId\":\"69eee39f-e9d0-4ebc-aa11-69332bcd7f38\"}"
+    },
+    {
+      "path": "Lakehouse",
+      "kind": "Lakehouse",
+      "connectionId": "{\"ClusterId\":\"e6436dba-643f-44c3-ad6f-51a8cbc45b81\",\"DatasourceId\":\"e33aec57-72c1-42a2-bf06-ac619adeca06\"}"
+    }
+  ]
+}

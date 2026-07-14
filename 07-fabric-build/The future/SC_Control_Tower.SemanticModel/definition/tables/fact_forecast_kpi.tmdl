@@ -1,0 +1,196 @@
+table fact_forecast_kpi
+	lineageTag: 9c255cc1-3896-4edb-99dc-9cd835013b78
+	sourceLineageTag: [gold].[gld_fact_forecast_kpi]
+
+	column id_item_sku
+		dataType: string
+		lineageTag: ea038dd9-c48d-4d08-b5ee-b3b130b0a513
+		sourceLineageTag: id_item_sku
+		summarizeBy: none
+		sourceColumn: id_item_sku
+
+		annotation SummarizationSetBy = Automatic
+
+	column code_warehouse
+		dataType: string
+		lineageTag: d28a4c43-d5e2-425d-9163-426d7a7f8ab0
+		sourceLineageTag: code_warehouse
+		summarizeBy: none
+		sourceColumn: code_warehouse
+
+		annotation SummarizationSetBy = Automatic
+
+	column dt_fsc_month_first
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 12fa30b0-c30d-46f3-bd40-35c7f9300b5e
+		sourceLineageTag: dt_fsc_month_first
+		summarizeBy: none
+		sourceColumn: dt_fsc_month_first
+
+		annotation SummarizationSetBy = Automatic
+
+	column dt_fsc_month_last
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 3913f332-e921-41d9-a7ed-7d26d31a41cf
+		sourceLineageTag: dt_fsc_month_last
+		summarizeBy: none
+		sourceColumn: dt_fsc_month_last
+
+		annotation SummarizationSetBy = Automatic
+
+	column code_horizon
+		dataType: string
+		lineageTag: 9354858a-9ebf-4d04-a5e6-f31c1e856f64
+		sourceLineageTag: code_horizon
+		summarizeBy: none
+		sourceColumn: code_horizon
+
+		annotation SummarizationSetBy = Automatic
+
+	column dt_snapshot
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 81b2fb70-64b7-4436-9f23-d8d9d95a8b5d
+		sourceLineageTag: dt_snapshot
+		summarizeBy: none
+		sourceColumn: dt_snapshot
+
+		annotation SummarizationSetBy = Automatic
+
+	column qty_forecast
+		dataType: double
+		lineageTag: 95e7f71e-51f0-4a86-8f20-252484b38d22
+		sourceLineageTag: qty_forecast
+		summarizeBy: sum
+		sourceColumn: qty_forecast
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column qty_actual
+		dataType: double
+		lineageTag: 5a4500cd-238e-4bcc-aee0-6327c1a8a528
+		sourceLineageTag: qty_actual
+		summarizeBy: sum
+		sourceColumn: qty_actual
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column qty_naive_forecast
+		dataType: double
+		lineageTag: 5498d464-2b78-4c7a-b6f3-d277e23a83ec
+		sourceLineageTag: qty_naive_forecast
+		summarizeBy: sum
+		sourceColumn: qty_naive_forecast
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column qty_fcst_error
+		dataType: double
+		lineageTag: 25bde76e-470e-4f6c-b7d9-4bf023250c18
+		sourceLineageTag: qty_fcst_error
+		summarizeBy: sum
+		sourceColumn: qty_fcst_error
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column qty_abs_fcst_error
+		dataType: double
+		lineageTag: 393a2e5b-62c2-4d5d-8f42-9c67beb9984b
+		sourceLineageTag: qty_abs_fcst_error
+		summarizeBy: sum
+		sourceColumn: qty_abs_fcst_error
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column qty_naive_fcst_error
+		dataType: double
+		lineageTag: 08e2e715-9332-408e-9dec-e9340fff757a
+		sourceLineageTag: qty_naive_fcst_error
+		summarizeBy: sum
+		sourceColumn: qty_naive_fcst_error
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column qty_abs_naive_fcst_error
+		dataType: double
+		lineageTag: 1824dd31-6a89-4025-839f-c28db4cbb9b2
+		sourceLineageTag: qty_abs_naive_fcst_error
+		summarizeBy: sum
+		sourceColumn: qty_abs_naive_fcst_error
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column qty_squared_fcst_error
+		dataType: double
+		lineageTag: 3f9147eb-a11e-4fb8-ac79-579774d23d0f
+		sourceLineageTag: qty_squared_fcst_error
+		summarizeBy: sum
+		sourceColumn: qty_squared_fcst_error
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column qty_squared_naive_fcst_error
+		dataType: double
+		lineageTag: ce4999f4-bd07-43a2-be01-eb1ffb02a2e0
+		sourceLineageTag: qty_squared_naive_fcst_error
+		summarizeBy: sum
+		sourceColumn: qty_squared_naive_fcst_error
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column valid_obs_flag
+		dataType: int64
+		lineageTag: 4df1da87-751c-4dfe-a549-002ba48d9c89
+		sourceLineageTag: valid_obs_flag
+		summarizeBy: sum
+		sourceColumn: valid_obs_flag
+
+		annotation SummarizationSetBy = Automatic
+
+	column valid_actual_nonzero_flag
+		dataType: int64
+		lineageTag: 33ffa4c9-2fa5-4667-9c3f-6caa38c0837f
+		sourceLineageTag: valid_actual_nonzero_flag
+		summarizeBy: sum
+		sourceColumn: valid_actual_nonzero_flag
+
+		annotation SummarizationSetBy = Automatic
+
+	column abs_pct_error
+		dataType: double
+		lineageTag: e5a928b4-5098-4866-a204-0bd62ccc17f0
+		sourceLineageTag: abs_pct_error
+		summarizeBy: none
+		sourceColumn: abs_pct_error
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition fact_forecast_kpi = entity
+		mode: directLake
+		source
+			entityName: gld_fact_forecast_kpi
+			schemaName: gold
+			expressionSource: 'DirectLake - SupplyChain_Warehouse'
+

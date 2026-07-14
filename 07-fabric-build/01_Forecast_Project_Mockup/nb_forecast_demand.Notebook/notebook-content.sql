@@ -1,0 +1,94 @@
+-- Fabric notebook source
+
+-- METADATA ********************
+
+-- META {
+-- META   "kernel_info": {
+-- META     "name": "synapse_pyspark"
+-- META   },
+-- META   "dependencies": {
+-- META     "lakehouse": {
+-- META       "default_lakehouse": "62a3081e-4093-4f46-856c-f50aa58732fa",
+-- META       "default_lakehouse_name": "SupplyChain_Lakehouse",
+-- META       "default_lakehouse_workspace_id": "c8d9fc83-18b6-4e1d-8264-0b49eed36fe0",
+-- META       "known_lakehouses": [
+-- META         {
+-- META           "id": "62a3081e-4093-4f46-856c-f50aa58732fa"
+-- META         }
+-- META       ]
+-- META     }
+-- META   }
+-- META }
+
+-- CELL ********************
+
+-- MAGIC %%sql
+-- MAGIC -- =============================================================
+-- MAGIC -- Silver Layer: Forecast Demand Snapshot
+-- MAGIC -- Source: brz2_SupplyChain_Enh__DemandForecastSnapshot
+-- MAGIC -- Target: slv_forecast_demand (Silver Layer)
+-- MAGIC -- =============================================================
+-- MAGIC 
+-- MAGIC CREATE OR REPLACE TABLE dbo.slv_forecast_demand AS
+-- MAGIC 
+-- MAGIC WITH RawForecast AS (
+-- MAGIC     SELECT 
+-- MAGIC         dfcItem AS ItemSKU,
+-- MAGIC         dfcWarehouse AS Warehouse,
+-- MAGIC         dfcCustomergroups AS CustomerGroup,
+-- MAGIC         -- Quy đổi YYYYMM (số) sang DATE
+-- MAGIC         make_date(CAST(dfcFiscalMonth / 100 AS INT), CAST(dfcFiscalMonth % 100 AS INT), 1) AS FiscalMonthYear,
+-- MAGIC         CAST(dfcSnapshot AS DATE) AS SnapshotDate,
+-- MAGIC         dfcResultantForecast,
+-- MAGIC         dfcPromotionalLift
+-- MAGIC     FROM dbo.brz2_SupplyChain_Enh__DemandForecastSnapshot
+-- MAGIC     WHERE 
+-- MAGIC         -- Filter Snapshot Dates
+-- MAGIC         CAST(dfcSnapshot AS DATE) IN (
+-- MAGIC             '2023-01-16','2023-02-13','2023-03-13','2023-04-17','2023-05-15',
+-- MAGIC             '2023-06-12','2023-07-17','2023-08-14','2023-09-11','2023-10-16',
+-- MAGIC             '2023-11-13','2023-12-11','2024-01-15','2024-02-12','2024-03-11',
+-- MAGIC             '2024-04-15','2024-05-13','2024-06-10','2024-07-15','2024-08-12',
+-- MAGIC             '2024-09-09','2024-10-14','2024-11-11','2024-12-09','2025-01-13',
+-- MAGIC             '2025-02-10','2025-03-29','2025-04-14','2025-05-12','2025-06-09',
+-- MAGIC             '2025-07-14','2025-08-18','2025-09-08','2025-10-13','2025-11-12',
+-- MAGIC             '2025-12-16','2026-01-15','2026-02-16','2026-03-14','2026-04-18',
+-- MAGIC             '2026-05-16'
+-- MAGIC         )
+-- MAGIC ),
+-- MAGIC 
+-- MAGIC CalculatedForecast AS (
+-- MAGIC     SELECT 
+-- MAGIC         ItemSKU,
+-- MAGIC         Warehouse,
+-- MAGIC         CustomerGroup,
+-- MAGIC         FiscalMonthYear,
+-- MAGIC         -- Tính toán Horizon (DATEDIFF MONTH trong Spark)
+-- MAGIC         CASE 
+-- MAGIC             WHEN (year(FiscalMonthYear)*12 + month(FiscalMonthYear)) - (year(SnapshotDate)*12 + month(SnapshotDate)) = 0 THEN '2W'
+-- MAGIC             WHEN (year(FiscalMonthYear)*12 + month(FiscalMonthYear)) - (year(SnapshotDate)*12 + month(SnapshotDate)) = 1 THEN '30Days'
+-- MAGIC             WHEN (year(FiscalMonthYear)*12 + month(FiscalMonthYear)) - (year(SnapshotDate)*12 + month(SnapshotDate)) = 2 THEN '60Days'
+-- MAGIC             WHEN (year(FiscalMonthYear)*12 + month(FiscalMonthYear)) - (year(SnapshotDate)*12 + month(SnapshotDate)) = 3 THEN '90Days'
+-- MAGIC             WHEN (year(FiscalMonthYear)*12 + month(FiscalMonthYear)) - (year(SnapshotDate)*12 + month(SnapshotDate)) = 4 THEN '120Days'
+-- MAGIC             WHEN (year(FiscalMonthYear)*12 + month(FiscalMonthYear)) - (year(SnapshotDate)*12 + month(SnapshotDate)) > 4 THEN '>120Days'
+-- MAGIC         END AS Horizon,
+-- MAGIC         CAST(SUM(dfcResultantForecast + dfcPromotionalLift) AS DOUBLE) AS Qty,
+-- MAGIC         concat('V ', date_format(SnapshotDate, 'yyyy.MM')) AS Version,
+-- MAGIC         --SnapshotDate,
+-- MAGIC         'Forecast' AS Status
+-- MAGIC     FROM RawForecast
+-- MAGIC     WHERE 
+-- MAGIC         -- Filter khung thời gian 3 năm (2 năm cũ, 1 năm tới)
+-- MAGIC         FiscalMonthYear BETWEEN add_months(current_date(), -24) AND add_months(current_date(), 12)
+-- MAGIC     GROUP BY 
+-- MAGIC         ItemSKU, Warehouse, CustomerGroup, FiscalMonthYear, SnapshotDate
+-- MAGIC )
+-- MAGIC 
+-- MAGIC SELECT * FROM CalculatedForecast;
+
+-- METADATA ********************
+
+-- META {
+-- META   "language": "sparksql",
+-- META   "language_group": "synapse_pyspark"
+-- META }

@@ -1,0 +1,20 @@
+{
+  "properties": {
+    "parameters": {
+      "REGION": {
+        "type": "String",
+        "defaultValue": "US"
+      }
+    },
+    "activities": [
+      {
+        "name": "Wait_2min",
+        "type": "Wait",
+        "dependsOn": [],
+        "typeProperties": {
+          "waitTimeInSeconds": 120
+        }
+      }
+    ]
+  }
+}

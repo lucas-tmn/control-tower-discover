@@ -1,0 +1,36 @@
+TABLE|Data|COLS:11|MEAS:1
+  COL|Item-Lvl1|string|Item-Lvl1
+  COL|Planner|string|Planner
+  COL|Series|string|Series
+  COL|Collective Class|string|Collective Class
+  COL|Current Status|string|Current Status
+  COL|Future Status|string|Future Status
+  COL|I/D Code|string|I/D Code
+  COL|ExclusiveComment|string|ExclusiveComment
+  COL|Market Introduced At|string|Market Introduced At
+  COL|Status|string|Status
+  COL|Planner Assignment Issue|string|Planner Assignment Issue
+  MEAS|Issue Count|,COUNTROWS(,    FILTER(,        'Data',,        NOT(ISBLANK('Data'[Planner Assignment Issue])),    ),)
+  PART|type=m
+  PART_BODY:let
+    Source = Sql.Database("Ashley-edw.database.windows.net", "Ashley_edw", [Query="SELECT DISTINCT#(lf)    FCC.[Item-Lvl1],#(lf)    IPK.[ienForecastPlannerID] AS [Planner],#(lf)    CPD.[Item Ext Series Number] AS [Series],#(lf)    CPD.[Collective Class],#(lf)    CPD.[AFI Item Status] AS [Current Status],#(lf)    IPK.[ienFutureStatus] AS [Future Status],#(lf)    CPD.[Import/Domestic Code] AS [I/D Code],#(lf)    [IM].[ExclusiveComment],#(lf)    CPD.[Market Introduced At],#(lf)    CASE#(lf)        WHEN CPD.[AFI Item Status] = 'D'#(lf)            THEN 'Disco'#(lf)        WHEN IPK.[ienFutureStatus] IN ('P', 'F','E','L')#(lf)            THEN 'Drop'#(lf)        WHEN [IM].[ExclusiveComment] = 'Homestore'#(lf)            THEN 'Homestore Exclusive'#(lf)        WHEN CPD.[Market Introduced At] LIKE 'INT%'#(lf)            THEN 'INT Exclusive'#(lf)        ELSE 'Inline'#(lf)    END AS [Status]#(lf)FROM [SupplyChain_Enh].[ForecastCommonContainer_Logility] AS FCC#(lf)INNER JOIN [SupplyChain_DW].[DimCurrentProductDetails] AS CPD#(lf)    ON CPD.[Item SKU] = FCC.[Item-Lvl1]#(lf)LEFT JOIN [Enterprise_DW].[DimItemMaster] AS [IM]#(lf)    ON CPD.[Item SKU] = [IM].[ItemSKU]#(lf)LEFT JOIN [MasterData_ProductKnowledge].[Item_ENV] AS IPK#(lf)    ON CPD.[Item SKU] = IPK.[ienItemNumber]#(lf)   AND IPK.[ienEnvironmentCode] = 'AFI'#(lf)WHERE FCC.[FileDate] = (#(lf)        SELECT MAX([FileDate])#(lf)        FROM [SupplyChain_Enh].[ForecastCommonContainer_Logility]#(lf)    )#(lf)  AND FCC.[Location] NOT IN ('C','12','101','151','16','20','213')#(lf)ORDER BY FCC.[Item-Lvl1];", CreateNavigationProperties=false]),
+    #"Added Planner Assignment Issue" = Table.AddColumn(
+        Source,
+        "Planner Assignment Issue",
+        each
+            if [Status] = "Disco" and [Planner] <> "SKUJAK" then "Disco - Should be SKUJAK"
+            else if [Status] = "Homestore Exclusive" and [Planner] <> "TMANGAN" then "Homestore Exclusive - Should be TMANGAN"
+            else if [Status] = "INT Exclusive" and [Planner] <> "TRACYHO" then "INT Exclusive - Should be TRACYHO"
+            else if [Status] = "Drop" and [Collective Class] = "BEDDING" and Text.Contains(Text.Upper(Text.From([Market Introduced At])), "INT") and [Planner] <> "SLYONS" then "Drop INT Bedding - Should be SLYONS"
+            else if [Status] = "Drop" and List.Contains({"HNGUYEN2", "VHA", "KHHO"}, [Planner]) then "Wrong Planner"
+            else if [Status] = "Inline" and not List.Contains({"HNGUYEN2", "VHA", "KHHO"}, [Planner]) then "Wrong Planner"
+            else null
+    )
+in
+    #"Added Planner Assignment Issue"
+
+=== RELS ===
+
+=== ANNOTATIONS ===
+  __PBI_TimeIntelligenceEnabled=0
+  PBI_QueryOrder=["Data"]

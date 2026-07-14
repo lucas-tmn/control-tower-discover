@@ -1,0 +1,399 @@
+table CustomerMaster
+	lineageTag: c8792727-1ced-437b-9df5-1b607da20f73
+	sourceLineageTag: [dbo].[CustomerMaster]
+
+	column 'Account And ShipTo Number'
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 0422e0ce-aed6-466a-8248-dd51b346b972
+		sourceLineageTag: Account And ShipTo Number
+		summarizeBy: none
+		sourceColumn: Account And ShipTo Number
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Account Number'
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: e7afe588-8eaa-4b49-ba6d-ba8154cd4cfc
+		sourceLineageTag: Account Number
+		summarizeBy: none
+		sourceColumn: Account Number
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'ShipTo Number'
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: ca2ee0b2-ee3a-4b36-ba50-ba1c0770bd2f
+		sourceLineageTag: ShipTo Number
+		summarizeBy: none
+		sourceColumn: ShipTo Number
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Customer Name'
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: a73b0db4-8937-4254-b610-70a565f3aab2
+		sourceLineageTag: Customer Name
+		summarizeBy: none
+		sourceColumn: Customer Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Account Name'
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: e407e31b-7f6f-4dfd-95b3-d94a570b229a
+		sourceLineageTag: Account Name
+		summarizeBy: none
+		sourceColumn: Account Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'ShipTo Details'
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: f0ab32b2-17c0-46d4-8b44-5c419409dbe5
+		sourceLineageTag: ShipTo Details
+		summarizeBy: none
+		sourceColumn: ShipTo Details
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Commission Code'
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 492e2428-c79e-40ac-8d0e-1c063150a4f2
+		sourceLineageTag: Commission Code
+		summarizeBy: none
+		sourceColumn: Commission Code
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Account Group'
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 9c9a4a0e-3516-49ca-ab7e-57c811e82fa9
+		sourceLineageTag: Account Group
+		summarizeBy: none
+		sourceColumn: Account Group
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Default Warehouse'
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 257ed284-93db-4d73-a7e6-a965d00a157a
+		sourceLineageTag: Default Warehouse
+		summarizeBy: none
+		sourceColumn: Default Warehouse
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Route Zone'
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 3371f866-f208-4540-8791-2fc722f246be
+		sourceLineageTag: Route Zone
+		summarizeBy: none
+		sourceColumn: Route Zone
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Route Region'
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 80f19a8d-1e90-47bf-a8e5-2b5e2b9dbe88
+		sourceLineageTag: Route Region
+		summarizeBy: none
+		sourceColumn: Route Region
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'ABC Account-Current Year'
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: d37e32ae-9545-42e2-814f-c91925b81b3d
+		sourceLineageTag: ABC Account-Current Year
+		summarizeBy: none
+		sourceColumn: ABC Account-Current Year
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'ABC Account-Previous Year'
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: d3d560ae-d848-4d8f-a8af-7685ed9f0584
+		sourceLineageTag: ABC Account-Previous Year
+		summarizeBy: none
+		sourceColumn: ABC Account-Previous Year
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'ABC Account-2 Years Ago'
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: b1968e5f-5a8a-4cb0-850d-cb17ff22d88a
+		sourceLineageTag: ABC Account-2 Years Ago
+		summarizeBy: none
+		sourceColumn: ABC Account-2 Years Ago
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Account Exception Flag'
+		dataType: int64
+		formatString: 0
+		sourceProviderType: int
+		lineageTag: 339778d1-2c2d-4f2f-809c-7d5e07c58bdd
+		sourceLineageTag: Account Exception Flag
+		summarizeBy: sum
+		sourceColumn: Account Exception Flag
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Customer Shipto Name'
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: ec186ce7-e4e1-4ed1-bbab-50caa405be83
+		sourceLineageTag: Customer Shipto Name
+		summarizeBy: none
+		sourceColumn: Customer Shipto Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Shipto AddressID'
+		dataType: int64
+		formatString: 0
+		sourceProviderType: int
+		lineageTag: 544ff3d0-6af6-4ce3-b3f5-66afc6ca5753
+		sourceLineageTag: Shipto AddressID
+		summarizeBy: count
+		sourceColumn: Shipto AddressID
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Primary Sales Territory'
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: f95ee14b-3bbc-48b3-bda0-57ee8e4a100e
+		sourceLineageTag: Primary Sales Territory
+		summarizeBy: none
+		sourceColumn: Primary Sales Territory
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Shipto Sales Territory'
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: ad8fddd9-c22f-4613-8299-64bafef0e9bc
+		sourceLineageTag: Shipto Sales Territory
+		summarizeBy: none
+		sourceColumn: Shipto Sales Territory
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Customer Account Status'
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: cf38ccfe-f572-44fa-bde2-d538d05abd6e
+		sourceLineageTag: Customer Account Status
+		summarizeBy: none
+		sourceColumn: Customer Account Status
+
+		annotation SummarizationSetBy = Automatic
+
+	column ZipCode
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: fb23c96a-2668-45a3-be0c-2d37c9988776
+		sourceLineageTag: ZipCode
+		summarizeBy: none
+		sourceColumn: ZipCode
+
+		annotation SummarizationSetBy = Automatic
+
+	column Country
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 151f2bb7-c98f-4f33-91e9-4b1cf8d38ef1
+		sourceLineageTag: Country
+		summarizeBy: none
+		sourceColumn: Country
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'State Code'
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: f99f9cb6-686d-4d90-ad03-c2f00c81e644
+		sourceLineageTag: State Code
+		summarizeBy: none
+		sourceColumn: State Code
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Country Code'
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 133da099-c8c4-4a7f-8139-2f0b6c9f487d
+		sourceLineageTag: Country Code
+		summarizeBy: none
+		sourceColumn: Country Code
+
+		annotation SummarizationSetBy = Automatic
+
+	column Latitude
+		dataType: double
+		sourceProviderType: decimal(38, 6)
+		lineageTag: 3474caa3-b8f0-44b4-85d7-afe26c00b87e
+		sourceLineageTag: Latitude
+		summarizeBy: sum
+		sourceColumn: Latitude
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Longitude
+		dataType: double
+		sourceProviderType: decimal(38, 6)
+		lineageTag: 231a1222-5352-49bf-a183-8e4950fb82b2
+		sourceLineageTag: Longitude
+		summarizeBy: sum
+		sourceColumn: Longitude
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Address 2'
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 2f9ebb2b-3797-4935-bde6-e4fbbbfb7e3b
+		sourceLineageTag: Address 2
+		summarizeBy: none
+		sourceColumn: Address 2
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Address 3'
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 7b3e6a12-46b5-44b4-ba00-f62b64afcfe1
+		sourceLineageTag: Address 3
+		summarizeBy: none
+		sourceColumn: Address 3
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Address 4'
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 061b7216-22c2-4631-b260-cdfe830287a1
+		sourceLineageTag: Address 4
+		summarizeBy: none
+		sourceColumn: Address 4
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Address 5'
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 18bb3770-a797-4e09-b2c4-53f2430f712b
+		sourceLineageTag: Address 5
+		summarizeBy: none
+		sourceColumn: Address 5
+
+		annotation SummarizationSetBy = Automatic
+
+	column City
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 741a17f6-97b8-4317-a2ee-0de9c899b641
+		sourceLineageTag: City
+		summarizeBy: none
+		sourceColumn: City
+
+		annotation SummarizationSetBy = Automatic
+
+	column State
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 5c2aa961-8fe0-4159-b377-2f402ced74e7
+		sourceLineageTag: State
+		summarizeBy: none
+		sourceColumn: State
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Customer Segment'
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 1bc4c384-ce05-47c3-94cc-7622990ba7ce
+		sourceLineageTag: Customer Segment
+		summarizeBy: none
+		sourceColumn: Customer Segment
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Business Type Code'
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 24a30836-5cda-4c58-a65f-6daf43fe2b40
+		sourceLineageTag: Business Type Code
+		summarizeBy: none
+		sourceColumn: Business Type Code
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Business Type'
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 72da523d-eec0-4a2f-8b6f-a771a4dcd9a2
+		sourceLineageTag: Business Type
+		summarizeBy: none
+		sourceColumn: Business Type
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Reporting Business Type'
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 13d51e3a-e3bc-4bed-965b-78041ed5df2e
+		sourceLineageTag: Reporting Business Type
+		summarizeBy: none
+		sourceColumn: Reporting Business Type
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Customer Group'
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 85f89971-0568-4253-8279-0e6aff5abd9e
+		sourceLineageTag: Customer Group
+		summarizeBy: none
+		sourceColumn: Customer Group
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Address 1'
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 2e5cca7c-e645-4f48-9041-fd91162532a4
+		sourceLineageTag: Address 1
+		summarizeBy: none
+		sourceColumn: Address 1
+
+		annotation SummarizationSetBy = Automatic
+
+	partition CustomerMaster = entity
+		mode: directLake
+		source
+			entityName: CustomerMaster
+			schemaName: dbo
+			expressionSource: DatabaseQuery
+
+	annotation PBI_ResultType = Table
+

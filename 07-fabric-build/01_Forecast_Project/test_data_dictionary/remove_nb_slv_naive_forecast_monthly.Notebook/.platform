@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Notebook",
+    "displayName": "remove_nb_slv_naive_forecast_monthly"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "c3580e02-f57c-bef6-4986-7cc74b22be78"
+  }
+}

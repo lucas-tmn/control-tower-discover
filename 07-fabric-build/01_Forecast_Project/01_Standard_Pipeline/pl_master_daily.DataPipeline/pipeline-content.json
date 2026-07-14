@@ -1,0 +1,172 @@
+{
+  "properties": {
+    "activities": [
+      {
+        "type": "InvokePipeline",
+        "typeProperties": {
+          "parameters": {},
+          "waitOnCompletion": true,
+          "workspaceId": "00000000-0000-0000-0000-000000000000",
+          "pipelineId": "36b8a683-9614-91b2-4e95-f067e388c9ef",
+          "operationType": "InvokeFabricPipeline"
+        },
+        "externalReferences": {
+          "connection": "468fac2e-08b0-4d52-9c97-95d84ef8896f"
+        },
+        "policy": {
+          "timeout": "0.06:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "pl_brz_daily",
+        "dependsOn": []
+      },
+      {
+        "type": "InvokePipeline",
+        "typeProperties": {
+          "parameters": {},
+          "waitOnCompletion": true,
+          "workspaceId": "00000000-0000-0000-0000-000000000000",
+          "pipelineId": "6e89b87f-ea3a-904d-4459-ff31188d52f4",
+          "operationType": "InvokeFabricPipeline"
+        },
+        "externalReferences": {
+          "connection": "468fac2e-08b0-4d52-9c97-95d84ef8896f"
+        },
+        "policy": {
+          "timeout": "0.06:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "pl_slv_daily",
+        "dependsOn": [
+          {
+            "activity": "pl_brz_daily",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "InvokePipeline",
+        "typeProperties": {
+          "parameters": {},
+          "waitOnCompletion": true,
+          "workspaceId": "00000000-0000-0000-0000-000000000000",
+          "pipelineId": "5b451438-929b-9909-4705-634e8a8fabf1",
+          "operationType": "InvokeFabricPipeline"
+        },
+        "externalReferences": {
+          "connection": "468fac2e-08b0-4d52-9c97-95d84ef8896f"
+        },
+        "policy": {
+          "timeout": "0.06:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "pl_gld_daily",
+        "dependsOn": [
+          {
+            "activity": "pl_slv_daily",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "InvokePipeline",
+        "typeProperties": {
+          "parameters": {},
+          "waitOnCompletion": true,
+          "workspaceId": "00000000-0000-0000-0000-000000000000",
+          "pipelineId": "017100c5-9594-a045-4232-57656577f34d",
+          "operationType": "InvokeFabricPipeline"
+        },
+        "externalReferences": {
+          "connection": "468fac2e-08b0-4d52-9c97-95d84ef8896f"
+        },
+        "policy": {
+          "timeout": "0.06:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "pl_sp_daily",
+        "dependsOn": [
+          {
+            "activity": "pl_gld_daily",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "PBISemanticModelRefresh",
+        "typeProperties": {
+          "method": "post",
+          "groupId": "c8d9fc83-18b6-4e1d-8264-0b49eed36fe0",
+          "datasetId": "3eecf594-a75e-46ab-9162-63c95ee68e45",
+          "commitMode": "Transactional",
+          "objects": [
+            {
+              "table": "dim_customer_grouping"
+            },
+            {
+              "table": "dim_calendar"
+            },
+            {
+              "table": "dim_warehouse"
+            },
+            {
+              "table": "dim_product"
+            },
+            {
+              "table": "_Measure"
+            },
+            {
+              "table": "dim_forecast_horizon"
+            },
+            {
+              "table": "fact_flat_forecast_actual"
+            },
+            {
+              "table": "fact_forecast_kpi"
+            }
+          ],
+          "waitOnCompletion": true,
+          "operationType": "SemanticModelRefresh"
+        },
+        "externalReferences": {
+          "connection": "881e4ab1-507a-4504-8ede-01284c46538c"
+        },
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "Control Tower",
+        "dependsOn": [
+          {
+            "activity": "pl_sp_daily",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ]
+      }
+    ],
+    "concurrency": 1
+  }
+}

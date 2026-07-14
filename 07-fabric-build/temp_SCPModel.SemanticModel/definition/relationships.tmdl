@@ -1,0 +1,15 @@
+relationship d0d7d5b9-3f6b-cba5-fc54-10e754ec4c8d
+	relyOnReferentialIntegrity
+	fromColumn: SupplyPlanDetailToday.'Item SKU'
+	toColumn: ItemMaster.'Item SKU'
+
+relationship a7387db8-1f8a-c35f-d22b-f679edcd0e5d
+	relyOnReferentialIntegrity
+	fromColumn: SupplyPlanDetailToday.'Week Ending'
+	toColumn: FiscalCal.'Transaction Date'
+
+relationship 465d6014-4b12-1ca4-a50d-4579c39637b9
+	relyOnReferentialIntegrity
+	fromColumn: SupplyPlanDetailToday.Warehouse
+	toColumn: WarehouseMaster.Warehouse
+

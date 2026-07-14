@@ -1,0 +1,81 @@
+-- Fabric notebook source
+
+-- METADATA ********************
+
+-- META {
+-- META   "kernel_info": {
+-- META     "name": "synapse_pyspark"
+-- META   },
+-- META   "dependencies": {
+-- META     "lakehouse": {
+-- META       "default_lakehouse": "62a3081e-4093-4f46-856c-f50aa58732fa",
+-- META       "default_lakehouse_name": "SupplyChain_Lakehouse",
+-- META       "default_lakehouse_workspace_id": "c8d9fc83-18b6-4e1d-8264-0b49eed36fe0",
+-- META       "known_lakehouses": [
+-- META         {
+-- META           "id": "62a3081e-4093-4f46-856c-f50aa58732fa"
+-- META         }
+-- META       ]
+-- META     }
+-- META   }
+-- META }
+
+-- CELL ********************
+
+-- MAGIC %%sql
+-- MAGIC /* SILVER LAYER: FORECAST DEMAND - FACT TABLE
+-- MAGIC    Target: dbo.slv_demand_forecast_snapshot
+-- MAGIC    Source: dbo.brz_supplychain_enh_1__demandforecastsnapshotdaily
+-- MAGIC    Logic: FORECAST DEMAND - FACT TABLE
+-- MAGIC */
+-- MAGIC 
+-- MAGIC CREATE OR REPLACE TABLE dbo.slv_demand_forecast_snapshot AS
+-- MAGIC SELECT
+-- MAGIC     -- Keys & Identifiers
+-- MAGIC     TRIM(dfcItem)                                        AS id_item_sku,
+-- MAGIC     TRIM(dfcWarehouse)                                   AS code_warehouse,
+-- MAGIC     CAST(dfcFiscalMonth AS INT)                          AS num_fiscal_month,
+-- MAGIC     TRIM(DfcCustomerGroups)                              AS code_customer_group,
+-- MAGIC 
+-- MAGIC     -- Forecast Values
+-- MAGIC     CAST(dfcResultantForecast AS DECIMAL(14,3))          AS qty_resultant_forecast,
+-- MAGIC     CAST(dfcPromotionalLift AS DECIMAL(14,3))            AS qty_promotional_lift,
+-- MAGIC     CAST(dfcForcedForecast AS DECIMAL(14,3))             AS qty_forced_forecast,
+-- MAGIC     CAST(dfcOrderFutureQty AS INT)                       AS qty_order_future,
+-- MAGIC     CAST(dfcPermComptQty AS DECIMAL(14,2))               AS qty_perm_component,
+-- MAGIC 
+-- MAGIC     -- Snapshot & Dates
+-- MAGIC     CAST(dfcSnapshot AS TIMESTAMP)                       AS ts_snapshot,
+-- MAGIC 
+-- MAGIC     -- Classification
+-- MAGIC     TRIM(dfcMainPiece)                                   AS code_main_piece,
+-- MAGIC     TRIM(dfcCollectiveClass)                             AS name_collective_class,
+-- MAGIC     TRIM(dfcUsr32Text)                                   AS name_product_category,
+-- MAGIC     TRIM(dfcFCSTTypeCode)                                AS code_forecast_type,
+-- MAGIC     TRIM(dfcMgmtCode)                                    AS code_management,
+-- MAGIC 
+-- MAGIC     -- Derived Forecast
+-- MAGIC     TRIM(dfcDerivedFCSTID)                               AS id_derived_forecast,
+-- MAGIC     CAST(dfcDerivedFCSTFctr AS DECIMAL(10,3))            AS val_derived_forecast_factor,
+-- MAGIC 
+-- MAGIC     -- Demand
+-- MAGIC     CAST(dfcValidDemandMonths AS INT)                    AS num_valid_demand_months,
+-- MAGIC 
+-- MAGIC     -- Other
+-- MAGIC     TRIM(dfcUsr25Text)                                   AS name_usr25,
+-- MAGIC 
+-- MAGIC     -- Source audit
+-- MAGIC     TRIM(usra)                                           AS name_created_by,
+-- MAGIC     CAST(dtea AS TIMESTAMP)                              AS ts_created,
+-- MAGIC     TRIM(usrc)                                           AS name_modified_by,
+-- MAGIC     CAST(dtec AS TIMESTAMP)                              AS ts_modified
+-- MAGIC 
+-- MAGIC FROM dbo.brz_supplychain_enh_1__demandforecastsnapshotdaily
+-- MAGIC WHERE dfcItem IS NOT NULL
+
+-- METADATA ********************
+
+-- META {
+-- META   "language": "sparksql",
+-- META   "language_group": "synapse_pyspark"
+-- META }

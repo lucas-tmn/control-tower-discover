@@ -1,0 +1,12 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "DataPipeline",
+    "displayName": "pl_master_regional",
+    "description": "Parent pipeline. Calls pl_regional_forecast 3 times in parallel with REGION=US/EU/APAC."
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "823eca51-09be-a8a7-40fd-610cf743db73"
+  }
+}

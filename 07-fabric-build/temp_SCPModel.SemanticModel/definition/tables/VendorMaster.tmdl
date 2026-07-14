@@ -1,0 +1,126 @@
+table VendorMaster
+	lineageTag: b929b10b-dea8-4001-ab4a-01ac9d9fcd76
+	sourceLineageTag: [dbo].[VendorMaster]
+
+	column VendorNumber
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 8f92275b-a09b-4cc0-a199-a65298789116
+		sourceLineageTag: VendorNumber
+		summarizeBy: none
+		sourceColumn: VendorNumber
+
+		annotation SummarizationSetBy = Automatic
+
+	column VendorName
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 1346b40e-dbcb-4acb-8789-e29b7e2ea455
+		sourceLineageTag: VendorName
+		summarizeBy: none
+		sourceColumn: VendorName
+
+		annotation SummarizationSetBy = Automatic
+
+	column Office
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 1b358507-e2f8-4284-bc2b-ec8ebca85c1e
+		sourceLineageTag: Office
+		summarizeBy: none
+		sourceColumn: Office
+
+		annotation SummarizationSetBy = Automatic
+
+	column VendorOfficeLocation
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: cd5a36b2-d9e1-485e-b934-82918650e4bc
+		sourceLineageTag: VendorOfficeLocation
+		summarizeBy: none
+		sourceColumn: VendorOfficeLocation
+
+		annotation SummarizationSetBy = Automatic
+
+	column VendorDesc
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 517790ce-a3f5-4209-b1f3-8670bc6baa26
+		sourceLineageTag: VendorDesc
+		summarizeBy: none
+		sourceColumn: VendorDesc
+
+		annotation SummarizationSetBy = Automatic
+
+	column Country
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: b18b8ea4-bc55-471f-9f55-713b21f45836
+		sourceLineageTag: Country
+		summarizeBy: none
+		sourceColumn: Country
+
+		annotation SummarizationSetBy = Automatic
+
+	column LeadTime
+		dataType: int64
+		formatString: 0
+		sourceProviderType: bigint
+		lineageTag: df3adf2e-b4ed-41e9-a957-c29672c7d972
+		sourceLineageTag: LeadTime
+		summarizeBy: sum
+		sourceColumn: LeadTime
+
+		annotation SummarizationSetBy = Automatic
+
+	column AFILeadTime
+		dataType: int64
+		formatString: 0
+		sourceProviderType: bigint
+		lineageTag: 4dc885df-d1d1-4cff-b780-1e12181d5dab
+		sourceLineageTag: AFILeadTime
+		summarizeBy: sum
+		sourceColumn: AFILeadTime
+
+		annotation SummarizationSetBy = Automatic
+
+	column WVFLeadTime
+		dataType: int64
+		formatString: 0
+		sourceProviderType: bigint
+		lineageTag: 9081f98f-4369-4509-af35-59815aa2faab
+		sourceLineageTag: WVFLeadTime
+		summarizeBy: sum
+		sourceColumn: WVFLeadTime
+
+		annotation SummarizationSetBy = Automatic
+
+	column VendorActive
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 989707d5-a10e-4bd4-a9b0-b49cb208bd69
+		sourceLineageTag: VendorActive
+		summarizeBy: none
+		sourceColumn: VendorActive
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Vendor Import Domestic Flag'
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: fe074e5b-8571-4d7a-8282-fff554d9ee00
+		sourceLineageTag: Vendor Import Domestic Flag
+		summarizeBy: none
+		sourceColumn: Vendor Import Domestic Flag
+
+		annotation SummarizationSetBy = Automatic
+
+	partition VendorMaster = entity
+		mode: directLake
+		source
+			entityName: VendorMaster
+			schemaName: dbo
+			expressionSource: DatabaseQuery
+
+	annotation PBI_ResultType = Table
+

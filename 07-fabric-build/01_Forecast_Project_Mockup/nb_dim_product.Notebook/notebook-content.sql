@@ -1,0 +1,200 @@
+-- Fabric notebook source
+
+-- METADATA ********************
+
+-- META {
+-- META   "kernel_info": {
+-- META     "name": "synapse_pyspark"
+-- META   },
+-- META   "dependencies": {
+-- META     "lakehouse": {
+-- META       "default_lakehouse": "62a3081e-4093-4f46-856c-f50aa58732fa",
+-- META       "default_lakehouse_name": "SupplyChain_Lakehouse",
+-- META       "default_lakehouse_workspace_id": "c8d9fc83-18b6-4e1d-8264-0b49eed36fe0",
+-- META       "known_lakehouses": [
+-- META         {
+-- META           "id": "62a3081e-4093-4f46-856c-f50aa58732fa"
+-- META         }
+-- META       ]
+-- META     }
+-- META   }
+-- META }
+
+-- CELL ********************
+
+-- %%sql
+-- /* ACTION: PREVIEW PRODUCT CLASSIFICATION (FIXED SCHEMA)
+--    SOURCE: dbo.brz2_SupplyChain_DW__DimCurrentProductDetails
+-- */
+
+-- WITH ProductPreview AS (
+--     SELECT 
+--         -- Các cột có khoảng trắng bắt buộc dùng dấu backticks ` `
+--         `Item SKU`,
+--         `Item Class Code`,
+        
+--         -- Logic phân loại hàng hóa
+--         CASE 
+--             WHEN `Item Class Code` LIKE 'Z%' AND `Item Class Code` NOT LIKE '%K' THEN 'Finished Goods'
+--             WHEN `Item Class Code` LIKE 'Z__K' THEN 'Kit / Bundle' 
+--             WHEN `Item Class Code` NOT LIKE 'Z%' THEN 'Raw Material'
+--             ELSE 'Others (Check Required)' 
+--         END AS ItemType,
+        
+--         -- Cột này viết liền (không dùng dấu cách theo hình ảnh schema của Bro)
+--         CurrentProductDetailsKey,
+        
+--         -- Cột này có khoảng trắng, phải dùng backticks
+--         `Current SCP Manufacturing Status`
+        
+--     FROM dbo.brz2_SupplyChain_DW__DimCurrentProductDetails
+--     -- Dùng backticks cho Item SKU trong điều kiện WHERE
+--     WHERE `Item SKU` <> 'N/A'
+-- )
+-- SELECT * FROM ProductPreview
+-- ORDER BY ItemType ASC, `Item Class Code` ASC
+-- LIMIT 100;
+
+-- METADATA ********************
+
+-- META {
+-- META   "language": "sparksql",
+-- META   "language_group": "synapse_pyspark"
+-- META }
+
+-- CELL ********************
+
+-- MAGIC %%sql
+-- MAGIC /* ACTION: MATERIALIZE SILVER PRODUCT DIMENSION (FULL SCHEMA FIXED)
+-- MAGIC    TARGET: dbo.slv_dim_product
+-- MAGIC    STRATEGY: CREATE OR REPLACE (Full Refresh)
+-- MAGIC    NOTE: All columns aliased to remove spaces, hyphens, and slashes for Delta compatibility.
+-- MAGIC */
+-- MAGIC 
+-- MAGIC CREATE OR REPLACE TABLE dbo.slv_dim_product
+-- MAGIC AS
+-- MAGIC SELECT 
+-- MAGIC     -- 1. Keys & Core Logic
+-- MAGIC     CurrentProductDetailsKey,
+-- MAGIC     `Item SKU` AS ItemSKU,
+-- MAGIC     `Item Class Code` AS ItemClassCode,
+-- MAGIC     
+-- MAGIC     -- Business Logic: Item Classification
+-- MAGIC     CASE 
+-- MAGIC         WHEN `Item Class Code` LIKE 'Z%' AND `Item Class Code` NOT LIKE '%K' THEN 'Finished Goods'
+-- MAGIC         WHEN `Item Class Code` LIKE 'Z__K' THEN 'Kit / Bundle' 
+-- MAGIC         WHEN `Item Class Code` NOT LIKE 'Z%' THEN 'Raw Material'
+-- MAGIC         ELSE 'Others' 
+-- MAGIC     END AS ItemType,
+-- MAGIC 
+-- MAGIC     -- 2. Basic Info
+-- MAGIC     `Item` AS Item,
+-- MAGIC     `Colors` AS Colors,
+-- MAGIC     `Qty In Box` AS QtyInBox,
+-- MAGIC     `UOM` AS UOM,
+-- MAGIC     `Series Name` AS SeriesName,
+-- MAGIC     `Series Color` AS SeriesColor,
+-- MAGIC     
+-- MAGIC     -- 3. Descriptions & Series (Removing Hyphens)
+-- MAGIC     `Item-Description-Series` AS ItemDescriptionSeries,
+-- MAGIC     `SH-Item-Description-Series` AS SHItemDescriptionSeries,
+-- MAGIC     `SH-Series-Description` AS SHSeriesDescription,
+-- MAGIC     `Item-Description-Series-Item Color` AS ItemDescriptionSeriesItemColor,
+-- MAGIC     
+-- MAGIC     -- 4. Classifications
+-- MAGIC     `Responsible Office` AS ResponsibleOffice,
+-- MAGIC     `Item Class Name` AS ItemClassName,
+-- MAGIC     `Item Class` AS ItemClass,
+-- MAGIC     `Product Line` AS ProductLine,
+-- MAGIC     `Retail Category Code` AS RetailCategoryCode,
+-- MAGIC     `Retail Category Description` AS RetailCategoryDescription,
+-- MAGIC     `AFI Finance Division` AS AFIFinanceDivision,
+-- MAGIC     `Item Description` AS ItemDescription,
+-- MAGIC     
+-- MAGIC     -- 5. Styles & Status
+-- MAGIC     `Item Style Code` AS ItemStyleCode,
+-- MAGIC     `Item Style Group` AS ItemStyleGroup,
+-- MAGIC     `Item Style` AS ItemStyle,
+-- MAGIC     `AFI Item Status` AS AFIItemStatus,
+-- MAGIC     `Sales Class Code` AS SalesClassCode,
+-- MAGIC     `Sales Class Description` AS SalesClassDescription,
+-- MAGIC     `Sales Class` AS SalesClass,
+-- MAGIC     `Discount Class Code` AS DiscountClassCode,
+-- MAGIC     `Discount Class Description` AS DiscountClassDescription,
+-- MAGIC     `Discount Class` AS DiscountClass,
+-- MAGIC     `Commission Class Code` AS CommissionClassCode,
+-- MAGIC     `Commission Class Description` AS CommissionClassDescription,
+-- MAGIC     `Commission Class` AS CommissionClass,
+-- MAGIC     `Freight Class Code` AS FreightClassCode,
+-- MAGIC     `Freight Class Description` AS FreightClassDescription,
+-- MAGIC     `Freight Class` AS FreightClass,
+-- MAGIC     `Manufacturing Status` AS ManufacturingStatus,
+-- MAGIC     `AFI Sales Category Code` AS AFISalesCategoryCode,
+-- MAGIC     `AFI Sales Category` AS AFISalesCategory,
+-- MAGIC     `Import/Domestic Code` AS ImportDomesticCode, -- Removed Slash
+-- MAGIC     `Country of Origin` AS CountryOfOrigin,
+-- MAGIC     `AFI Sales Division Code` AS AFISalesDivisionCode,
+-- MAGIC     `AFI Sales Division` AS AFISalesDivision,
+-- MAGIC     `CEX Code` AS CEXCode,
+-- MAGIC     
+-- MAGIC     -- 6. Series & Piece Details
+-- MAGIC     `Series Number` AS SeriesNumber,
+-- MAGIC     `Ext Series Number` AS ExtSeriesNumber,
+-- MAGIC     `Main Piece Item` AS MainPieceItem,
+-- MAGIC     `Commodity Item` AS CommodityItem,
+-- MAGIC     `Market Introduced At` AS MarketIntroducedAt,
+-- MAGIC     `Merchandising Category` AS MerchandisingCategory,
+-- MAGIC     `Child Style Description` AS ChildStyleDescription,
+-- MAGIC     `Parent Style Description` AS ParentStyleDescription,
+-- MAGIC     `Price Point` AS PricePoint,
+-- MAGIC     `Item Code` AS ItemCode,
+-- MAGIC     `Item Grouping` AS ItemGrouping,
+-- MAGIC     `Association Code` AS AssociationCode,
+-- MAGIC     
+-- MAGIC     -- 7. Marketing & Pricing
+-- MAGIC     `Marketing Item Status` AS MarketingItemStatus,
+-- MAGIC     `Marketing Status Description` AS MarketingStatusDescription,
+-- MAGIC     `Default Group` AS DefaultGroup,
+-- MAGIC     `Series Description` AS SeriesDescription,
+-- MAGIC     `Good Better Best For Price Point` AS GoodBetterBestForPricePoint,
+-- MAGIC     `GBBSortId` AS GBBSortId,
+-- MAGIC     `Primary Vendor` AS PrimaryVendor,
+-- MAGIC     
+-- MAGIC     -- 8. Flags (SCM Vital)
+-- MAGIC     `Sellable Item Flag` AS SellableItemFlag,
+-- MAGIC     `F123 Product Flag` AS F123ProductFlag,
+-- MAGIC     `HS Core Product Flag` AS HSCoreProductFlag,
+-- MAGIC     `HS Proprietary Product Flag` AS HSProprietaryProductFlag,
+-- MAGIC     `HS Exclusive Flag` AS HSExclusiveFlag,
+-- MAGIC     `Berkline Product Flag` AS BerklineProductFlag,
+-- MAGIC     `Benchcraft Product Flag` AS BenchcraftProductFlag,
+-- MAGIC     `New Millennium Product Flag` AS NewMillenniumProductFlag,
+-- MAGIC     `Bardini Product Flag` AS BardiniProductFlag,
+-- MAGIC     
+-- MAGIC     -- 9. Dates & Logistics
+-- MAGIC     `Manufacturing Status Change Date` AS ManufacturingStatusChangeDate,
+-- MAGIC     `Shanghai Store` AS ShanghaiStore,
+-- MAGIC     `Initial Invoice Period` AS InitialInvoicePeriod,
+-- MAGIC     `Initial Invoice Qty` AS InitialInvoiceQty,
+-- MAGIC     `Item Forecast Planner ID` AS ItemForecastPlannerID,
+-- MAGIC     `Market Begin Date` AS MarketBeginDate,
+-- MAGIC     `Market End Date` AS MarketEndDate,
+-- MAGIC     `SCP Item` AS SCPItem,
+-- MAGIC     `FOB Price` AS FOBPrice,
+-- MAGIC     `Primary Vendor Name` AS PrimaryVendorName,
+-- MAGIC     `Main Piece` AS MainPiece,
+-- MAGIC     `Item Ext Series Number` AS ItemExtSeriesNumber,
+-- MAGIC     `Current SCP Manufacturing Status` AS CurrentSCPManufacturingStatus,
+-- MAGIC     `Collective Class Code` AS CollectiveClassCode,
+-- MAGIC     `Collective Class` AS CollectiveClass,
+-- MAGIC     `Current Status` AS CurrentStatus
+-- MAGIC 
+-- MAGIC FROM dbo.brz2_SupplyChain_DW__DimCurrentProductDetails
+-- MAGIC WHERE `Item SKU` <> 'N/A';
+
+-- METADATA ********************
+
+-- META {
+-- META   "language": "sparksql",
+-- META   "language_group": "synapse_pyspark"
+-- META }

@@ -1,0 +1,120 @@
+-- Fabric notebook source
+
+-- METADATA ********************
+
+-- META {
+-- META   "kernel_info": {
+-- META     "name": "synapse_pyspark"
+-- META   },
+-- META   "dependencies": {
+-- META     "lakehouse": {
+-- META       "default_lakehouse": "62a3081e-4093-4f46-856c-f50aa58732fa",
+-- META       "default_lakehouse_name": "SupplyChain_Lakehouse",
+-- META       "default_lakehouse_workspace_id": "c8d9fc83-18b6-4e1d-8264-0b49eed36fe0",
+-- META       "known_lakehouses": [
+-- META         {
+-- META           "id": "62a3081e-4093-4f46-856c-f50aa58732fa"
+-- META         }
+-- META       ]
+-- META     }
+-- META   }
+-- META }
+
+-- CELL ********************
+
+-- MAGIC %%sql
+-- MAGIC /*
+-- MAGIC    SILVER TABLE: ACTUAL DEMAND MONTHLY
+-- MAGIC    Target: dbo.slv_actual_demand_monthly
+-- MAGIC    Sources:
+-- MAGIC      - slv_invoice_detail_line_level   (Invoiced, qty_shipped > 0)
+-- MAGIC      - slv_open_order_line_level       (Open, code_allocation_flag = '2')
+-- MAGIC      - ref_calendar                    (fiscal month lookup)
+-- MAGIC      - ref_customer_grouping           (customer group for open orders)
+-- MAGIC    Grain:  id_item_sku × code_warehouse × code_customer_group
+-- MAGIC            × num_fsc_month_year × code_status
+-- MAGIC    Range:  3 fiscal years back → 1 fiscal year forward
+-- MAGIC    Legacy Reference: [SCP_Core_Wrk].[v_FactAFISales_CurReqQty]
+-- MAGIC */
+-- MAGIC 
+-- MAGIC CREATE OR REPLACE TABLE dbo.slv_actual_demand_monthly AS
+-- MAGIC 
+-- MAGIC WITH current_fiscal AS (
+-- MAGIC     SELECT num_fsc_year
+-- MAGIC     FROM dbo.ref_calendar
+-- MAGIC     WHERE dt_date = CURRENT_DATE()
+-- MAGIC     LIMIT 1
+-- MAGIC )
+-- MAGIC 
+-- MAGIC /* ── Part 1: Invoiced ── */
+-- MAGIC SELECT
+-- MAGIC     INV.id_item_sku,
+-- MAGIC     INV.code_warehouse,
+-- MAGIC     INV.code_customer_group,
+-- MAGIC     CAL.dt_fsc_month_first,
+-- MAGIC     CAL.dt_fsc_month_last,
+-- MAGIC     SUM(INV.qty_shipped)                                 AS qty_demand,
+-- MAGIC     SUM(INV.amt_net_sales)                               AS amt_demand,
+-- MAGIC     'Invoice'                                            AS code_status,
+-- MAGIC     'Actual Demand'                                      AS name_version
+-- MAGIC 
+-- MAGIC FROM dbo.slv_invoice_detail_line_level                   AS INV
+-- MAGIC INNER JOIN dbo.ref_calendar                              AS CAL
+-- MAGIC     ON  CAL.dt_date = DATEADD(DAY, -INV.num_lead_time_days, INV.dt_current_request)
+-- MAGIC 
+-- MAGIC CROSS JOIN current_fiscal                                AS CF
+-- MAGIC 
+-- MAGIC WHERE
+-- MAGIC     INV.qty_shipped > 0
+-- MAGIC     AND CAL.num_fsc_year BETWEEN CF.num_fsc_year - 3 AND CF.num_fsc_year + 1
+-- MAGIC 
+-- MAGIC GROUP BY
+-- MAGIC     INV.id_item_sku,
+-- MAGIC     INV.code_warehouse,
+-- MAGIC     INV.code_customer_group,
+-- MAGIC     CAL.dt_fsc_month_first,
+-- MAGIC     CAL.dt_fsc_month_last
+-- MAGIC 
+-- MAGIC UNION ALL
+-- MAGIC 
+-- MAGIC /* ── Part 2: Open Orders (Allocated = '2') ── */
+-- MAGIC SELECT
+-- MAGIC     OO.id_item_sku,
+-- MAGIC     OO.code_warehouse,
+-- MAGIC     CASE WHEN CAL.dt_fsc_month_first < '2025-04-01' THEN 'AFICONs'
+-- MAGIC         ELSE CG.code_customer_group 
+-- MAGIC     END AS code_customer_group ,
+-- MAGIC     CAL.dt_fsc_month_first,
+-- MAGIC     CAL.dt_fsc_month_last,
+-- MAGIC     SUM(OO.qty_open_order)                               AS qty_demand,
+-- MAGIC     SUM(OO.amt_open_order)                               AS amt_demand,
+-- MAGIC     'Open Order'                                         AS code_status,
+-- MAGIC     'Actual Demand'                                      AS name_version
+-- MAGIC 
+-- MAGIC FROM dbo.slv_open_order_line_level                       AS OO
+-- MAGIC 
+-- MAGIC INNER JOIN dbo.ref_calendar                              AS CAL
+-- MAGIC     ON  CAL.dt_date = DATEADD(DAY, -OO.num_lead_time_days, OO.dt_current_request)
+-- MAGIC 
+-- MAGIC LEFT JOIN dbo.ref_customer_grouping                      AS CG
+-- MAGIC     ON  CG.id_customer = OO.id_customer
+-- MAGIC 
+-- MAGIC CROSS JOIN current_fiscal                                AS CF
+-- MAGIC 
+-- MAGIC WHERE
+-- MAGIC     OO.code_allocation_flag = '2'
+-- MAGIC     AND CAL.num_fsc_year BETWEEN CF.num_fsc_year - 3 AND CF.num_fsc_year + 1
+-- MAGIC 
+-- MAGIC GROUP BY
+-- MAGIC     OO.id_item_sku,
+-- MAGIC     OO.code_warehouse,
+-- MAGIC     CG.code_customer_group,
+-- MAGIC     CAL.dt_fsc_month_first,
+-- MAGIC     CAL.dt_fsc_month_last
+
+-- METADATA ********************
+
+-- META {
+-- META   "language": "sparksql",
+-- META   "language_group": "synapse_pyspark"
+-- META }

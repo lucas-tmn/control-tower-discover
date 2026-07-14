@@ -1,0 +1,34 @@
+{
+  "formatVersion": "202502",
+  "computeEngineSettings": {
+    "allowModernEvaluationEngine": true
+  },
+  "name": "df_customer_grouping",
+  "queryGroups": [],
+  "documentLocale": "en-US",
+  "queriesMetadata": {
+    "CustomerGrouping(Wholesale_ProductSourcing_AFI)": {
+      "queryId": "2b0babde-d26f-413c-bf50-ae58f16e09ae",
+      "queryName": "CustomerGrouping(Wholesale_ProductSourcing_AFI)",
+      "loadEnabled": false
+    },
+    "CustomerGrouping(Wholesale_ProductSourcing_AFI)_DataDestination": {
+      "queryId": "b09e16a2-1596-408c-aad3-e6bcad840a71",
+      "queryName": "CustomerGrouping(Wholesale_ProductSourcing_AFI)_DataDestination",
+      "isHidden": true,
+      "loadEnabled": false
+    }
+  },
+  "connections": [
+    {
+      "path": "ashley-edw.database.windows.net;ASHLEY_EDW",
+      "kind": "SQL",
+      "connectionId": "{\"ClusterId\":\"e6436dba-643f-44c3-ad6f-51a8cbc45b81\",\"DatasourceId\":\"67192c57-5e5c-4ad4-8801-858e75656fe4\"}"
+    },
+    {
+      "path": "Lakehouse",
+      "kind": "Lakehouse",
+      "connectionId": "{\"ClusterId\":\"e6436dba-643f-44c3-ad6f-51a8cbc45b81\",\"DatasourceId\":\"b4311980-3d3b-49be-bd11-7e2f8e424e19\"}"
+    }
+  ]
+}

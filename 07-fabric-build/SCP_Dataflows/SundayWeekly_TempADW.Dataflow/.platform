@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Dataflow",
+    "displayName": "SundayWeekly_TempADW"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "25a6511c-e18c-9f00-4b4e-c9e030eeee86"
+  }
+}

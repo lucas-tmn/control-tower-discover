@@ -1,0 +1,129 @@
+table WarehouseMaster
+	lineageTag: 374641dc-071d-45b0-bb22-d2d1466201db
+	sourceLineageTag: [dbo].[WarehouseMaster]
+
+	column Warehouse
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 91b53758-3834-441d-a1c1-d7ca6542a252
+		sourceLineageTag: Warehouse
+		summarizeBy: none
+		sourceColumn: Warehouse
+		sortByColumn: 'Sort By'
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Warehouse Location'
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 8319c190-0053-4550-8984-d213452a8600
+		sourceLineageTag: Warehouse Location
+		summarizeBy: none
+		sourceColumn: Warehouse Location
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Site ID'
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 430ffb5e-5920-4320-91ae-1a0cf5feb9f7
+		sourceLineageTag: Site ID
+		summarizeBy: none
+		sourceColumn: Site ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Warehouse Name'
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 7a9c3537-a6d8-4b0c-8ab8-121960fe309e
+		sourceLineageTag: Warehouse Name
+		summarizeBy: none
+		sourceColumn: Warehouse Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Warehouse Order Group'
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: b9164e77-c299-4ddd-ac6c-8ea09881194f
+		sourceLineageTag: Warehouse Order Group
+		summarizeBy: none
+		sourceColumn: Warehouse Order Group
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Intransit Warehouse'
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: b79d1a5f-f375-440b-bbc5-2cab4d20d942
+		sourceLineageTag: Intransit Warehouse
+		summarizeBy: none
+		sourceColumn: Intransit Warehouse
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Container Direct Warehouse'
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 20b94f7f-f2db-46e3-9f42-8c46364a05ec
+		sourceLineageTag: Container Direct Warehouse
+		summarizeBy: none
+		sourceColumn: Container Direct Warehouse
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Controlled Warehouse'
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		sourceProviderType: bit
+		lineageTag: ccdcd3dc-10d5-4dd5-90c1-aa92ec18607f
+		sourceLineageTag: Controlled Warehouse
+		summarizeBy: none
+		sourceColumn: Controlled Warehouse
+
+		annotation SummarizationSetBy = Automatic
+
+	column AFIWarehousesKey
+		dataType: int64
+		formatString: 0
+		sourceProviderType: int
+		lineageTag: 62538d66-f13c-46ec-b45f-7b757d3b8ad7
+		sourceLineageTag: AFIWarehousesKey
+		summarizeBy: none
+		sourceColumn: AFIWarehousesKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Warehouse Group'
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 3acd3a02-d1d0-461c-b09b-05b1f94dbc10
+		sourceLineageTag: Warehouse Group
+		summarizeBy: none
+		sourceColumn: Warehouse Group
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Sort By'
+		dataType: int64
+		formatString: 0
+		sourceProviderType: bigint
+		lineageTag: 304dd63c-8b2a-4edc-a9ce-e91956642889
+		sourceLineageTag: Sort By
+		summarizeBy: none
+		sourceColumn: Sort By
+
+		annotation SummarizationSetBy = Automatic
+
+	partition WarehouseMaster = entity
+		mode: directLake
+		source
+			entityName: WarehouseMaster
+			schemaName: dbo
+			expressionSource: DatabaseQuery
+
+	annotation PBI_ResultType = Table
+

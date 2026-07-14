@@ -1,0 +1,104 @@
+-- Fabric notebook source
+
+-- METADATA ********************
+
+-- META {
+-- META   "kernel_info": {
+-- META     "name": "synapse_pyspark"
+-- META   },
+-- META   "dependencies": {
+-- META     "lakehouse": {
+-- META       "default_lakehouse": "62a3081e-4093-4f46-856c-f50aa58732fa",
+-- META       "default_lakehouse_name": "SupplyChain_Lakehouse",
+-- META       "default_lakehouse_workspace_id": "c8d9fc83-18b6-4e1d-8264-0b49eed36fe0",
+-- META       "known_lakehouses": [
+-- META         {
+-- META           "id": "62a3081e-4093-4f46-856c-f50aa58732fa"
+-- META         }
+-- META       ]
+-- META     }
+-- META   }
+-- META }
+
+-- CELL ********************
+
+-- MAGIC %%sql
+-- MAGIC /* SILVER TABLE: INVOICE DETAIL - LINE LEVEL (no time filter, no agg)
+-- MAGIC    Target: dbo.slv_invoice_detail_line_level
+-- MAGIC    Source Bronze:
+-- MAGIC      - brz_saleshistory_afi__invoicedetail_ver2          (INV)
+-- MAGIC      - ref_customer_grouping       (CG)
+-- MAGIC      - brz_saleshistory_afi__invoiceheader_ver2                (IH) → get column num_lead_time_days
+-- MAGIC    Legacy Reference: Part 1 of [SCP_Core_Wrk].[v_FactAFISales_CurReqQty]
+-- MAGIC */
+-- MAGIC 
+-- MAGIC CREATE OR REPLACE TABLE dbo.slv_invoice_detail_line_level AS
+-- MAGIC SELECT
+-- MAGIC     /* ── Keys & Identifiers ── */
+-- MAGIC     INV.id_invoice,
+-- MAGIC     INV.id_invoice_extended,
+-- MAGIC     INV.id_order,
+-- MAGIC     INV.num_item_sequence,
+-- MAGIC     INV.id_customer,
+-- MAGIC     INV.code_ship_to,
+-- MAGIC     RTRIM(
+-- MAGIC         CASE
+-- MAGIC             WHEN INV.code_ship_to IS NULL OR TRIM(INV.code_ship_to) = ''
+-- MAGIC                 THEN TRIM(INV.id_customer)
+-- MAGIC             ELSE CONCAT(TRIM(INV.id_customer), '-', TRIM(INV.code_ship_to))
+-- MAGIC         END
+-- MAGIC     )                                                    AS id_account_ship_to,
+-- MAGIC     INV.id_item_sku,
+-- MAGIC     INV.code_warehouse,
+-- MAGIC     CG.code_customer_group,
+-- MAGIC     IH.num_lead_time_days,
+-- MAGIC 
+-- MAGIC     /* ── Quantities ── */
+-- MAGIC     INV.qty_shipped,
+-- MAGIC     INV.qty_ordered,
+-- MAGIC     INV.qty_backordered,
+-- MAGIC 
+-- MAGIC     /* ── Amounts ── */
+-- MAGIC     INV.amt_invoice,
+-- MAGIC     INV.amt_net_sales,
+-- MAGIC     INV.amt_price,
+-- MAGIC     INV.amt_standard_price,
+-- MAGIC     INV.amt_contract_price,
+-- MAGIC     INV.amt_discount,
+-- MAGIC     INV.amt_price_adjustment,
+-- MAGIC     INV.amt_freight,
+-- MAGIC 
+-- MAGIC     /* ── Dates (from invoice) ── */
+-- MAGIC     INV.dt_invoice,
+-- MAGIC     INV.dt_order,
+-- MAGIC     INV.dt_request,
+-- MAGIC     INV.dt_current_request,
+-- MAGIC     INV.dt_current_promise,
+-- MAGIC     INV.dt_original_request,
+-- MAGIC     INV.dt_original_promise,
+-- MAGIC     INV.dt_promised_delivery,
+-- MAGIC     INV.dt_delivery,
+-- MAGIC     INV.dt_actual_delivery,
+-- MAGIC 
+-- MAGIC     /* ── Order attributes ── */
+-- MAGIC     INV.code_order_type,
+-- MAGIC     INV.code_order_type_3,
+-- MAGIC     INV.code_credit,
+-- MAGIC     INV.code_item_class,
+-- MAGIC     INV.code_order_item_status
+-- MAGIC 
+-- MAGIC FROM dbo.brz_saleshistory_afi__invoicedetail_ver2                            AS INV
+-- MAGIC LEFT JOIN dbo.brz_saleshistory_afi__invoiceheader_ver2 AS IH
+-- MAGIC     ON INV.id_invoice = IH.id_invoice
+-- MAGIC       AND INV.dt_invoice = IH.dt_invoice
+-- MAGIC       AND INV.dt_order = IH.dt_order
+-- MAGIC       AND INV.id_order = IH.id_order
+-- MAGIC LEFT JOIN dbo.ref_customer_grouping                      AS CG
+-- MAGIC     ON  CG.id_customer = INV.id_customer;
+
+-- METADATA ********************
+
+-- META {
+-- META   "language": "sparksql",
+-- META   "language_group": "synapse_pyspark"
+-- META }

@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Reflex",
+    "displayName": "Pipeline Alert Reflex"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "fe027175-c9cc-ae60-4708-bb4ec720a5df"
+  }
+}

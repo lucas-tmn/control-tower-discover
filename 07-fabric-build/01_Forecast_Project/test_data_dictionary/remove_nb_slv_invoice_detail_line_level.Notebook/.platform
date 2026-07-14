@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Notebook",
+    "displayName": "remove_nb_slv_invoice_detail_line_level"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "590edb38-9d4e-96a8-4868-739df368ef87"
+  }
+}

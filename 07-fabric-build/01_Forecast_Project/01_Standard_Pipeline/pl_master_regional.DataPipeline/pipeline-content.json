@@ -1,0 +1,60 @@
+{
+  "properties": {
+    "activities": [
+      {
+        "type": "ExecutePipeline",
+        "typeProperties": {
+          "pipeline": {
+            "referenceName": "8c1d0fc7-a4ce-8714-4fb9-15c87370cb2a",
+            "type": "PipelineReference"
+          },
+          "parameters": {
+            "REGION": "US"
+          },
+          "waitOnCompletion": true
+        },
+        "policy": {
+          "secureInput": false
+        },
+        "name": "Run_US",
+        "dependsOn": []
+      },
+      {
+        "type": "ExecutePipeline",
+        "typeProperties": {
+          "pipeline": {
+            "referenceName": "8c1d0fc7-a4ce-8714-4fb9-15c87370cb2a",
+            "type": "PipelineReference"
+          },
+          "parameters": {
+            "REGION": "EU"
+          },
+          "waitOnCompletion": true
+        },
+        "policy": {
+          "secureInput": false
+        },
+        "name": "Run_EU",
+        "dependsOn": []
+      },
+      {
+        "type": "ExecutePipeline",
+        "typeProperties": {
+          "pipeline": {
+            "referenceName": "8c1d0fc7-a4ce-8714-4fb9-15c87370cb2a",
+            "type": "PipelineReference"
+          },
+          "parameters": {
+            "REGION": "APAC"
+          },
+          "waitOnCompletion": true
+        },
+        "policy": {
+          "secureInput": false
+        },
+        "name": "Run_APAC",
+        "dependsOn": []
+      }
+    ]
+  }
+}

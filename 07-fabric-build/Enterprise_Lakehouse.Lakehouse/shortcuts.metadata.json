@@ -1,0 +1,374 @@
+[
+  {
+    "name": "Wholesale_SalesHistory_AFI",
+    "path": "/Tables",
+    "target": {
+      "type": "OneLake",
+      "oneLake": {
+        "path": "Tables/Wholesale_SalesHistory_AFI",
+        "itemId": "d27b3ef9-a331-4489-abca-588f909c4321",
+        "workspaceId": "ce4e6503-b368-496b-95e2-63b43c8b3b0a"
+      }
+    }
+  },
+  {
+    "name": "Wholesale_Purchasing_AFI",
+    "path": "/Tables",
+    "target": {
+      "type": "OneLake",
+      "oneLake": {
+        "path": "Tables/Wholesale_Purchasing_AFI",
+        "itemId": "d27b3ef9-a331-4489-abca-588f909c4321",
+        "workspaceId": "ce4e6503-b368-496b-95e2-63b43c8b3b0a"
+      }
+    }
+  },
+  {
+    "name": "Wholesale_ProductSourcing_AFI",
+    "path": "/Tables",
+    "target": {
+      "type": "OneLake",
+      "oneLake": {
+        "path": "Tables/Wholesale_ProductSourcing_AFI",
+        "itemId": "d27b3ef9-a331-4489-abca-588f909c4321",
+        "workspaceId": "ce4e6503-b368-496b-95e2-63b43c8b3b0a"
+      }
+    }
+  },
+  {
+    "name": "Wholesale_ProductSourcing",
+    "path": "/Tables",
+    "target": {
+      "type": "OneLake",
+      "oneLake": {
+        "path": "Tables/Wholesale_ProductSourcing",
+        "itemId": "d27b3ef9-a331-4489-abca-588f909c4321",
+        "workspaceId": "ce4e6503-b368-496b-95e2-63b43c8b3b0a"
+      }
+    }
+  },
+  {
+    "name": "wholesale_pricing_afi",
+    "path": "/Tables",
+    "target": {
+      "type": "OneLake",
+      "oneLake": {
+        "path": "Tables/wholesale_pricing_afi",
+        "itemId": "d27b3ef9-a331-4489-abca-588f909c4321",
+        "workspaceId": "ce4e6503-b368-496b-95e2-63b43c8b3b0a"
+      }
+    }
+  },
+  {
+    "name": "Wholesale_Invoicing_AFI",
+    "path": "/Tables",
+    "target": {
+      "type": "OneLake",
+      "oneLake": {
+        "path": "Tables/Wholesale_Invoicing_AFI",
+        "itemId": "d27b3ef9-a331-4489-abca-588f909c4321",
+        "workspaceId": "ce4e6503-b368-496b-95e2-63b43c8b3b0a"
+      }
+    }
+  },
+  {
+    "name": "Wholesale_DemandPlanning_AFI",
+    "path": "/Tables",
+    "target": {
+      "type": "OneLake",
+      "oneLake": {
+        "path": "Tables/Wholesale_DemandPlanning_AFI",
+        "itemId": "d27b3ef9-a331-4489-abca-588f909c4321",
+        "workspaceId": "ce4e6503-b368-496b-95e2-63b43c8b3b0a"
+      }
+    }
+  },
+  {
+    "name": "Wholesale_Codis_AFI",
+    "path": "/Tables",
+    "target": {
+      "type": "OneLake",
+      "oneLake": {
+        "path": "Tables/Wholesale_Codis_AFI",
+        "itemId": "d27b3ef9-a331-4489-abca-588f909c4321",
+        "workspaceId": "ce4e6503-b368-496b-95e2-63b43c8b3b0a"
+      }
+    }
+  },
+  {
+    "name": "SupplyChain_Enh_1",
+    "path": "/Tables",
+    "target": {
+      "type": "OneLake",
+      "oneLake": {
+        "path": "Tables/SupplyChain_Enh",
+        "itemId": "d926e44c-d23f-4762-873e-0f3edbc94319",
+        "workspaceId": "ce4e6503-b368-496b-95e2-63b43c8b3b0a"
+      }
+    }
+  },
+  {
+    "name": "SupplyChain_Enh",
+    "path": "/Tables",
+    "target": {
+      "type": "OneLake",
+      "oneLake": {
+        "path": "Tables/SupplyChain_Enh",
+        "itemId": "d27b3ef9-a331-4489-abca-588f909c4321",
+        "workspaceId": "ce4e6503-b368-496b-95e2-63b43c8b3b0a"
+      }
+    }
+  },
+  {
+    "name": "SupplyChain_DW_1",
+    "path": "/Tables",
+    "target": {
+      "type": "OneLake",
+      "oneLake": {
+        "path": "Tables/SupplyChain_DW",
+        "itemId": "d926e44c-d23f-4762-873e-0f3edbc94319",
+        "workspaceId": "ce4e6503-b368-496b-95e2-63b43c8b3b0a"
+      }
+    }
+  },
+  {
+    "name": "SupplyChain_DW",
+    "path": "/Tables",
+    "target": {
+      "type": "OneLake",
+      "oneLake": {
+        "path": "Tables/SupplyChain_DW",
+        "itemId": "d27b3ef9-a331-4489-abca-588f909c4321",
+        "workspaceId": "ce4e6503-b368-496b-95e2-63b43c8b3b0a"
+      }
+    }
+  },
+  {
+    "name": "SalesHistory_AFI",
+    "path": "/Tables",
+    "target": {
+      "type": "OneLake",
+      "oneLake": {
+        "path": "Tables/SalesHistory_AFI",
+        "itemId": "9293af4e-3974-4ec0-b619-fc3c64c42c0c",
+        "workspaceId": "ce4e6503-b368-496b-95e2-63b43c8b3b0a"
+      }
+    }
+  },
+  {
+    "name": "Retail_Corporate",
+    "path": "/Tables",
+    "target": {
+      "type": "OneLake",
+      "oneLake": {
+        "path": "Tables/Retail_Corporate",
+        "itemId": "d27b3ef9-a331-4489-abca-588f909c4321",
+        "workspaceId": "ce4e6503-b368-496b-95e2-63b43c8b3b0a"
+      }
+    }
+  },
+  {
+    "name": "Retail_ChannelDB",
+    "path": "/Tables",
+    "target": {
+      "type": "OneLake",
+      "oneLake": {
+        "path": "Tables/Retail_ChannelDB",
+        "itemId": "d27b3ef9-a331-4489-abca-588f909c4321",
+        "workspaceId": "ce4e6503-b368-496b-95e2-63b43c8b3b0a"
+      }
+    }
+  },
+  {
+    "name": "ResidentHome",
+    "path": "/Tables",
+    "target": {
+      "type": "OneLake",
+      "oneLake": {
+        "path": "Tables/ResidentHome",
+        "itemId": "d27b3ef9-a331-4489-abca-588f909c4321",
+        "workspaceId": "ce4e6503-b368-496b-95e2-63b43c8b3b0a"
+      }
+    }
+  },
+  {
+    "name": "Purchasing_AFI",
+    "path": "/Tables",
+    "target": {
+      "type": "OneLake",
+      "oneLake": {
+        "path": "Tables/Purchasing_AFI",
+        "itemId": "9293af4e-3974-4ec0-b619-fc3c64c42c0c",
+        "workspaceId": "ce4e6503-b368-496b-95e2-63b43c8b3b0a"
+      }
+    }
+  },
+  {
+    "name": "ProductKnowledge",
+    "path": "/Tables",
+    "target": {
+      "type": "OneLake",
+      "oneLake": {
+        "path": "Tables/ProductKnowledge",
+        "itemId": "d8e6439b-830d-421d-aa3e-435fc8bacacf",
+        "workspaceId": "ce4e6503-b368-496b-95e2-63b43c8b3b0a"
+      }
+    }
+  },
+  {
+    "name": "Placements",
+    "path": "/Tables",
+    "target": {
+      "type": "OneLake",
+      "oneLake": {
+        "path": "Tables/Placements",
+        "itemId": "9293af4e-3974-4ec0-b619-fc3c64c42c0c",
+        "workspaceId": "ce4e6503-b368-496b-95e2-63b43c8b3b0a"
+      }
+    }
+  },
+  {
+    "name": "MasterData_ProductKnowledge",
+    "path": "/Tables",
+    "target": {
+      "type": "OneLake",
+      "oneLake": {
+        "path": "Tables/MasterData_ProductKnowledge",
+        "itemId": "d27b3ef9-a331-4489-abca-588f909c4321",
+        "workspaceId": "ce4e6503-b368-496b-95e2-63b43c8b3b0a"
+      }
+    }
+  },
+  {
+    "name": "MasterData_PIM",
+    "path": "/Tables",
+    "target": {
+      "type": "OneLake",
+      "oneLake": {
+        "path": "Tables/MasterData_PIM",
+        "itemId": "d27b3ef9-a331-4489-abca-588f909c4321",
+        "workspaceId": "ce4e6503-b368-496b-95e2-63b43c8b3b0a"
+      }
+    }
+  },
+  {
+    "name": "Masterdata_Finance",
+    "path": "/Tables",
+    "target": {
+      "type": "OneLake",
+      "oneLake": {
+        "path": "Tables/Masterdata_Finance",
+        "itemId": "d27b3ef9-a331-4489-abca-588f909c4321",
+        "workspaceId": "ce4e6503-b368-496b-95e2-63b43c8b3b0a"
+      }
+    }
+  },
+  {
+    "name": "MasterData_DW",
+    "path": "/Tables",
+    "target": {
+      "type": "OneLake",
+      "oneLake": {
+        "path": "Tables/MasterData_DW",
+        "itemId": "d8e6439b-830d-421d-aa3e-435fc8bacacf",
+        "workspaceId": "ce4e6503-b368-496b-95e2-63b43c8b3b0a"
+      }
+    }
+  },
+  {
+    "name": "Manufacturing_ProductionPlanning_AFI",
+    "path": "/Tables",
+    "target": {
+      "type": "OneLake",
+      "oneLake": {
+        "path": "Tables/Manufacturing_ProductionPlanning_AFI",
+        "itemId": "d27b3ef9-a331-4489-abca-588f909c4321",
+        "workspaceId": "ce4e6503-b368-496b-95e2-63b43c8b3b0a"
+      }
+    }
+  },
+  {
+    "name": "Manufacturing_Inventory_AFI",
+    "path": "/Tables",
+    "target": {
+      "type": "OneLake",
+      "oneLake": {
+        "path": "Tables/Manufacturing_Inventory_AFI",
+        "itemId": "d27b3ef9-a331-4489-abca-588f909c4321",
+        "workspaceId": "ce4e6503-b368-496b-95e2-63b43c8b3b0a"
+      }
+    }
+  },
+  {
+    "name": "Manufacturing_Inventory",
+    "path": "/Tables",
+    "target": {
+      "type": "OneLake",
+      "oneLake": {
+        "path": "Tables/Manufacturing_Inventory",
+        "itemId": "d27b3ef9-a331-4489-abca-588f909c4321",
+        "workspaceId": "ce4e6503-b368-496b-95e2-63b43c8b3b0a"
+      }
+    }
+  },
+  {
+    "name": "ItemMaster_AFI",
+    "path": "/Tables",
+    "target": {
+      "type": "OneLake",
+      "oneLake": {
+        "path": "Tables/MasterData_ItemMaster_AFI",
+        "itemId": "d27b3ef9-a331-4489-abca-588f909c4321",
+        "workspaceId": "ce4e6503-b368-496b-95e2-63b43c8b3b0a"
+      }
+    }
+  },
+  {
+    "name": "GeographicData",
+    "path": "/Tables",
+    "target": {
+      "type": "OneLake",
+      "oneLake": {
+        "path": "Tables/GeographicData",
+        "itemId": "d8e6439b-830d-421d-aa3e-435fc8bacacf",
+        "workspaceId": "ce4e6503-b368-496b-95e2-63b43c8b3b0a"
+      }
+    }
+  },
+  {
+    "name": "DemandPlanning_AFI",
+    "path": "/Tables",
+    "target": {
+      "type": "OneLake",
+      "oneLake": {
+        "path": "Tables/Wholesale_DemandPlanning_AFI",
+        "itemId": "d27b3ef9-a331-4489-abca-588f909c4321",
+        "workspaceId": "ce4e6503-b368-496b-95e2-63b43c8b3b0a"
+      }
+    }
+  },
+  {
+    "name": "Customers",
+    "path": "/Tables",
+    "target": {
+      "type": "OneLake",
+      "oneLake": {
+        "path": "Tables/Wholesale_Customers",
+        "itemId": "d27b3ef9-a331-4489-abca-588f909c4321",
+        "workspaceId": "ce4e6503-b368-496b-95e2-63b43c8b3b0a"
+      }
+    }
+  },
+  {
+    "name": "CustomerOrders_AFI",
+    "path": "/Tables",
+    "target": {
+      "type": "OneLake",
+      "oneLake": {
+        "path": "Tables/CustomerOrders_AFI",
+        "itemId": "9293af4e-3974-4ec0-b619-fc3c64c42c0c",
+        "workspaceId": "ce4e6503-b368-496b-95e2-63b43c8b3b0a"
+      }
+    }
+  }
+]

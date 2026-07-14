@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Notebook",
+    "displayName": "nb_brz_SupplyChain_Enh_1__DemandForecastSnapshotDaily"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "d7f51096-c037-96ba-40f0-64118a714133"
+  }
+}

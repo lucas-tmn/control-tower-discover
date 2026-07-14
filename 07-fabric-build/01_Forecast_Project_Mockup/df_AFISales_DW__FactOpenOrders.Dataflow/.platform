@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Dataflow",
+    "displayName": "df_AFISales_DW__FactOpenOrders"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "f6f05f2e-07a5-b4a3-472d-e35dd3de230a"
+  }
+}

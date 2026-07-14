@@ -1,0 +1,15 @@
+{
+  "properties": {
+    "activities": [
+      {
+        "name": "Wait_3min",
+        "type": "Wait",
+        "dependsOn": [],
+        "typeProperties": {
+          "waitTimeInSeconds": 180
+        }
+      }
+    ],
+    "concurrency": 1
+  }
+}

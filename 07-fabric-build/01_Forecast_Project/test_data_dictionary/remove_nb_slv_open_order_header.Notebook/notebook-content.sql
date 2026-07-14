@@ -1,0 +1,63 @@
+-- Fabric notebook source
+
+-- METADATA ********************
+
+-- META {
+-- META   "kernel_info": {
+-- META     "name": "synapse_pyspark"
+-- META   },
+-- META   "dependencies": {
+-- META     "lakehouse": {
+-- META       "default_lakehouse": "62a3081e-4093-4f46-856c-f50aa58732fa",
+-- META       "default_lakehouse_name": "SupplyChain_Lakehouse",
+-- META       "default_lakehouse_workspace_id": "c8d9fc83-18b6-4e1d-8264-0b49eed36fe0",
+-- META       "known_lakehouses": [
+-- META         {
+-- META           "id": "62a3081e-4093-4f46-856c-f50aa58732fa"
+-- META         }
+-- META       ]
+-- META     }
+-- META   }
+-- META }
+
+-- CELL ********************
+
+-- MAGIC %%sql
+-- MAGIC /* SILVER LAYER: OPEN SALES ORDER HEADER - FACT TABLE
+-- MAGIC    Target: dbo.slv_open_order_header
+-- MAGIC    Logic: OPEN SALES ORDER HEADER - FACT TABLE
+-- MAGIC */
+-- MAGIC 
+-- MAGIC CREATE OR REPLACE TABLE dbo.slv_open_order_header AS
+-- MAGIC SELECT
+-- MAGIC     -- Keys & Identifiers
+-- MAGIC     TRIM(ACREC)                                         AS code_record_type,
+-- MAGIC     TRIM(ORDNO)                                         AS id_order,
+-- MAGIC     TRIM(CUSNO)                                         AS id_customer,
+-- MAGIC     TRIM(CUSPO)                                         AS id_customer_po,
+-- MAGIC 
+-- MAGIC     -- Order Info
+-- MAGIC     to_date(CAST(ORDTE AS STRING), 'yyyyMMdd')          AS dt_order,
+-- MAGIC     CAST(ORVAL AS DECIMAL(14,2))                        AS amt_order_value,
+-- MAGIC     TRIM(HOUSE)                                         AS code_warehouse,
+-- MAGIC     TRIM(SLSNO)                                         AS code_salesperson,
+-- MAGIC     TRIM(SHPNO)                                         AS code_ship_to,
+-- MAGIC 
+-- MAGIC     -- Scheduling & Shipping
+-- MAGIC     to_date(CAST(RQDTE AS STRING), 'yyyyMMdd')          AS dt_requested,
+-- MAGIC     CAST(SHLTC AS INT)                                  AS num_lead_time_days,
+-- MAGIC     TRIM(SHINS)                                         AS name_shipping_instructions,
+-- MAGIC     to_date(CAST(CUSPD AS STRING), 'yyyyMMdd')          AS dt_customer_paid,
+-- MAGIC 
+-- MAGIC     -- Flags
+-- MAGIC     TRIM(MPROR)                                         AS code_priority,
+-- MAGIC     TRIM(CMEMO)                                         AS code_memo
+-- MAGIC FROM dbo.brz_wholesale_codis_afi__comast
+-- MAGIC WHERE ORDNO IS NOT NULL
+
+-- METADATA ********************
+
+-- META {
+-- META   "language": "sparksql",
+-- META   "language_group": "synapse_pyspark"
+-- META }

@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Notebook",
+    "displayName": "remove_nb_slv_actual_demand_weekly"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "6eece78e-0118-9508-427c-1e0f9bccac98"
+  }
+}

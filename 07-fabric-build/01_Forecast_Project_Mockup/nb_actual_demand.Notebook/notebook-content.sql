@@ -1,0 +1,96 @@
+-- Fabric notebook source
+
+-- METADATA ********************
+
+-- META {
+-- META   "kernel_info": {
+-- META     "name": "synapse_pyspark"
+-- META   },
+-- META   "dependencies": {
+-- META     "lakehouse": {
+-- META       "default_lakehouse": "62a3081e-4093-4f46-856c-f50aa58732fa",
+-- META       "default_lakehouse_name": "SupplyChain_Lakehouse",
+-- META       "default_lakehouse_workspace_id": "c8d9fc83-18b6-4e1d-8264-0b49eed36fe0",
+-- META       "known_lakehouses": [
+-- META         {
+-- META           "id": "62a3081e-4093-4f46-856c-f50aa58732fa"
+-- META         }
+-- META       ]
+-- META     }
+-- META   }
+-- META }
+
+-- CELL ********************
+
+-- MAGIC %%sql
+-- MAGIC /* SILVER LAYER: ACTUAL DEMAND (CONSOLIDATED)
+-- MAGIC    Target: dbo.slv_actual_demand
+-- MAGIC    Logic: Invoiced + Open Orders with Bulletproof TRIM & to_date
+-- MAGIC */
+-- MAGIC 
+-- MAGIC CREATE OR REPLACE TABLE dbo.slv_actual_demand AS
+-- MAGIC 
+-- MAGIC WITH Dim_Customers AS (
+-- MAGIC     SELECT 
+-- MAGIC         DC.*,
+-- MAGIC         TRIM(DCG.CustomerGroup) AS CustomerGroup
+-- MAGIC     FROM dbo.brz2_AFISales_DW__DimCustomers DC
+-- MAGIC     LEFT JOIN (
+-- MAGIC         SELECT DISTINCT TRIM(CustomerNumber) as CustomerNumber, TRIM(CustomerGroup) as CustomerGroup 
+-- MAGIC         FROM dbo.brz2_Wholesale_ProductSourcing_AFI__CustomerGrouping
+-- MAGIC     ) DCG
+-- MAGIC         ON TRIM(DC.`Customer Account Number`) = DCG.CustomerNumber
+-- MAGIC ),
+-- MAGIC 
+-- MAGIC ActualDemandBase AS (
+-- MAGIC     -- 1. NHÁNH HÓA ĐƠN (Dữ liệu lịch sử đã giao hàng)
+-- MAGIC     SELECT 
+-- MAGIC         DC.CustomerGroup,
+-- MAGIC         TRIM(INV.ItemNumber) AS ItemSKU,
+-- MAGIC         TRIM(INV.Warehouse) AS Warehouse,
+-- MAGIC         -- Quy hoạch về ngày đầu tháng tài chính
+-- MAGIC         make_date(CAST(year(DD.FiscalWeekLastDate) AS INT), CAST(month(DD.FiscalWeekLastDate) AS INT), 1) AS FiscalMonthYear,
+-- MAGIC         CAST(SUM(INV.QuantityShipped) AS DOUBLE) AS Qty,
+-- MAGIC         CAST(SUM(INV.NetSales) AS DOUBLE)        AS Amt,
+-- MAGIC         'Invoiced'                               AS Status,
+-- MAGIC         'Actual Demand'                          AS Version
+-- MAGIC     FROM dbo.brz2_Wholesale_SalesHistory_AFI__InvoiceDetail AS INV
+-- MAGIC     LEFT JOIN Dim_Customers AS DC
+-- MAGIC         ON TRIM(INV.CustomerNumber) = TRIM(DC.`Customer Account Number`)
+-- MAGIC         AND TRIM(INV.ShiptoNumber)  = TRIM(DC.`Customer ShipTo Number`)
+-- MAGIC     INNER JOIN dbo.brz2_Enterprise_DW__DimDate AS DD
+-- MAGIC         ON to_date(INV.CurrentRequestDate) = to_date(DD.DateID)
+-- MAGIC     WHERE INV.QuantityShipped > 0
+-- MAGIC       AND to_date(INV.CurrentRequestDate) >= add_months(current_date(), -24)
+-- MAGIC     GROUP BY 1, 2, 3, 4
+-- MAGIC 
+-- MAGIC     UNION ALL
+-- MAGIC 
+-- MAGIC     -- 2. NHÁNH ĐƠN MỞ (Nhu cầu đang chờ xử lý)
+-- MAGIC     SELECT 
+-- MAGIC         DC.CustomerGroup,
+-- MAGIC         TRIM(OO.`Item Sku`) AS ItemSKU,
+-- MAGIC         TRIM(OO.Warehouse)  AS Warehouse,
+-- MAGIC         make_date(CAST(year(DD.FiscalWeekLastDate) AS INT), CAST(month(DD.FiscalWeekLastDate) AS INT), 1) AS FiscalMonthYear,
+-- MAGIC         CAST(SUM(OO.`Open Order Quantity`) AS DOUBLE) AS Qty,
+-- MAGIC         CAST(SUM(OO.`Open Order Amount`) AS DOUBLE)   AS Amt,
+-- MAGIC         'Open Order'                                  AS Status,
+-- MAGIC         'Actual Demand'                               AS Version
+-- MAGIC     FROM dbo.brz2_AFISales_DW__FactOpenOrders AS OO
+-- MAGIC     LEFT JOIN Dim_Customers AS DC
+-- MAGIC         ON TRIM(OO.`Account And ShipTo Number`) = TRIM(DC.`Account And ShipTo Number`)
+-- MAGIC     INNER JOIN dbo.brz2_Enterprise_DW__DimDate AS DD
+-- MAGIC         ON to_date(OO.`Current Request Date`) = to_date(DD.DateID)
+-- MAGIC     WHERE OO.`Inventory Allocated Flag` = '2'
+-- MAGIC       AND to_date(OO.`Current Request Date`) >= add_months(current_date(), -24)
+-- MAGIC     GROUP BY 1, 2, 3, 4
+-- MAGIC )
+-- MAGIC 
+-- MAGIC SELECT * FROM ActualDemandBase;
+
+-- METADATA ********************
+
+-- META {
+-- META   "language": "sparksql",
+-- META   "language_group": "synapse_pyspark"
+-- META }

@@ -1,0 +1,137 @@
+-- Fabric notebook source
+
+-- METADATA ********************
+
+-- META {
+-- META   "kernel_info": {
+-- META     "name": "synapse_pyspark"
+-- META   },
+-- META   "dependencies": {
+-- META     "lakehouse": {
+-- META       "default_lakehouse": "62a3081e-4093-4f46-856c-f50aa58732fa",
+-- META       "default_lakehouse_name": "SupplyChain_Lakehouse",
+-- META       "default_lakehouse_workspace_id": "c8d9fc83-18b6-4e1d-8264-0b49eed36fe0",
+-- META       "known_lakehouses": [
+-- META         {
+-- META           "id": "62a3081e-4093-4f46-856c-f50aa58732fa"
+-- META         }
+-- META       ]
+-- META     }
+-- META   }
+-- META }
+
+-- CELL ********************
+
+-- MAGIC %%sql
+-- MAGIC /* SILVER LAYER: DATE - MASTER TABLE
+-- MAGIC    Target: dbo.slv_calendar
+-- MAGIC    Logic: DATE TABLE
+-- MAGIC */
+-- MAGIC 
+-- MAGIC CREATE OR REPLACE TABLE dbo.slv_calendar AS
+-- MAGIC SELECT *
+-- MAGIC     -- Keys
+-- MAGIC     CAST(DateKey AS INT)                                 AS sk_date,
+-- MAGIC     CAST(MapicsDate AS INT)                              AS id_mapics_date,
+-- MAGIC     CAST(DateID AS DATE)                                 AS dt_date,
+-- MAGIC     CAST(DateTimeID AS DATE)                             AS dt_datetime,
+-- MAGIC     CAST(CalendarDate AS DATE)                           AS dt_calendar,
+-- MAGIC 
+-- MAGIC     -- Calendar - Day
+-- MAGIC     TRIM(CalendarDateName)                               AS name_calendar_date,
+-- MAGIC     CAST(CalendarDateIndicator AS INT)                   AS num_cal_date_indicator,
+-- MAGIC     CAST(CalendarDayOfWeek AS INT)                       AS num_cal_day_of_week,
+-- MAGIC     TRIM(CalendarDayOfWeekName)                          AS name_cal_day_of_week,
+-- MAGIC     CAST(CalendarDayOfMonth AS INT)                      AS num_cal_day_of_month,
+-- MAGIC     CAST(CalendarDayOfYear AS INT)                       AS num_cal_day_of_year,
+-- MAGIC 
+-- MAGIC     -- Calendar - Week
+-- MAGIC     CAST(CalendarWeek AS INT)                            AS num_cal_week,
+-- MAGIC     CAST(CalendarWeekIndicator AS INT)                   AS num_cal_week_indicator,
+-- MAGIC     CAST(CalendarWeekYear AS INT)                        AS num_cal_week_year,
+-- MAGIC     TRIM(CalendarWeekYearName)                           AS name_cal_week_year,
+-- MAGIC     CAST(CalendarWeekFirstDate AS DATE)                  AS dt_cal_week_first,
+-- MAGIC     CAST(CalendarWeekLastDate AS DATE)                   AS dt_cal_week_last,
+-- MAGIC     CAST(CalendarWeekOfMonth AS INT)                     AS num_cal_week_of_month,
+-- MAGIC 
+-- MAGIC     -- Calendar - Month
+-- MAGIC     CAST(CalendarMonth AS INT)                           AS num_cal_month,
+-- MAGIC     CAST(CalendarMonthIndicator AS INT)                  AS num_cal_month_indicator,
+-- MAGIC     CAST(CalendarMonthYear AS INT)                       AS num_cal_month_year,
+-- MAGIC     TRIM(CalendarMonthName)                              AS name_cal_month,
+-- MAGIC     TRIM(CalendarMonthYearName)                          AS name_cal_month_year,
+-- MAGIC     CAST(CalendarMonthFirstDate AS DATE)                 AS dt_cal_month_first,
+-- MAGIC     CAST(CalendarMonthLastDate AS DATE)                  AS dt_cal_month_last,
+-- MAGIC 
+-- MAGIC     -- Calendar - Quarter
+-- MAGIC     CAST(CalendarQuarter AS INT)                         AS num_cal_quarter,
+-- MAGIC     TRIM(CalendarQuarterName)                            AS name_cal_quarter,
+-- MAGIC     CAST(CalendarQuarterIndicator AS INT)                AS num_cal_quarter_indicator,
+-- MAGIC     CAST(CalendarQuarterYear AS INT)                     AS num_cal_quarter_year,
+-- MAGIC     TRIM(CalendarQuarterYearName)                        AS name_cal_quarter_year,
+-- MAGIC 
+-- MAGIC     -- Calendar - Semester & Year
+-- MAGIC     CAST(CalendarSemester AS INT)                        AS num_cal_semester,
+-- MAGIC     CAST(CalendarSemesterYear AS INT)                    AS num_cal_semester_year,
+-- MAGIC     CAST(CalendarYear AS INT)                            AS num_cal_year,
+-- MAGIC     TRIM(CalendarYearName)                               AS name_cal_year,
+-- MAGIC     CAST(CalendarYearIndicator AS INT)                   AS num_cal_year_indicator,
+-- MAGIC 
+-- MAGIC     -- Fiscal - Day
+-- MAGIC     CAST(FiscalDate AS DATE)                             AS dt_fiscal,
+-- MAGIC     TRIM(FiscalDateName)                                 AS name_fiscal_date,
+-- MAGIC     CAST(FiscalDateIndicator AS INT)                     AS num_fsc_date_indicator,
+-- MAGIC     CAST(FiscalDayOfWeek AS INT)                         AS num_fsc_day_of_week,
+-- MAGIC     TRIM(FiscalDayOfWeekName)                            AS name_fsc_day_of_week,
+-- MAGIC     CAST(FiscalDayOfMonth AS INT)                        AS num_fsc_day_of_month,
+-- MAGIC     CAST(FiscalDayOfYear AS INT)                         AS num_fsc_day_of_year,
+-- MAGIC 
+-- MAGIC     -- Fiscal - Week
+-- MAGIC     CAST(FiscalWeek AS INT)                              AS num_fsc_week,
+-- MAGIC     CAST(FiscalWeekIndicator AS INT)                     AS num_fsc_week_indicator,
+-- MAGIC     CAST(FiscalWeekYear AS INT)                          AS num_fsc_week_year,
+-- MAGIC     TRIM(FiscalWeekYearName)                             AS name_fsc_week_year,
+-- MAGIC     CAST(FiscalWeekFirstDate AS DATE)                    AS dt_fsc_week_first,
+-- MAGIC     CAST(FiscalWeekLastDate AS DATE)                     AS dt_fsc_week_last,
+-- MAGIC     CAST(FiscalWeekOfMonth AS INT)                       AS num_fsc_week_of_month,
+-- MAGIC 
+-- MAGIC     -- Fiscal - Month
+-- MAGIC     CAST(FiscalMonth AS INT)                             AS num_fsc_month,
+-- MAGIC     CAST(FiscalMonthIndicator AS INT)                    AS num_fsc_month_indicator,
+-- MAGIC     CAST(FiscalMonthYear AS INT)                         AS num_fsc_month_year,
+-- MAGIC     TRIM(FiscalMonthName)                                AS name_fsc_month,
+-- MAGIC     TRIM(FiscalMonthYearName)                            AS name_fsc_month_year,
+-- MAGIC     CAST(FiscalMonthFirstDate AS DATE)                   AS dt_fsc_month_first,
+-- MAGIC     CAST(FiscalMonthLastDate AS DATE)                    AS dt_fsc_month_last,
+-- MAGIC 
+-- MAGIC     -- Fiscal - Quarter
+-- MAGIC     CAST(FiscalQuarter AS INT)                           AS num_fsc_quarter,
+-- MAGIC     TRIM(FiscalQuarterName)                              AS name_fsc_quarter,
+-- MAGIC     CAST(FiscalQuarterIndicator AS INT)                  AS num_fsc_quarter_indicator,
+-- MAGIC     CAST(FiscalQuarterYear AS INT)                       AS num_fsc_quarter_year,
+-- MAGIC     TRIM(FiscalQuarterYearName)                          AS name_fsc_quarter_year,
+-- MAGIC 
+-- MAGIC     -- Fiscal - Semester & Year
+-- MAGIC     CAST(FiscalSemester AS INT)                          AS num_fsc_semester,
+-- MAGIC     CAST(FiscalSemesterYear AS INT)                      AS num_fsc_semester_year,
+-- MAGIC     CAST(FiscalYear AS INT)                              AS num_fsc_year,
+-- MAGIC     TRIM(FiscalYearName)                                 AS name_fsc_year,
+-- MAGIC     CAST(FiscalYearIndicator AS INT)                     AS num_fsc_year_indicator,
+-- MAGIC     CAST(FiscalYearFirstDate AS DATE)                    AS dt_fsc_year_first,
+-- MAGIC     CAST(FiscalYearLastDate AS DATE)                     AS dt_fsc_year_last,
+-- MAGIC 
+-- MAGIC     -- Holiday & Working Day
+-- MAGIC     TRIM(HolidayIndicator)                               AS code_holiday_indicator,
+-- MAGIC     TRIM(HolidayName)                                    AS name_holiday,
+-- MAGIC     TRIM(WorkingDayIndicator)                            AS code_working_day,
+-- MAGIC     TRIM(WeekdayWeekend)                                 AS code_weekday_weekend
+-- MAGIC 
+-- MAGIC FROM dbo.brz_masterdata_dw__dimdate
+-- MAGIC -- WHERE DateKey IS NOT NULL
+
+-- METADATA ********************
+
+-- META {
+-- META   "language": "sparksql",
+-- META   "language_group": "synapse_pyspark"
+-- META }

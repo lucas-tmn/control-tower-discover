@@ -1,0 +1,37 @@
+{
+  "formatVersion": "202502",
+  "computeEngineSettings": {},
+  "name": "SundayWeekly_TempADW",
+  "queryGroups": [],
+  "documentLocale": "en-US",
+  "gatewayObjectId": "335d9a16-3303-4334-ac67-aff021dddea8",
+  "queriesMetadata": {
+    "InvTransWeeklySummary": {
+      "queryId": "95ee87a0-adf7-4a31-8fb8-72b589377e18",
+      "queryName": "InvTransWeeklySummary"
+    },
+    "InvTransWeeklySummary_DataDestination": {
+      "queryId": "45bae27a-cc36-477c-a7e1-fdbefa4ec99a",
+      "queryName": "InvTransWeeklySummary_DataDestination",
+      "isHidden": true,
+      "loadEnabled": false
+    }
+  },
+  "connections": [
+    {
+      "path": "ashley-edw.database.windows.net;ashley_edw",
+      "kind": "SQL",
+      "connectionId": "{\"ClusterId\":\"e6436dba-643f-44c3-ad6f-51a8cbc45b81\",\"DatasourceId\":\"69eee39f-e9d0-4ebc-aa11-69332bcd7f38\"}"
+    },
+    {
+      "path": "FabricSql",
+      "kind": "FabricSql",
+      "connectionId": "{\"ClusterId\":\"e6436dba-643f-44c3-ad6f-51a8cbc45b81\",\"DatasourceId\":\"fb7b5858-36a1-4230-af85-dd602b806a85\"}"
+    },
+    {
+      "path": "Warehouse",
+      "kind": "Warehouse",
+      "connectionId": "{\"ClusterId\":\"e6436dba-643f-44c3-ad6f-51a8cbc45b81\",\"DatasourceId\":\"d5134e2c-4348-4d6f-8a7c-e3a240032cc5\"}"
+    }
+  ]
+}

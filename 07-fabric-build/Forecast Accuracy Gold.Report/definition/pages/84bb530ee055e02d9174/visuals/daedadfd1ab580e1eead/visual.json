@@ -1,0 +1,114 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.5.0/schema.json",
+  "name": "daedadfd1ab580e1eead",
+  "position": {
+    "x": 388.66080156402734,
+    "y": 31.476050830889537,
+    "z": 8000,
+    "height": 243.59726295210166,
+    "width": 762.26783968719451,
+    "tabOrder": 8000
+  },
+  "visual": {
+    "visualType": "pivotTable",
+    "query": {
+      "queryState": {
+        "Columns": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "DimFiscalCalendar"
+                    }
+                  },
+                  "Property": "Fiscal Month End"
+                }
+              },
+              "queryRef": "DimFiscalCalendar.Fiscal Month End",
+              "nativeQueryRef": "Fiscal Month End",
+              "active": true
+            }
+          ]
+        },
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Forecast Qty"
+                }
+              },
+              "queryRef": "_Measures.Forecast Qty",
+              "nativeQueryRef": "Forecast Qty"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Actual Demand"
+                }
+              },
+              "queryRef": "_Measures.Actual Demand",
+              "nativeQueryRef": "Actual Demand"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Fcst Error Qty"
+                }
+              },
+              "queryRef": "_Measures.Fcst Error Qty",
+              "nativeQueryRef": "Fcst Error Qty"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Fcst Error %"
+                }
+              },
+              "queryRef": "_Measures.Fcst Error %",
+              "nativeQueryRef": "Fcst Error %"
+            }
+          ]
+        }
+      }
+    },
+    "objects": {
+      "values": [
+        {
+          "properties": {
+            "valuesOnRow": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

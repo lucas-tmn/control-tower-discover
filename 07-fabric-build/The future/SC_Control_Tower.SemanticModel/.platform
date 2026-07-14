@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "SemanticModel",
+    "displayName": "SC_Control_Tower"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "c4493d60-2a2c-b2f7-46df-d853a52841ee"
+  }
+}

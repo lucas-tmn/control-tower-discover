@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Notebook",
+    "displayName": "remove_nb_forecast_kpi"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "e09520a0-30b4-afb4-4760-c2534aec8d4c"
+  }
+}

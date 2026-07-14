@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Dataflow",
+    "displayName": "OneTimeForecastSnapshotLoad"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "aeadddd0-6036-af14-46ed-48179cff9a25"
+  }
+}

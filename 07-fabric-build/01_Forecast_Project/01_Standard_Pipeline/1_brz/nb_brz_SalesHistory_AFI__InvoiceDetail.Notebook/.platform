@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Notebook",
+    "displayName": "nb_brz_SalesHistory_AFI__InvoiceDetail"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "5de6d869-5307-bbe0-4f38-498524e6e753"
+  }
+}

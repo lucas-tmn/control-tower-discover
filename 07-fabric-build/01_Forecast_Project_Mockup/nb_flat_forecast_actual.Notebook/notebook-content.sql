@@ -1,0 +1,78 @@
+-- Fabric notebook source
+
+-- METADATA ********************
+
+-- META {
+-- META   "kernel_info": {
+-- META     "name": "synapse_pyspark"
+-- META   },
+-- META   "dependencies": {
+-- META     "lakehouse": {
+-- META       "default_lakehouse": "62a3081e-4093-4f46-856c-f50aa58732fa",
+-- META       "default_lakehouse_name": "SupplyChain_Lakehouse",
+-- META       "default_lakehouse_workspace_id": "c8d9fc83-18b6-4e1d-8264-0b49eed36fe0",
+-- META       "known_lakehouses": [
+-- META         {
+-- META           "id": "62a3081e-4093-4f46-856c-f50aa58732fa"
+-- META         }
+-- META       ]
+-- META     }
+-- META   }
+-- META }
+
+-- CELL ********************
+
+-- MAGIC %%sql
+-- MAGIC 
+-- MAGIC 
+-- MAGIC CREATE OR REPLACE TABLE dbo.gld_flat_forecast_actual
+-- MAGIC AS
+-- MAGIC SELECT 
+-- MAGIC     TRIM(ItemSKU) AS ItemSKU,
+-- MAGIC     TRIM(Warehouse) AS Warehouse,
+-- MAGIC     TRIM(CustomerGroup) AS CustomerGroup,
+-- MAGIC     FiscalMonthYear,
+-- MAGIC     Status,
+-- MAGIC     Version,
+-- MAGIC     CAST(Qty AS DOUBLE) AS Qty,
+-- MAGIC     CAST(Amt AS DOUBLE) AS Amt,
+-- MAGIC     CAST(NULL AS STRING) AS Horizon,
+-- MAGIC     'Actual' AS DataSource
+-- MAGIC FROM dbo.slv_actual_demand
+-- MAGIC 
+-- MAGIC UNION ALL
+-- MAGIC 
+-- MAGIC SELECT 
+-- MAGIC     TRIM(ItemSKU) AS ItemSKU,
+-- MAGIC     TRIM(Warehouse) AS Warehouse,
+-- MAGIC     TRIM(CustomerGroup) AS CustomerGroup,
+-- MAGIC     FiscalMonthYear,
+-- MAGIC     Status,
+-- MAGIC     Version,
+-- MAGIC     CAST(Qty AS DOUBLE) AS Qty,
+-- MAGIC     CAST(NULL AS DOUBLE) AS Amt,
+-- MAGIC     Horizon,
+-- MAGIC     'Forecast' AS DataSource
+-- MAGIC FROM dbo.slv_forecast_demand
+-- MAGIC 
+-- MAGIC UNION ALL
+-- MAGIC 
+-- MAGIC SELECT 
+-- MAGIC     TRIM(ItemSKU) AS ItemSKU,
+-- MAGIC     TRIM(Warehouse) AS Warehouse,
+-- MAGIC     TRIM(CustomerGroup) AS CustomerGroup,
+-- MAGIC     FiscalMonthYear,
+-- MAGIC     Status,
+-- MAGIC     Version,
+-- MAGIC     CAST(Qty AS DOUBLE) AS Qty,
+-- MAGIC     CAST(NULL AS DOUBLE) AS Amt,
+-- MAGIC     CAST(NULL AS STRING) AS Horizon,
+-- MAGIC     'Naive' AS DataSource
+-- MAGIC FROM dbo.slv_naive_forecast;
+
+-- METADATA ********************
+
+-- META {
+-- META   "language": "sparksql",
+-- META   "language_group": "synapse_pyspark"
+-- META }

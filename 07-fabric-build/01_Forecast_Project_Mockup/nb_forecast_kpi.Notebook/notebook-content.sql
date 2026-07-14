@@ -1,0 +1,145 @@
+-- Fabric notebook source
+
+-- METADATA ********************
+
+-- META {
+-- META   "kernel_info": {
+-- META     "name": "synapse_pyspark"
+-- META   },
+-- META   "dependencies": {
+-- META     "lakehouse": {
+-- META       "default_lakehouse": "62a3081e-4093-4f46-856c-f50aa58732fa",
+-- META       "default_lakehouse_name": "SupplyChain_Lakehouse",
+-- META       "default_lakehouse_workspace_id": "c8d9fc83-18b6-4e1d-8264-0b49eed36fe0",
+-- META       "known_lakehouses": [
+-- META         {
+-- META           "id": "62a3081e-4093-4f46-856c-f50aa58732fa"
+-- META         }
+-- META       ]
+-- META     }
+-- META   }
+-- META }
+
+-- CELL ********************
+
+-- MAGIC %%sql
+-- MAGIC 
+-- MAGIC 
+-- MAGIC CREATE OR REPLACE TABLE dbo.gld_forecast_kpi
+-- MAGIC AS
+-- MAGIC WITH SnapshotMapping AS (
+-- MAGIC     -- 1. Map Snapshot Date với Version Key để đồng bộ logic Stability
+-- MAGIC     SELECT DISTINCT 
+-- MAGIC         to_date(dfcSnapshot) AS SnapshotDate, 
+-- MAGIC         TRIM(concat('V ', date_format(to_date(dfcSnapshot), 'yyyy.MM'))) AS VersionKey
+-- MAGIC     FROM dbo.brz2_SupplyChain_Enh__DemandForecastSnapshot
+-- MAGIC ),
+-- MAGIC 
+-- MAGIC StabilityBase AS (
+-- MAGIC     -- 2. Lấy Forecast và dùng LAG để tìm Snapshot liền trước cho cùng 1 Target Month
+-- MAGIC     SELECT 
+-- MAGIC         S.*, 
+-- MAGIC         M.SnapshotDate, 
+-- MAGIC         LAG(S.Qty) OVER (
+-- MAGIC             PARTITION BY S.ItemSKU, S.Warehouse, S.CustomerGroup, S.FiscalMonthYear 
+-- MAGIC             ORDER BY M.SnapshotDate
+-- MAGIC         ) AS PriorSnapshotForecast
+-- MAGIC     FROM dbo.slv_forecast_demand S 
+-- MAGIC     LEFT JOIN SnapshotMapping M ON TRIM(S.Version) = M.VersionKey
+-- MAGIC ),
+-- MAGIC 
+-- MAGIC ActualsPivot AS (
+-- MAGIC     -- 3. Pivot Actuals: Invoiced vs Open Orders
+-- MAGIC     SELECT 
+-- MAGIC         TRIM(ItemSKU) as ItemSKU, 
+-- MAGIC         TRIM(Warehouse) as Warehouse, 
+-- MAGIC         TRIM(CustomerGroup) as CustomerGroup, 
+-- MAGIC         FiscalMonthYear,
+-- MAGIC         SUM(CASE WHEN Status = 'Invoiced' THEN Qty ELSE 0 END) AS InvoiceQty,
+-- MAGIC         SUM(CASE WHEN Status = 'Invoiced' THEN Amt ELSE 0 END) AS InvoiceAmt,
+-- MAGIC         SUM(CASE WHEN Status = 'Open Order' THEN Qty ELSE 0 END) AS OrderQty,
+-- MAGIC         SUM(CASE WHEN Status = 'Open Order' THEN Amt ELSE 0 END) AS OrderAmt,
+-- MAGIC         SUM(Qty) AS ActualQty, 
+-- MAGIC         SUM(Amt) AS ActualAmt
+-- MAGIC     FROM dbo.slv_actual_demand 
+-- MAGIC     GROUP BY 1, 2, 3, 4
+-- MAGIC ),
+-- MAGIC 
+-- MAGIC NaiveBase AS (
+-- MAGIC     -- 4. Tính Naive Forecast dựa trên Run-rate và Unit Price thực tế
+-- MAGIC     SELECT 
+-- MAGIC         TRIM(N.ItemSKU) as ItemSKU, 
+-- MAGIC         TRIM(N.Warehouse) as Warehouse, 
+-- MAGIC         TRIM(N.CustomerGroup) as CustomerGroup, 
+-- MAGIC         N.FiscalMonthYear, 
+-- MAGIC         N.Qty,
+-- MAGIC         CASE 
+-- MAGIC             WHEN COALESCE(A.ActualQty, 0) <> 0 
+-- MAGIC             THEN (N.Qty * (A.ActualAmt / A.ActualQty)) 
+-- MAGIC             ELSE 0 
+-- MAGIC         END AS NaiveForecastAmt
+-- MAGIC     FROM dbo.slv_naive_forecast N 
+-- MAGIC     LEFT JOIN ActualsPivot A 
+-- MAGIC         ON TRIM(N.ItemSKU) = A.ItemSKU 
+-- MAGIC         AND TRIM(N.Warehouse) = A.Warehouse 
+-- MAGIC         AND TRIM(N.CustomerGroup) = A.CustomerGroup 
+-- MAGIC         AND N.FiscalMonthYear = A.FiscalMonthYear
+-- MAGIC )
+-- MAGIC 
+-- MAGIC -- BƯỚC CUỐI: TỔNG HỢP VÀ VẬT LÝ HÓA DỮ LIỆU
+-- MAGIC SELECT 
+-- MAGIC     -- Grain (7 columns)
+-- MAGIC     COALESCE(TRIM(F.ItemSKU), TRIM(A.ItemSKU), TRIM(N.ItemSKU)) AS ItemSKU,
+-- MAGIC     COALESCE(TRIM(F.Warehouse), TRIM(A.Warehouse), TRIM(N.Warehouse)) AS Warehouse,
+-- MAGIC     COALESCE(TRIM(F.CustomerGroup), TRIM(A.CustomerGroup), TRIM(N.CustomerGroup)) AS CustomerGroup,
+-- MAGIC     COALESCE(F.FiscalMonthYear, A.FiscalMonthYear, N.FiscalMonthYear) AS FiscalMonthYear,
+-- MAGIC     F.SnapshotDate,
+-- MAGIC     F.Horizon AS FcstPeriod,
+-- MAGIC     (year(COALESCE(F.FiscalMonthYear, A.FiscalMonthYear))*12 + month(COALESCE(F.FiscalMonthYear, A.FiscalMonthYear))) 
+-- MAGIC       - (year(F.SnapshotDate)*12 + month(F.SnapshotDate)) AS FcstPeriodMonths,
+-- MAGIC 
+-- MAGIC     -- Actuals (6 columns)
+-- MAGIC     COALESCE(A.ActualQty, 0) AS ActualQty, 
+-- MAGIC     COALESCE(A.ActualAmt, 0) AS ActualAmt,
+-- MAGIC     COALESCE(A.InvoiceQty, 0) AS InvoiceQty, 
+-- MAGIC     COALESCE(A.InvoiceAmt, 0) AS InvoiceAmt,
+-- MAGIC     COALESCE(A.OrderQty, 0) AS OrderQty, 
+-- MAGIC     COALESCE(A.OrderAmt, 0) AS OrderAmt,
+-- MAGIC 
+-- MAGIC     -- Forecasts (3 columns)
+-- MAGIC     COALESCE(F.Qty, 0) AS ForecastQty,
+-- MAGIC     COALESCE(N.Qty, 0) AS NaiveForecastQty,
+-- MAGIC     COALESCE(N.NaiveForecastAmt, 0) AS NaiveForecastAmt,
+-- MAGIC 
+-- MAGIC     -- Metrics (8 columns)
+-- MAGIC     ABS(COALESCE(A.ActualQty, 0) - COALESCE(F.Qty, 0)) AS AbsErrorQty,
+-- MAGIC     (COALESCE(A.ActualQty, 0) - COALESCE(F.Qty, 0)) AS ErrorQty,
+-- MAGIC     CASE 
+-- MAGIC         WHEN (COALESCE(A.ActualQty, 0) - COALESCE(F.Qty, 0)) = 0 THEN 'Good' 
+-- MAGIC         WHEN (COALESCE(A.ActualQty, 0) - COALESCE(F.Qty, 0)) > 0 THEN 'Under' 
+-- MAGIC         ELSE 'Over' 
+-- MAGIC     END AS BiasStatus,
+-- MAGIC     ABS(COALESCE(A.ActualQty, 0) - COALESCE(N.Qty, 0)) AS NaiveAbsErrorQty,
+-- MAGIC     ABS(COALESCE(A.ActualAmt, 0) - COALESCE(N.NaiveForecastAmt, 0)) AS NaiveAbsErrorAmt,
+-- MAGIC     F.PriorSnapshotForecast,
+-- MAGIC     ABS(F.Qty - F.PriorSnapshotForecast) AS AbsFcstChange,
+-- MAGIC     (ABS(F.Qty - F.PriorSnapshotForecast) / NULLIF(F.PriorSnapshotForecast, 0)) * 100 AS FcstStabilityPct
+-- MAGIC 
+-- MAGIC FROM StabilityBase F
+-- MAGIC FULL OUTER JOIN ActualsPivot A 
+-- MAGIC     ON TRIM(F.ItemSKU) = A.ItemSKU 
+-- MAGIC     AND TRIM(F.Warehouse) = A.Warehouse 
+-- MAGIC     AND TRIM(F.CustomerGroup) = A.CustomerGroup 
+-- MAGIC     AND F.FiscalMonthYear = A.FiscalMonthYear
+-- MAGIC LEFT JOIN NaiveBase N 
+-- MAGIC     ON COALESCE(TRIM(F.ItemSKU), TRIM(A.ItemSKU)) = N.ItemSKU 
+-- MAGIC     AND COALESCE(TRIM(F.Warehouse), TRIM(A.Warehouse)) = N.Warehouse 
+-- MAGIC     AND COALESCE(TRIM(F.CustomerGroup), TRIM(A.CustomerGroup)) = N.CustomerGroup 
+-- MAGIC     AND COALESCE(F.FiscalMonthYear, A.FiscalMonthYear) = N.FiscalMonthYear;
+
+-- METADATA ********************
+
+-- META {
+-- META   "language": "sparksql",
+-- META   "language_group": "synapse_pyspark"
+-- META }

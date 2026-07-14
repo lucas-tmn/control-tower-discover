@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Notebook",
+    "displayName": "remove_nb_slv_product"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "97528bcc-b823-8b4f-4edd-964fd28e0ce1"
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Dataflow",
+    "displayName": "remove_df_SupplyChain_Enh__DemandForecastSnapshot"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "0280c0f9-f561-bd44-4a55-5bca3c8d651e"
+  }
+}

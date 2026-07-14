@@ -1,0 +1,86 @@
+{
+  "formatVersion": "202502",
+  "computeEngineSettings": {},
+  "name": "temp_SCPDim",
+  "queryGroups": [],
+  "documentLocale": "en-US",
+  "queriesMetadata": {
+    "VendorMaster": {
+      "queryId": "3564bdc1-cd9e-4529-9a37-c4f13fe3f3b8",
+      "queryName": "VendorMaster"
+    },
+    "WarehouseMaster": {
+      "queryId": "166bd2af-778c-4e39-93fc-e5fda85e2a3c",
+      "queryName": "WarehouseMaster"
+    },
+    "VendorMaster_DataDestination": {
+      "queryId": "90b2face-ffb8-480c-b020-301179c618b3",
+      "queryName": "VendorMaster_DataDestination",
+      "isHidden": true,
+      "loadEnabled": false
+    },
+    "WarehouseMaster_DataDestination": {
+      "queryId": "165e417a-54c0-4374-82b5-fe6afa64db34",
+      "queryName": "WarehouseMaster_DataDestination",
+      "isHidden": true,
+      "loadEnabled": false
+    },
+    "FiscalCal": {
+      "queryId": "16ede0f6-5a33-451c-9080-4eecb93219c4",
+      "queryName": "FiscalCal"
+    },
+    "CustomerMaster": {
+      "queryId": "8df2abdb-edba-4802-bc1f-777e92889d41",
+      "queryName": "CustomerMaster"
+    },
+    "CustomerMaster_DataDestination": {
+      "queryId": "0eb0fded-4eb1-4be4-b3aa-f662c3dda9f8",
+      "queryName": "CustomerMaster_DataDestination",
+      "isHidden": true,
+      "loadEnabled": false
+    },
+    "FiscalCal_DataDestination": {
+      "queryId": "f3cb4677-e191-4961-a707-a76ad65a3358",
+      "queryName": "FiscalCal_DataDestination",
+      "isHidden": true,
+      "loadEnabled": false
+    },
+    "ItemMaster": {
+      "queryId": "7fdf2f2b-bc5d-412c-800a-fd72f1b2a2b8",
+      "queryName": "ItemMaster"
+    },
+    "ItemMaster_DataDestination": {
+      "queryId": "2778c680-feff-445d-859f-bc948d8a909e",
+      "queryName": "ItemMaster_DataDestination",
+      "isHidden": true,
+      "loadEnabled": false
+    },
+    "SupplyPlanDetailToday": {
+      "queryId": "d3737868-bff2-4c37-b20a-1b3d5340f3e8",
+      "queryName": "SupplyPlanDetailToday"
+    },
+    "SupplyPlanDetailToday_DataDestination": {
+      "queryId": "7d631fa6-2a3f-4853-a19e-89d515d5e192",
+      "queryName": "SupplyPlanDetailToday_DataDestination",
+      "isHidden": true,
+      "loadEnabled": false
+    }
+  },
+  "connections": [
+    {
+      "path": "ashley-edw.database.windows.net;ashley_edw",
+      "kind": "SQL",
+      "connectionId": "{\"ClusterId\":\"e6436dba-643f-44c3-ad6f-51a8cbc45b81\",\"DatasourceId\":\"69eee39f-e9d0-4ebc-aa11-69332bcd7f38\"}"
+    },
+    {
+      "path": "FabricSql",
+      "kind": "FabricSql",
+      "connectionId": "{\"ClusterId\":\"e6436dba-643f-44c3-ad6f-51a8cbc45b81\",\"DatasourceId\":\"fb7b5858-36a1-4230-af85-dd602b806a85\"}"
+    },
+    {
+      "path": "Warehouse",
+      "kind": "Warehouse",
+      "connectionId": "{\"ClusterId\":\"e6436dba-643f-44c3-ad6f-51a8cbc45b81\",\"DatasourceId\":\"d5134e2c-4348-4d6f-8a7c-e3a240032cc5\"}"
+    }
+  ]
+}

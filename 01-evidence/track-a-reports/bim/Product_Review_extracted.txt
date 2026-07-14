@@ -1,0 +1,437 @@
+TABLE|Product Details|COLS:103|MEAS:0|HIDDEN:false
+TABLE|Forecast Accuracy|COLS:25|MEAS:58|HIDDEN:false
+TABLE|Demand Fulfillment|COLS:7|MEAS:3|HIDDEN:false
+TABLE|Demand Data|COLS:9|MEAS:11|HIDDEN:false
+TABLE|Logility - Current Mo|COLS:35|MEAS:24|HIDDEN:false
+TABLE|AshleyFiscalCalendar|COLS:29|MEAS:0|HIDDEN:false
+TABLE|SupplyPlanDetail|COLS:39|MEAS:22|HIDDEN:false
+TABLE|Placements|COLS:17|MEAS:10|HIDDEN:false
+TABLE|Sales Trend - AFI|COLS:12|MEAS:27|HIDDEN:false
+TABLE|Sales Trend - Retail|COLS:8|MEAS:20|HIDDEN:false
+TABLE|Nailed|COLS:9|MEAS:0|HIDDEN:false
+TABLE|Sales Trend - Ashcomm|COLS:9|MEAS:20|HIDDEN:false
+TABLE|Inventory Turns|COLS:7|MEAS:3|HIDDEN:false
+TABLE|Current SS/SI|COLS:12|MEAS:7|HIDDEN:false
+TABLE|Status|COLS:3|MEAS:0|HIDDEN:true
+TABLE|Placements - Wk|COLS:7|MEAS:1|HIDDEN:false
+TABLE|Planner|COLS:2|MEAS:0|HIDDEN:true
+TABLE|Annualized Fcst|COLS:4|MEAS:0|HIDDEN:false
+TABLE|Forecast - Logility|COLS:12|MEAS:0|HIDDEN:false
+TABLE|tblDataStoreControl (Logility)|COLS:8|MEAS:0|HIDDEN:true
+TABLE|Vendor|COLS:8|MEAS:0|HIDDEN:false
+TABLE|On Time|COLS:11|MEAS:5|HIDDEN:false
+TABLE|DRP Planner|COLS:4|MEAS:0|HIDDEN:true
+TABLE|Vendor/SKU Lead Time|COLS:15|MEAS:0|HIDDEN:false
+TABLE|Unit Price|COLS:2|MEAS:0|HIDDEN:true
+TABLE|ABC Codes|COLS:14|MEAS:0|HIDDEN:false
+TABLE|Future Orders - Current Mo|COLS:18|MEAS:1|HIDDEN:false
+TABLE|Ordered Qty - Requested Week|COLS:4|MEAS:0|HIDDEN:false
+TABLE|Future Orders - Month End|COLS:7|MEAS:0|HIDDEN:false
+TABLE|Inventory Velocity (Historicals)|COLS:6|MEAS:1|HIDDEN:false
+TABLE|Make-Buy Code|COLS:4|MEAS:0|HIDDEN:true
+TABLE|ATP Week Ending|COLS:11|MEAS:0|HIDDEN:false
+TABLE|PSW|COLS:11|MEAS:3|HIDDEN:false
+TABLE|Collective Class|COLS:2|MEAS:0|HIDDEN:true
+TABLE|ABC Account|COLS:1|MEAS:0|HIDDEN:false
+TABLE|Warehouse Master|COLS:7|MEAS:0|HIDDEN:false
+TABLE|Reporting Business Type|COLS:1|MEAS:0|HIDDEN:false
+TABLE|ATP (2)|COLS:10|MEAS:2|HIDDEN:false
+TABLE|Seasonality|COLS:8|MEAS:0|HIDDEN:false
+TABLE|PIM|COLS:4|MEAS:0|HIDDEN:false
+TABLE|Colors|COLS:2|MEAS:0|HIDDEN:false
+TABLE|CurrentProductDetails|COLS:90|MEAS:0|HIDDEN:false
+TOTAL_MEASURES:218|COMPAT:1567
+
+=== Forecast Accuracy (58 meas) ===
+  Total Demand :: CALCULATE(SUM('Forecast Accuracy'[Actual Demand Quantity]))
+  Total Forecast :: CALCULATE(SUM('Forecast Accuracy'[Promoted Resultant Forecast Quantity]))
+  Total Accuracy :: IFERROR(IF([Total Demand]>=[Total Forecast],[Total Forecast]/[Total Demand],[Total Demand]/[Total Forecast]),0)
+  Total sABS % Error :: IFERROR(ABS([Total Demand] - [Total Forecast])/(([Total Demand] + [Total Forecast]) / 2),0)
+  Total Forecast Error :: CALCULATE(SUM('Forecast Accuracy'[Forecast Error]))
+  Total Forecast Bias :: DIVIDE([Total Forecast Error],[Total Demand])
+  Total Demand - YTD :: TOTALYTD([Total Demand],'Forecast Accuracy'[Fiscal Date])
+  Total Forecast - YTD :: TOTALYTD([Total Forecast],'Forecast Accuracy'[Fiscal Date])
+  Total Forecast Error - YTD :: TOTALYTD([Total Forecast Error],'Forecast Accuracy'[Fiscal Date])
+  Total Forecast Bias - YTD :: DIVIDE([Total Forecast Error - YTD],[Total Demand - YTD])
+  Total ABS Error :: CALCULATE(SUM('Forecast Accuracy'[ABS Error]))
+  Total wMAPE :: DIVIDE([Total Mean ABS Deviation (MAD)], [Total Mean of Actual Demand])
+  Total Mean of Actual Demand :: AVERAGEX('Forecast Accuracy','Forecast Accuracy'[Actual Demand Quantity])
+  Total Mean ABS Deviation (MAD) :: AVERAGEX('Forecast Accuracy',[Total ABS Error])
+  Total ABS % Error :: IFERROR(ABS([Total Demand] - [Total Forecast])/[Total Demand],0)
+  Total MAPE :: AVERAGEX('Forecast Accuracy',[Total ABS % Error])
+  Total sMAPE :: AVERAGEX('Forecast Accuracy',[Total sABS % Error])
+  Total Forecast Error Squared :: CALCULATE(SUM('Forecast Accuracy'[Forecast Error Squared]))
+  Total Mean Squared Error (MSE) :: AVERAGEX('Forecast Accuracy','Forecast Accuracy'[Forecast Error Squared])
+  Total Root Mean Square Error (RMSE) :: SQRT([Total Mean Squared Error (MSE)])
+  Total Standard Deviation :: STDEVX.P('Forecast Accuracy',[Total Demand])
+  Total Coefficient of Variation :: DIVIDE([Total Standard Deviation],[Total Mean of Actual Demand])
+  Total MAD-MEAN Ratio :: DIVIDE([Total Mean ABS Deviation (MAD)],[Total Mean of Actual Demand])
+  Total Forecast Attainment :: DIVIDE([Total Demand],[Total Forecast])
+  Total Normalized Forecast Metric :: DIVIDE(([Total Forecast]-[Total Demand]),([Total Forecast]+[Total Demand]))
+  Total sDemand :: CALCULATE(SUM('Forecast Accuracy'[sDemand]))
+  Total Mean of sDemand :: AVERAGEX('Forecast Accuracy',[Total sDemand])
+  Total wsMAPE :: DIVIDE([Total Mean ABS Deviation (MAD)], [Total Mean of sDemand])
+  Total Naive Forecast :: CALCULATE(SUM('Forecast Accuracy'[Naive Forecast]))
+  Total ABS Scaled Error :: CALCULATE(SUM('Forecast Accuracy'[ABS Scaled Error]))
+  Total Mean ABS Scaled Error :: AVERAGEX('Forecast Accuracy',[Total ABS Scaled Error])
+  Total MASE :: DIVIDE([Total Mean ABS Deviation (MAD)],[Total Mean ABS Scaled Error])
+  Weekly Total Dmnd :: CALCULATE(SUM('Forecast Accuracy'[Weekly Dmnd]))
+  Weekly Total Standard Deviation :: STDEVX.P('Forecast Accuracy',[Weekly Total Dmnd])
+  Weekly Total Mean of Actual Dmnd :: AVERAGEX('Forecast Accuracy','Forecast Accuracy'[Weekly Dmnd])
+  Weekly Total Coefficient of Variation :: DIVIDE([Weekly Total Standard Deviation],[Weekly Total Mean of Actual Dmnd])
+  Forecast Value Added :: [Total wMAPE] - [Total Naive wMAPE] 
+  Total Naive ABS Error :: CALCULATE(SUM('Forecast Accuracy'[Naive ABS Error]))
+  Total Naive Mean ABS Deviation (MAD) :: AVERAGEX('Forecast Accuracy',[Total Naive ABS Error])
+  Total Naive wMAPE :: DIVIDE([Total Naive Mean ABS Deviation (MAD)], [Total Mean of Actual Demand])
+  Total Naive Forecast Error :: CALCULATE(SUM('Forecast Accuracy'[Naive Forecast Error]))
+  Total wMAPE - 30d :: CALCULATE(DIVIDE([Total Mean ABS Deviation (MAD)], [Total Mean of Actual Demand]),'Forecast Accuracy'[Forecast Period] = "30 Day")
+  Total wMAPE - 60d :: CALCULATE(DIVIDE([Total Mean ABS Deviation (MAD)], [Total Mean of Actual Demand]),'Forecast Accuracy'[Forecast Period] = "60 Day")
+  Total wMAPE - 90d :: CALCULATE(DIVIDE([Total Mean ABS Deviation (MAD)], [Total Mean of Actual Demand]),'Forecast Accuracy'[Forecast Period] = "90 Day")
+  Total wMAPE - 120d :: CALCULATE(DIVIDE([Total Mean ABS Deviation (MAD)], [Total Mean of Actual Demand]),'Forecast Accuracy'[Forecast Period] = "120 Day")
+  Total Forecast Bias - 30d :: CALCULATE(DIVIDE([Total Forecast Error],[Total Demand]),'Forecast Accuracy'[Forecast Period] = "30 Day")
+  Total Forecast Bias - 60d :: CALCULATE(DIVIDE([Total Forecast Error],[Total Demand]),'Forecast Accuracy'[Forecast Period] = "60 Day")
+  Total Forecast Bias - 90d :: CALCULATE(DIVIDE([Total Forecast Error],[Total Demand]),'Forecast Accuracy'[Forecast Period] = "90 Day")
+  Total Forecast Bias - 120d :: CALCULATE(DIVIDE([Total Forecast Error],[Total Demand]),'Forecast Accuracy'[Forecast Period] = "120 Day")
+  Forecast Value Added - 30d :: CALCULATE(([Total wMAPE] - [Total Naive wMAPE]),'Forecast Accuracy'[Forecast Period] = "30 Day")
+  Forecast Value Added - 120d :: CALCULATE(([Total wMAPE] - [Total Naive wMAPE]),'Forecast Accuracy'[Forecast Period] = "120 Day")
+  Forecast Value Added - 60d :: CALCULATE(([Total wMAPE] - [Total Naive wMAPE]),'Forecast Accuracy'[Forecast Period] = "60 Day")
+  Forecast Value Added - 90d :: CALCULATE(([Total wMAPE] - [Total Naive wMAPE]),'Forecast Accuracy'[Forecast Period] = "90 Day")
+  Total Naive wMAPE - 30d :: CALCULATE(DIVIDE([Total Naive Mean ABS Deviation (MAD)], [Total Mean of Actual Demand]),'Forecast Accuracy'[Forecast Period] = "30 Day")
+  Total Naive wMAPE - 60d :: CALCULATE(DIVIDE([Total Naive Mean ABS Deviation (MAD)], [Total Mean of Actual Demand]),'Forecast Accuracy'[Forecast Period] = "60 Day")
+  Total Naive wMAPE - 90d :: CALCULATE(DIVIDE([Total Naive Mean ABS Deviation (MAD)], [Total Mean of Actual Demand]),'Forecast Accuracy'[Forecast Period] = "90 Day")
+  Total Naive wMAPE - 120d :: CALCULATE(DIVIDE([Total Naive Mean ABS Deviation (MAD)], [Total Mean of Actual Demand]),'Forecast Accuracy'[Forecast Period] = "120 Day")
+  Forecast Accuracy :: CALCULATE(1-(DIVIDE(ABS([Total Forecast] - [Total Demand]), [Total Forecast])))
+
+=== Demand Fulfillment (3 meas) ===
+  Total Firm Demand :: CALCULATE(SUM('Demand Fulfillment'[Firm Demand]))
+  Total SI Negative :: CALCULATE(SUM('Demand Fulfillment'[SI Negative]))
+  Total % Cust Orders Covered :: IFERROR(IF(([Total Firm Demand] + [Total SI Negative]) / [Total Firm Demand] > 1, 1, IF(([Total Firm Demand] + [Total SI Negative]) / [Total Firm Demand] < 0, 0, ([Total Firm Demand] + [Total SI Negative]) / [Total Firm Demand])),0)
+
+=== Demand Data (11 meas) ===
+  Total Dmnd :: CALCULATE(SUM('Demand Data'[Actual Demand]))
+  Total Dmnd - Rolling 3Mo :: CALCULATE([Total Dmnd],DATESINPERIOD('Demand Data'[Fiscal Date],LASTDATE('Demand Data'[Fiscal Date]),-3,MONTH))
+  Total Dmnd - 3Mo Avg :: [Total Dmnd - Rolling 3Mo] / CALCULATE(DISTINCTCOUNT('Demand Data'[Fiscal Date]),DATESINPERIOD('Demand Data'[Fiscal Date],LASTDATE('Demand Data'[Fiscal Date]),-3,MONTH))
+  Total Dmnd - Previous Year :: CALCULATE([Total Dmnd], PARALLELPERIOD('Demand Data'[Fiscal Date],-12,MONTH))
+  Total Dmnd - YTD Current Year :: TOTALYTD([Total Dmnd],'Demand Data'[Fiscal Date])
+  Total Dmnd - YTD Previous Year :: TOTALYTD([Total Dmnd - Previous Year],'Demand Data'[Fiscal Date])
+  Total Dmnd - Previous Mo :: CALCULATE([Total Dmnd], PARALLELPERIOD('Demand Data'[Fiscal Date],-1,MONTH))
+  Total Dmnd - 2Yrs Ago :: CALCULATE([Total Dmnd], PARALLELPERIOD('Demand Data'[Fiscal Date],-24,MONTH))
+  Total Dmnd - 3Mo Ago :: CALCULATE([Total Dmnd], PARALLELPERIOD('Demand Data'[Fiscal Date],-3,MONTH))
+  Dmnd Average :: DIVIDE(([Total Dmnd - Previous Mo] + [Total Dmnd - 3Mo Ago] + [Total Dmnd - Previous Year] + [Total Dmnd - 2Yrs Ago]),4,0)
+  Total Dmnd - Rolling 12Mo :: CALCULATE([Total Dmnd],DATESINPERIOD('Demand Data'[Fiscal Date],LASTDATE('Demand Data'[Fiscal Date]),-12,MONTH))
+
+=== Logility - Current Mo (24 meas) ===
+  Pro_Rslt_FC_0 :: CALCULATE(SUM('Logility - Current Mo'[Result_Fc_0])) + CALCULATE(SUM('Logility - Current Mo'[Result_PROL_0]))
+  Pro_Rslt_FC_1 :: CALCULATE(SUM('Logility - Current Mo'[Result_Fc_1])) + CALCULATE(SUM('Logility - Current Mo'[Result_PROL_1]))
+  Pro_Rslt_FC_2 :: CALCULATE(SUM('Logility - Current Mo'[Result_Fc_2])) + CALCULATE(SUM('Logility - Current Mo'[Result_PROL_2]))
+  Prev Day Pro_Rslt_FC_0 :: IF(HASONEVALUE('Logility - Current Mo'[Go Back]),CALCULATE([Pro_Rslt_FC_0],DATEADD('Logility - Current Mo'[FileDate],VALUES('Logility - Current Mo'[Go Back]),DAY)),BLANK())
+  Prev Day Pro_Rslt_FC_1 :: IF(HASONEVALUE('Logility - Current Mo'[Go Back]),CALCULATE([Pro_Rslt_FC_1],DATEADD('Logility - Current Mo'[FileDate],VALUES('Logility - Current Mo'[Go Back]),DAY)),BLANK())
+  Prev Day Pro_Rslt_FC_2 :: IF(HASONEVALUE('Logility - Current Mo'[Go Back]),CALCULATE([Pro_Rslt_FC_2],DATEADD('Logility - Current Mo'[FileDate],VALUES('Logility - Current Mo'[Go Back]),DAY)),BLANK())
+  Day over Day - Pro_Rslt_FC_0 :: IF([Prev Day Pro_Rslt_FC_0]=BLANK(),BLANK(),[Pro_Rslt_FC_0] - [Prev Day Pro_Rslt_FC_0])
+  Day over Day - Pro_Rslt_FC_1 :: IF([Prev Day Pro_Rslt_FC_1]=BLANK(),BLANK(),[Pro_Rslt_FC_1] - [Prev Day Pro_Rslt_FC_1])
+  Day over Day - Pro_Rslt_FC_2 :: IF([Prev Day Pro_Rslt_FC_2]=BLANK(),BLANK(),[Pro_Rslt_FC_2] - [Prev Day Pro_Rslt_FC_2])
+  Day over Day Change - Pro_Rslt_FC_0 :: IF([Day over Day - Pro_Rslt_FC_0]=BLANK(),BLANK(),IF([Day over Day - Pro_Rslt_FC_0]>0,"UP",IF([Day over Day - Pro_Rslt_FC_0]<0,"DOWN",IF([Day over Day - Pro_Rslt_FC_0]=0,"FLAT"))))
+  Day over Day Change - Pro_Rslt_FC_1 :: IF([Day over Day - Pro_Rslt_FC_1]=BLANK(),BLANK(),IF([Day over Day - Pro_Rslt_FC_1]>0,"UP",IF([Day over Day - Pro_Rslt_FC_1]<0,"DOWN",IF([Day over Day - Pro_Rslt_FC_1]=0,"FLAT"))))
+  Day over Day Change - Pro_Rslt_FC_2 :: IF([Day over Day - Pro_Rslt_FC_2]=BLANK(),BLANK(),IF([Day over Day - Pro_Rslt_FC_2]>0,"UP",IF([Day over Day - Pro_Rslt_FC_2]<0,"DOWN",IF([Day over Day - Pro_Rslt_FC_2]=0,"FLAT"))))
+  Pro_Rslt_FC_3 :: CALCULATE(SUM('Logility - Current Mo'[Result_Fc_3])) + CALCULATE(SUM('Logility - Current Mo'[Result_PROL_3]))
+  Pro_Rslt_FC_4 :: CALCULATE(SUM('Logility - Current Mo'[Result_Fc_4])) + CALCULATE(SUM('Logility - Current Mo'[Result_PROL_4]))
+  Pro_Rslt_FC_5 :: CALCULATE(SUM('Logility - Current Mo'[Result_Fc_5])) + CALCULATE(SUM('Logility - Current Mo'[Result_PROL_5]))
+  Prev Day Pro_Rslt_FC_3 :: IF(HASONEVALUE('Logility - Current Mo'[Go Back]),CALCULATE([Pro_Rslt_FC_3],DATEADD('Logility - Current Mo'[FileDate],VALUES('Logility - Current Mo'[Go Back]),DAY)),BLANK())
+  Prev Day Pro_Rslt_FC_4 :: IF(HASONEVALUE('Logility - Current Mo'[Go Back]),CALCULATE([Pro_Rslt_FC_4],DATEADD('Logility - Current Mo'[FileDate],VALUES('Logility - Current Mo'[Go Back]),DAY)),BLANK())
+  Prev Day Pro_Rslt_FC_5 :: IF(HASONEVALUE('Logility - Current Mo'[Go Back]),CALCULATE([Pro_Rslt_FC_5],DATEADD('Logility - Current Mo'[FileDate],VALUES('Logility - Current Mo'[Go Back]),DAY)),BLANK())
+  Day over Day - Pro_Rslt_FC_3 :: IF([Prev Day Pro_Rslt_FC_3]=BLANK(),BLANK(),[Pro_Rslt_FC_3] - [Prev Day Pro_Rslt_FC_3])
+  Day over Day - Pro_Rslt_FC_4 :: IF([Prev Day Pro_Rslt_FC_4]=BLANK(),BLANK(),[Pro_Rslt_FC_4] - [Prev Day Pro_Rslt_FC_4])
+  Day over Day - Pro_Rslt_FC_5 :: IF([Prev Day Pro_Rslt_FC_5]=BLANK(),BLANK(),[Pro_Rslt_FC_5] - [Prev Day Pro_Rslt_FC_5])
+  Day over Day Change - Pro_Rslt_FC_3 :: IF([Day over Day - Pro_Rslt_FC_3]=BLANK(),BLANK(),IF([Day over Day - Pro_Rslt_FC_3]>0,"UP",IF([Day over Day - Pro_Rslt_FC_3]<0,"DOWN",IF([Day over Day - Pro_Rslt_FC_3]=0,"FLAT"))))
+  Day over Day Change - Pro_Rslt_FC_4 :: IF([Day over Day - Pro_Rslt_FC_4]=BLANK(),BLANK(),IF([Day over Day - Pro_Rslt_FC_4]>0,"UP",IF([Day over Day - Pro_Rslt_FC_4]<0,"DOWN",IF([Day over Day - Pro_Rslt_FC_4]=0,"FLAT"))))
+  Day over Day Change - Pro_Rslt_FC_5 :: IF([Day over Day - Pro_Rslt_FC_5]=BLANK(),BLANK(),IF([Day over Day - Pro_Rslt_FC_5]>0,"UP",IF([Day over Day - Pro_Rslt_FC_5]<0,"DOWN",IF([Day over Day - Pro_Rslt_FC_5]=0,"FLAT"))))
+
+=== SupplyPlanDetail (22 meas) ===
+  SI-SS :: CALCULATE(SUM(SupplyPlanDetail[spdShippableInventory])) - CALCULATE(SUM(SupplyPlanDetail[spdSafetyStock])) 
+  SI as % of SS :: DIVIDE(CALCULATE(SUM(SupplyPlanDetail[spdShippableInventory])),CALCULATE(SUM(SupplyPlanDetail[spdSafetyStock]))) 
+  *SI Neg :: CALCULATE(SUM(SupplyPlanDetail[SI Negative]))
+  *FirmDemands+NetForecast :: CALCULATE(SUM(SupplyPlanDetail[spdFirmDemands]))+CALCULATE(SUM(SupplyPlanDetail[spdNetForecast]))
+  *% COC w/ NetForecast :: IFERROR(IF(DIVIDE(([*FirmDemands+NetForecast]+[*SI Neg]),[*FirmDemands+NetForecast]) > 1, 1, IF(DIVIDE(([*FirmDemands+NetForecast]+[*SI Neg]),[*FirmDemands+NetForecast]) < 0, 0, DIVIDE(([*FirmDemands+NetForecast]+[*SI Neg]),[*FirmDemands+NetForecast]
+  *DF :: CALCULATE(SUM(SupplyPlanDetail[spdDemandFulfillment]))
+  *DF YTD :: TOTALYTD([*DF],SupplyPlanDetail[spdWeekEnding])
+  *SCP Team DF_2 YTD :: IF(DIVIDE([*DF YTD],[*FirmDemands+NetForecast YTD])>1,1, IF(DIVIDE([*DF YTD],[*FirmDemands+NetForecast YTD])<0,0, DIVIDE([*DF YTD],[*FirmDemands+NetForecast YTD])))
+  *SCP Team DF_2 :: IF(DIVIDE([*DF],[*FirmDemands+NetForecast])>1,1, IF(DIVIDE([*DF],[*FirmDemands+NetForecast])<0,0, DIVIDE([*DF],[*FirmDemands+NetForecast])))
+  *SCP Team DF_2 YTD w/o NetForecast :: IF(DIVIDE([*DF YTD],[*FirmDemands YTD])>1,1, IF(DIVIDE([*DF YTD],[*FirmDemands YTD])<0,0, DIVIDE([*DF YTD],[*FirmDemands YTD])))
+  *FirmDemands :: CALCULATE(SUM(SupplyPlanDetail[spdFirmDemands]))
+  *FirmDemands YTD :: TOTALYTD([*FirmDemands],SupplyPlanDetail[spdWeekEnding])
+  *FirmDemands+NetForecast YTD :: TOTALYTD([*FirmDemands+NetForecast],SupplyPlanDetail[spdWeekEnding])
+  *SI Neg YTD :: TOTALYTD([*SI Neg],SupplyPlanDetail[spdWeekEnding])
+  *SCP Team DF_2 w/o NetForecast :: IF(DIVIDE([*DF],[*FirmDemands])>1,1, IF(DIVIDE([*DF],[*FirmDemands])<0,0, DIVIDE([*DF],[*FirmDemands])))
+  WeeksOfSupply :: DIVIDE(CALCULATE(SUM(SupplyPlanDetail[spdShippableInventory])),(CALCULATE(SUM(SupplyPlanDetail[spdNetForecast]))+CALCULATE(SUM(SupplyPlanDetail[spdFirmDemands]))))
+  *% COC :: IFERROR(IF(DIVIDE(([*FirmDemands]+[*SI Neg]),[*FirmDemands]) > 1, 1, IF(DIVIDE(([*FirmDemands]+[*SI Neg]),[*FirmDemands]) < 0, 0, DIVIDE(([*FirmDemands]+[*SI Neg]),[*FirmDemands]))),0)
+  *% of Out of Stock :: DIVIDE([*SI Neg],[*FirmDemands])
+  *Fill Rate_2b :: IF(DIVIDE([*DF],[*SI Neg])>1,1, IF(DIVIDE([*DF],[*SI Neg])<0,0, DIVIDE([*DF],[*SI Neg])))
+  *Inventory Velocity :: IFERROR( DIVIDE( CALCULATE(SUM(SupplyPlanDetail[BeginningOnHandQty])), (CALCULATE(SUM(SupplyPlanDetail[spdResultantForecast]))+CALCULATE(SUM(SupplyPlanDetail[spdPromotionalLift])))), BLANK() )
+  Promoted Resultant :: CALCULATE(SUM(SupplyPlanDetail[spdResultantForecast])) + CALCULATE(SUM(SupplyPlanDetail[spdPromotionalLift]))
+  Production + Purchase Orders :: CALCULATE(SUM(SupplyPlanDetail[Production])) + CALCULATE(SUM(SupplyPlanDetail[PurchaseOrders]))
+
+=== Placements (10 meas) ===
+  Total Placements :: CALCULATE(SUM('Placements'[Current Placements]))
+  Total Placements - Rolling 3Mo :: CALCULATE([Total Placements],DATESINPERIOD('Placements'[Month Ended],LASTDATE('Placements'[Month Ended]),-91,DAY))
+  Total Placements - 3Mo Avg :: [Total Placements - Rolling 3Mo] / CALCULATE(DISTINCTCOUNT('Placements'[Month Ended]),DATESINPERIOD('Placements'[Month Ended],LASTDATE('Placements'[Month Ended]),-91,DAY))
+  Total Month Qty :: CALCULATE(SUM('Placements'[Monthly Quantity]))
+  Total Monthly Qty - Rolling 3Mo :: CALCULATE([Total Month Qty],DATESINPERIOD('Placements'[Month Ended],LASTDATE('Placements'[Month Ended]),-91,DAY))
+  Total Monthly Qty - 3Mo Avg :: [Total Monthly Qty - Rolling 3Mo] / CALCULATE(DISTINCTCOUNT('Placements'[Month Ended]),DATESINPERIOD('Placements'[Month Ended],LASTDATE('Placements'[Month Ended]),-91,DAY))
+  Total Velocity (New) :: DIVIDE([Total Monthly Qty - 3Mo Avg],[Total Placements])
+  Total Placements (Cube Velocity) :: CALCULATE(SUM('Placements'[Current Placements]),PARALLELPERIOD('Placements'[Month Ended],-2,MONTH))
+  Total Velocity (Cube) :: DIVIDE([Total Monthly Qty - 3Mo Avg],[Total Placements (Cube Velocity)])
+  HS Current Placements :: CALCULATE(SUM('Placements'[Current Placements]),'Placements'[Reporting Business Type] = "Ashley HomeStores")
+
+=== Sales Trend - AFI (27 meas) ===
+  Total Qty Shipped :: CALCULATE(SUM('Sales Trend - AFI'[Gross Quantity Shipped]))
+  Total Qty Ordered :: CALCULATE(SUM('Sales Trend - AFI'[Quantity Ordered]))
+  Total Qty Ordered - Rolling 3Mo :: CALCULATE([Total Qty Ordered],DATESINPERIOD('Sales Trend - AFI'[Fiscal Date],LASTDATE('Sales Trend - AFI'[Fiscal Date]),-3,MONTH))
+  Total Qty Shipped - Rolling 3Mo :: CALCULATE([Total Qty Shipped],DATESINPERIOD('Sales Trend - AFI'[Fiscal Date],LASTDATE('Sales Trend - AFI'[Fiscal Date]),-3,MONTH))
+  Total Qty Ordered - 3Mo Avg :: [Total Qty Ordered - Rolling 3Mo] / CALCULATE(DISTINCTCOUNT('Sales Trend - AFI'[Fiscal Date]),DATESINPERIOD('Sales Trend - AFI'[Fiscal Date],LASTDATE('Sales Trend - AFI'[Fiscal Date]),-3,MONTH))
+  Total Qty Shipped - 3Mo Avg :: [Total Qty Shipped - Rolling 3Mo] / CALCULATE(DISTINCTCOUNT('Sales Trend - AFI'[Fiscal Date]),DATESINPERIOD('Sales Trend - AFI'[Fiscal Date],LASTDATE('Sales Trend - AFI'[Fiscal Date]),-3,MONTH))
+  Total Net Sales :: CALCULATE(SUM('Sales Trend - AFI'[Net Sales]))
+  Total Amount Ordered :: CALCULATE(SUM('Sales Trend - AFI'[Amount Ordered]))
+  Total Net Sales - Rolling 3Mo :: CALCULATE([Total Net Sales],DATESINPERIOD('Sales Trend - AFI'[Fiscal Date],LASTDATE('Sales Trend - AFI'[Fiscal Date]),-3,MONTH))
+  Total Amount Ordered - Rolling 3Mo :: CALCULATE([Total Amount Ordered],DATESINPERIOD('Sales Trend - AFI'[Fiscal Date],LASTDATE('Sales Trend - AFI'[Fiscal Date]),-3,MONTH))
+  Total Amount Ordered - 3Mo Avg :: [Total Amount Ordered - Rolling 3Mo] / CALCULATE(DISTINCTCOUNT('Sales Trend - AFI'[Fiscal Date]),DATESINPERIOD('Sales Trend - AFI'[Fiscal Date],LASTDATE('Sales Trend - AFI'[Fiscal Date]),-3,MONTH))
+  Total Net Sales - 3Mo Avg :: [Total Net Sales - Rolling 3Mo] / CALCULATE(DISTINCTCOUNT('Sales Trend - AFI'[Fiscal Date]),DATESINPERIOD('Sales Trend - AFI'[Fiscal Date],LASTDATE('Sales Trend - AFI'[Fiscal Date]),-3,MONTH))
+  Total Net Sales - YTD Current Year :: TOTALYTD([Total Net Sales],'Sales Trend - AFI'[Fiscal Date])
+  Total Net Sales - Previous Year :: CALCULATE([Total Net Sales], PARALLELPERIOD('Sales Trend - AFI'[Fiscal Date],-12,MONTH))
+  Total Net Sales - YTD Previous Year :: TOTALYTD([Total Net Sales - Previous Year],'Sales Trend - AFI'[Fiscal Date])
+  Total Amount Ordered - Previous Year :: CALCULATE([Total Amount Ordered], PARALLELPERIOD('Sales Trend - AFI'[Fiscal Date],-12,MONTH))
+  Total Amount Ordered - YTD Current Year :: TOTALYTD([Total Amount Ordered],'Sales Trend - AFI'[Fiscal Date])
+  Total Amount Ordered - YTD Previous Year :: TOTALYTD([Total Amount Ordered - Previous Year],'Sales Trend - AFI'[Fiscal Date])
+  Avg $ per Piece :: DIVIDE([Total Amount Ordered],[Total Qty Ordered])
+  Total Net Sales - % Change YTD YoY :: IF([Total Net Sales - YTD Previous Year] = BLANK(), BLANK(), DIVIDE([Total Net Sales - YTD Current Year], [Total Net Sales - YTD Previous Year],BLANK())-1) 
+  Total Amount Ordered - % Change YTD YoY :: IF([Total Amount Ordered - YTD Previous Year] = BLANK(), BLANK(), DIVIDE([Total Amount Ordered - YTD Current Year], [Total Amount Ordered - YTD Previous Year],BLANK())-1) 
+  Weekly Total Qty Ordered :: CALCULATE(SUM('Sales Trend - AFI'[Weekly Qty Ordered]))
+  Weekly Avg Qty Ordered :: AVERAGEX('Sales Trend - AFI','Sales Trend - AFI'[Weekly Qty Ordered])
+  Weekly StDev Qty Ordered :: STDEV.P('Sales Trend - AFI'[Weekly Qty Ordered])
+  Weekly Qty Ordered Coefficient of Variation :: DIVIDE([Weekly StDev Qty Ordered],[Weekly Avg Qty Ordered])
+  Total Qty Shipped - 232 :: CALCULATE(SUM('Sales Trend - AFI'[Gross Quantity Shipped]),'Sales Trend - AFI'[Whse Group] = "232")
+  Total Qty Shipped - C/CNW :: CALCULATE(SUM('Sales Trend - AFI'[Gross Quantity Shipped]),'Sales Trend - AFI'[Whse Group] = "C/CNW")
+
+=== Sales Trend - Retail (20 meas) ===
+  Total Quantity Ordered (Retail) :: CALCULATE(SUM('Sales Trend - Retail'[Quantity Ordered]))
+  Total Quantity Sold (Retail) :: CALCULATE(SUM('Sales Trend - Retail'[Quantity Sold]))
+  Total Quantity Ordered (Retail) - Rolling 3Mo :: CALCULATE([Total Quantity Ordered (Retail)],DATESINPERIOD('Sales Trend - Retail'[Fiscal Date],LASTDATE('Sales Trend - Retail'[Fiscal Date]),-3,MONTH))
+  Total Quantity Sold (Retail) - Rolling 3Mo :: CALCULATE([Total Quantity Sold (Retail)],DATESINPERIOD('Sales Trend - Retail'[Fiscal Date],LASTDATE('Sales Trend - Retail'[Fiscal Date]),-3,MONTH))
+  Total Quantity Ordered (Retail) - 3Mo Avg :: [Total Quantity Ordered (Retail) - Rolling 3Mo] / CALCULATE(DISTINCTCOUNT('Sales Trend - Retail'[Fiscal Date]),DATESINPERIOD('Sales Trend - Retail'[Fiscal Date],LASTDATE('Sales Trend - Retail'[Fiscal Date]),-3,MONTH))
+  Total Quantity Sold (Retail) - 3Mo Avg :: [Total Quantity Sold (Retail) - Rolling 3Mo] / CALCULATE(DISTINCTCOUNT('Sales Trend - Retail'[Fiscal Date]),DATESINPERIOD('Sales Trend - Retail'[Fiscal Date],LASTDATE('Sales Trend - Retail'[Fiscal Date]),-3,MONTH))
+  Total Invoiced Sales (Retail) :: CALCULATE(SUM('Sales Trend - Retail'[Invoiced Sales]))
+  Total Written Sales (Retail) :: CALCULATE(SUM('Sales Trend - Retail'[Written Sales]))
+  Total Invoiced Sales (Retail) - Rolling 3Mo :: CALCULATE([Total Invoiced Sales (Retail)],DATESINPERIOD('Sales Trend - Retail'[Fiscal Date],LASTDATE('Sales Trend - Retail'[Fiscal Date]),-3,MONTH))
+  Total Written Sales (Retail) - Rolling 3Mo :: CALCULATE([Total Written Sales (Retail)],DATESINPERIOD('Sales Trend - Retail'[Fiscal Date],LASTDATE('Sales Trend - Retail'[Fiscal Date]),-3,MONTH))
+  Total Invoiced Sales (Retail) - 3Mo Avg :: [Total Invoiced Sales (Retail) - Rolling 3Mo] / CALCULATE(DISTINCTCOUNT('Sales Trend - Retail'[Fiscal Date]),DATESINPERIOD('Sales Trend - Retail'[Fiscal Date],LASTDATE('Sales Trend - Retail'[Fiscal Date]),-3,MONTH))
+  Total Written Sales (Retail) - 3Mo Avg :: [Total Written Sales (Retail) - Rolling 3Mo] / CALCULATE(DISTINCTCOUNT('Sales Trend - Retail'[Fiscal Date]),DATESINPERIOD('Sales Trend - Retail'[Fiscal Date],LASTDATE('Sales Trend - Retail'[Fiscal Date]),-3,MONTH))
+  Total Invoiced Sales (Retail) - Previous Year :: CALCULATE([Total Invoiced Sales (Retail)], PARALLELPERIOD('Sales Trend - Retail'[Fiscal Date],-12,MONTH))
+  Total Written Sales (Retail) - Previous Year :: CALCULATE([Total Written Sales (Retail)], PARALLELPERIOD('Sales Trend - Retail'[Fiscal Date],-12,MONTH))
+  Total Invoiced Sales (Retail) - YTD Current Year :: TOTALYTD([Total Invoiced Sales (Retail)],'Sales Trend - Retail'[Fiscal Date])
+  Total Written Sales (Retail) - YTD Current Year :: TOTALYTD([Total Written Sales (Retail)],'Sales Trend - Retail'[Fiscal Date])
+  Total Invoiced Sales (Retail) - YTD Previous Year :: TOTALYTD([Total Invoiced Sales (Retail) - Previous Year],'Sales Trend - Retail'[Fiscal Date])
+  Total Written Sales (Retail) - YTD Previous Year :: TOTALYTD([Total Written Sales (Retail) - Previous Year],'Sales Trend - Retail'[Fiscal Date])
+  Total Written Sales (Retail) - % Change YTD YoY :: IF([Total Written Sales (Retail) - YTD Previous Year] = BLANK(), BLANK(), DIVIDE([Total Written Sales (Retail) - YTD Current Year], [Total Written Sales (Retail) - YTD Previous Year],BLANK())-1) 
+  Total Invoiced Sales (Retail) - % Change YTD YoY :: IF([Total Invoiced Sales (Retail) - YTD Previous Year] = BLANK(), BLANK(), DIVIDE([Total Invoiced Sales (Retail) - YTD Current Year], [Total Invoiced Sales (Retail) - YTD Previous Year],BLANK())-1) 
+
+=== Sales Trend - Ashcomm (20 meas) ===
+  Total Quantity Sold (Ashcomm) :: CALCULATE(SUM('Sales Trend - Ashcomm'[Quantity Sold]))
+  Total Quantity Ordered (Ashcomm) :: CALCULATE(SUM('Sales Trend - Ashcomm'[Quantity Ordered]))
+  Total Quantity Sold (Ashcomm) - Rolling 3Mo :: CALCULATE([Total Quantity Sold (Ashcomm)],DATESINPERIOD('Sales Trend - Ashcomm'[Fiscal Date],LASTDATE('Sales Trend - Ashcomm'[Fiscal Date]),-3,MONTH))
+  Total Quantity Ordered (Ashcomm) - Rolling 3Mo :: CALCULATE([Total Quantity Ordered (Ashcomm)],DATESINPERIOD('Sales Trend - Ashcomm'[Fiscal Date],LASTDATE('Sales Trend - Ashcomm'[Fiscal Date]),-3,MONTH))
+  Total Quantity Sold (Ashcomm) - 3Mo Avg :: [Total Quantity Sold (Ashcomm) - Rolling 3Mo] / CALCULATE(DISTINCTCOUNT('Sales Trend - Ashcomm'[Fiscal Date]),DATESINPERIOD('Sales Trend - Ashcomm'[Fiscal Date],LASTDATE('Sales Trend - Ashcomm'[Fiscal Date]),-3,MONTH))
+  Total Quantity Ordered (Ashcomm) - 3Mo Avg :: [Total Quantity Ordered (Ashcomm) - Rolling 3Mo] / CALCULATE(DISTINCTCOUNT('Sales Trend - Ashcomm'[Fiscal Date]),DATESINPERIOD('Sales Trend - Ashcomm'[Fiscal Date],LASTDATE('Sales Trend - Ashcomm'[Fiscal Date]),-3,MONTH))
+  Total Written Sales (Ashcomm) :: CALCULATE(SUM('Sales Trend - Ashcomm'[Written Sales]))
+  Total Invoiced Sales (Ashcomm) - Rolling 3Mo :: CALCULATE([Total Invoiced Sales (Ashcomm)],DATESINPERIOD('Sales Trend - Ashcomm'[Fiscal Date],LASTDATE('Sales Trend - Ashcomm'[Fiscal Date]),-3,MONTH))
+  Total Invoiced Sales (Ashcomm) :: CALCULATE(SUM('Sales Trend - Ashcomm'[Invoiced Sales]))
+  Total Written Sales (Ashcomm) - Rolling 3Mo :: CALCULATE([Total Written Sales (Ashcomm)],DATESINPERIOD('Sales Trend - Ashcomm'[Fiscal Date],LASTDATE('Sales Trend - Ashcomm'[Fiscal Date]),-3,MONTH))
+  Total Invoiced Sales (Ashcomm) - 3Mo Avg :: [Total Invoiced Sales (Ashcomm) - Rolling 3Mo] / CALCULATE(DISTINCTCOUNT('Sales Trend - Ashcomm'[Fiscal Date]),DATESINPERIOD('Sales Trend - Ashcomm'[Fiscal Date],LASTDATE('Sales Trend - Ashcomm'[Fiscal Date]),-3,MONTH))
+  Total Written Sales (Ashcomm) - 3Mo Avg :: [Total Written Sales (Ashcomm) - Rolling 3Mo] / CALCULATE(DISTINCTCOUNT('Sales Trend - Ashcomm'[Fiscal Date]),DATESINPERIOD('Sales Trend - Ashcomm'[Fiscal Date],LASTDATE('Sales Trend - Ashcomm'[Fiscal Date]),-3,MONTH))
+  Total Invoiced Sales (Ashcomm) - Previous Year :: CALCULATE([Total Invoiced Sales (Ashcomm)], PARALLELPERIOD('Sales Trend - Ashcomm'[Fiscal Date],-12,MONTH))
+  Total Written Sales (Ashcomm) - Previous Year :: CALCULATE([Total Written Sales (Ashcomm)], PARALLELPERIOD('Sales Trend - Ashcomm'[Fiscal Date],-12,MONTH))
+  Total Written Sales (Ashcomm) - YTD Current Year :: TOTALYTD([Total Written Sales (Ashcomm)],'Sales Trend - Ashcomm'[Fiscal Date])
+  Total Invoiced Sales (Ashcomm) - YTD Current Year :: TOTALYTD([Total Invoiced Sales (Ashcomm)],'Sales Trend - Ashcomm'[Fiscal Date])
+  Total Written Sales (Ashcomm) - YTD Previous Year :: TOTALYTD([Total Written Sales (Ashcomm) - Previous Year],'Sales Trend - Ashcomm'[Fiscal Date])
+  Total Invoiced Sales (Ashcomm) - YTD Previous Year :: TOTALYTD([Total Invoiced Sales (Ashcomm) - Previous Year],'Sales Trend - Ashcomm'[Fiscal Date])
+  Total Invoiced Sales (Ashcomm) - % Change YTD YoY :: IF([Total Invoiced Sales (Ashcomm) - YTD Previous Year] = BLANK(), BLANK(), DIVIDE([Total Invoiced Sales (Ashcomm) - YTD Current Year], [Total Invoiced Sales (Ashcomm) - YTD Previous Year],BLANK())-1) 
+  Total Written Sales (Ashcomm) - % Change YTD YoY :: IF([Total Written Sales (Ashcomm) - YTD Previous Year] = BLANK(), BLANK(), DIVIDE([Total Written Sales (Ashcomm) - YTD Current Year], [Total Written Sales (Ashcomm) - YTD Previous Year],BLANK())-1) 
+
+=== Inventory Turns (3 meas) ===
+  COGS :: CALCULATE(SUM('Inventory Turns'[12 Month Annualized Cost Of Goods])) 
+  Avg Inventory :: CALCULATE(SUM('Inventory Turns'[12 Month On Hand Cost - Weekly Average])) 
+  Turns :: DIVIDE([COGS],[Avg Inventory])
+
+=== Current SS/SI (7 meas) ===
+  Current SI as % of SS :: IFERROR(DIVIDE(CALCULATE(SUM('Current SS/SI'[spdShippableInventory])),CALCULATE(SUM('Current SS/SI'[spdSafetyStock]))),0)
+  SI Neg :: CALCULATE(SUM('Current SS/SI'[SI Negative]))
+  Firm Demands :: CALCULATE(SUM('Current SS/SI'[spdFirmDemands]))
+  Firm Demands & Net Forecast :: CALCULATE(SUM('Current SS/SI'[spdFirmDemands])) + CALCULATE(SUM('Current SS/SI'[spdNetForecast]))
+  % COC :: IFERROR(IF(([Firm Demands] + [SI Neg]) / [Firm Demands] > 1, 1, IF(([Firm Demands] + [SI Neg]) / [Firm Demands] < 0, 0, ([Firm Demands] + [SI Neg]) / [Firm Demands])),0)
+  % COC w/ Net Forecast :: IFERROR(IF(([Firm Demands & Net Forecast] + [SI Neg]) / [Firm Demands & Net Forecast] > 1, 1, IF(([Firm Demands & Net Forecast] + [SI Neg]) / [Firm Demands & Net Forecast] < 0, 0, ([Firm Demands & Net Forecast] + [SI Neg]) / [Firm Demands & Net Forec
+  WeeksSupply :: DIVIDE(CALCULATE(SUM('Current SS/SI'[spdShippableInventory])),(CALCULATE(SUM('Current SS/SI'[spdNetForecast]))+CALCULATE(SUM('Current SS/SI'[spdFirmDemands]))))
+
+=== Placements - Wk (1 meas) ===
+  Current Placements - HS :: CALCULATE(SUM('Placements - Wk'[Current Placements]),'Placements - Wk'[Reporting Business Type] = "Ashley HomeStores")
+
+=== On Time (5 meas) ===
+  Total Shipped Quantity :: CALCULATE(SUM('On Time'[Shipped Quantity]))
+  Total On-Time % - Original Request Wk :: DIVIDE(CALCULATE(SUM('On Time'[Qty On Time - Orig Req Week])),[Total Shipped Quantity])
+  Total On-Time % - Original Promise Wk :: DIVIDE(CALCULATE(SUM('On Time'[Qty On Time - Orig Promise Week])),[Total Shipped Quantity])
+  Total On-Time % - Current Promise Wk :: DIVIDE(CALCULATE(SUM('On Time'[Qty On Time - Cur Promise Week])),[Total Shipped Quantity])
+  Total On-Time % - Current Request Wk :: DIVIDE(CALCULATE(SUM('On Time'[Qty On Time - Cur Req Week])),[Total Shipped Quantity])
+
+=== Future Orders - Current Mo (1 meas) ===
+  Consumption % :: DIVIDE(CALCULATE(SUM('Future Orders - Current Mo'[OFQ_0])),[Pro_Rslt_FC_0])
+
+=== Inventory Velocity (Historicals) (1 meas) ===
+  Inventory Velocity :: IFERROR( DIVIDE( CALCULATE(SUM('Inventory Velocity (Historicals)'[On Hand Qty])), CALCULATE(SUM('Inventory Velocity (Historicals)'[Promoted Resultant Forecast Quantity]))), BLANK() )
+
+=== PSW (3 meas) ===
+  FQty :: CALCULATE(SUM(PSW[Value]),PSW[Attribute] = "FQty")
+  PQty :: CALCULATE(SUM(PSW[Value]),PSW[Attribute] = "PQty")
+  SQty :: CALCULATE(SUM(PSW[Value]),PSW[Attribute] = "SQty")
+
+=== ATP (2) (2 meas) ===
+  ATP - Morning Verison :: CALCULATE(SUM('ATP (2)'[ATPQty]),'ATP (2)'[InsertedVersion] = 2)
+  ATP - Afternoon Verison :: CALCULATE(SUM('ATP (2)'[ATPQty]),'ATP (2)'[InsertedVersion] = 3)
+
+=== Product Details CALC ===
+  Finished Goods = IF(OR(AND(LEFT('Product Details'[Item Class Code],1)="Z",RIGHT('Product Details'[Item Class Code],1)="K"),OR('Product Details'[Item Class Code]="ZARP",'Product Details'[Item Class Code]="ZAHM")),"non-
+  xFuture Status = RELATED('Status'[Future Status])
+  Current Fcst Planner = RELATED('Planner'[ItemForecastPlannerID])
+  Number of Months Invoicing = DATEDIFF('Product Details'[Invoice Month],TODAY(),MONTH)
+  Invoice Month = IF('Product Details'[Initial Invoice Period]=BLANK(),BLANK(),COMBINEVALUES("/",LEFT('Product Details'[Initial Invoice Period],2),"15",RIGHT('Product Details'[Initial Invoice Period],4)))
+  xCurrent Status = RELATED('Status'[Current Status])
+  Item Desc & Color = COMBINEVALUES(" - ",'Product Details'[Item Description],'Product Details'[Colors])
+  Average Lead Time = RELATED('Vendor/SKU Lead Time'[AverageVendorLeadTime])
+  Lead Time Forecast Period = RELATED('Vendor/SKU Lead Time'[LeadTimeForecastPeriod])
+  xUnit Price = RELATED('Unit Price'[Unit Price])
+  ABC Code = RELATED('ABC Codes'[ABC Logility])
+  ABC/XYZ Code = RELATED('ABC Codes'[ABCXYZ Code])
+  Lifestyle = RELATED(PIM[SeriesAshleyHomestore])
+  Standard Color = RELATED(Colors[Standard Color])
+
+=== SupplyPlanDetail derived cols ===
+  Item/Whse = COMBINEVALUES("-",SupplyPlanDetail[spdItem],SupplyPlanDetail[spdWarehouse])
+  BeginningOnHandQty = IF( WEEKNUM(SupplyPlanDetail[Run Date])=WEEKNUM(SupplyPlanDetail[spdWeekEnding]), SupplyPlanDetail[spdBeginingBalance], (SupplyPlanDetail[spdShippable
+  Production = SupplyPlanDetail[spdFirmProduction] + SupplyPlanDetail[spdPlannedProduction]
+  PurchaseOrders = SupplyPlanDetail[spdFirmPurchaseOrders] + SupplyPlanDetail[spdPlannedPurchaseOrders]
+  NetTransfers = SupplyPlanDetail[spdInTransitTransferIn] + SupplyPlanDetail[spdOnOrderTransferIn] + SupplyPlanDetail[spdPlannedTransferIn] - SupplyPlanDetail[spdFirmT
+  SI Negative = IF(SupplyPlanDetail[spdShippableInventory] < 0, SupplyPlanDetail[spdShippableInventory], 0)
+  Make-Buy Code = RELATED('Make-Buy Code'[MK_BuyCODE])
+  PlannedTransferIn = IF(SupplyPlanDetail[Make-Buy Code] = "X", SupplyPlanDetail[spdPlannedTransferIn], 0)
+  UnplannedTransferIn = IF(SupplyPlanDetail[Make-Buy Code] <> "X", SupplyPlanDetail[spdPlannedTransferIn], 0)
+  SI w/o Net Forecast = SupplyPlanDetail[spdShippableInventory] + SupplyPlanDetail[spdNetForecast]
+  Max Run Date Flag = IF(SupplyPlanDetail[Run Date] = MAX(SupplyPlanDetail[Run Date]), "1", "0")
+  Run Date Filter = IF(SupplyPlanDetail[Run Date] = MAX(SupplyPlanDetail[Run Date]), "Today", FORMAT(SupplyPlanDetail[Run Date],"M/D/YY"))
+
+=== On Time derived cols ===
+  Item/Whse = COMBINEVALUES("-",'On Time'[Item SKU],'On Time'[Warehouse])
+  $ = 'On Time'[Shipped Quantity] * RELATED('Product Details'[xUnit Price])
+
+=== Placements derived cols ===
+
+=== Demand Data derived cols ===
+  Fiscal Month = RELATED(AshleyFiscalCalendar[Fiscal Month])
+  Item/Whse/Month = COMBINEVALUES("/",'Demand Data'[Item SKU],'Demand Data'[Warehouse Code],'Demand Data'[Fiscal Month])
+  Seasonality Factor = RELATED(Seasonality[Factor]) / 100
+  Deseasonalized Demand = Divide('Demand Data'[Actual Demand],'Demand Data'[Seasonality Factor])
+
+=== Logility - Current Mo derived cols ===
+  Concatenate = COMBINEVALUES("-",'Logility - Current Mo'[Item-Lvl1],'Logility - Current Mo'[Location]) 
+  Go Back = IF(WEEKDAY('Logility - Current Mo'[FileDate])=2,-3,-1)
+  Date of Forecast = IF(MIN('Logility - Current Mo'[FileDate]),'Logility - Current Mo'[FileDate]-1, IF(WEEKDAY('Logility - Current Mo'[FileDate])=2,'Logility - Current Mo'
+  Max FileDate Flag = IF('Logility - Current Mo'[FileDate] = MAX('Logility - Current Mo'[FileDate]), "1", "0")
+  Logility Fcst Max Date Flag = IF('Logility - Current Mo'[FileDate] = MAX('Logility - Current Mo'[FileDate]),"1","0")
+
+=== Sales Trend - AFI derived cols ===
+  Wks/Mo = SWITCH('Sales Trend - AFI'[Fiscal Month], 1, 4, 2, 4, 3, 5, 4, 4, 5, 4, 6, 5, 7, 4, 8, 4, 9, 5, 10, 4, 11, 4, 12, 5)
+  Weekly Qty Ordered = DIVIDE('Sales Trend - AFI'[Quantity Ordered],'Sales Trend - AFI'[Wks/Mo])
+  Whse Group = SWITCH('Sales Trend - AFI'[AFI Warehouse Code], "335","335", "232","232", "C","C/CNW", "CNW","C/CNW", "AFI")
+
+=== KEY RELS ===
+  Logility - Current Mo[FileDate] -> AshleyFiscalCalendar[Transaction Date]
+  SupplyPlanDetail[spdWeekEnding] -> AshleyFiscalCalendar[Transaction Date]
+  Current SS/SI[spdWeekEnding] -> AshleyFiscalCalendar[Transaction Date]
+  On Time[Item/Whse] -> DRP Planner[Item/Whse]
+  SupplyPlanDetail[Item/Whse] -> DRP Planner[Item/Whse]
+  Demand Fulfillment[Item/Whse] -> DRP Planner[Item/Whse]
+  Current SS/SI[Item/Whse] -> DRP Planner[Item/Whse]
+  Future Orders - Current Mo[FileDate] -> AshleyFiscalCalendar[Transaction Date]
+  Ordered Qty - Requested Week[OriginalReqWeekEnding] -> AshleyFiscalCalendar[Transaction Date]
+  Future Orders - Month End[dfoRunDate] -> AshleyFiscalCalendar[Transaction Date]
+  SupplyPlanDetail[Item/Whse] -> Make-Buy Code[Item/Whse]
+  Current SS/SI[Item/Whse] -> Make-Buy Code[Item/Whse]
+  ATP Week Ending[WeekEnding] -> AshleyFiscalCalendar[Transaction Date]
+  PSW[Weekday] -> AshleyFiscalCalendar[Transaction Date]
+  Demand Fulfillment[Fiscal Date] -> AshleyFiscalCalendar[Transaction Date]
+  Placements[Month Ended] -> AshleyFiscalCalendar[Transaction Date]
+  Placements - Wk[Week Ended] -> AshleyFiscalCalendar[Transaction Date]
+  Placements[ABC Account-Current Year] -> ABC Account[ABC Account-Current Year]
+  Placements - Wk[ABC Account-Current Year] -> ABC Account[ABC Account-Current Year]
+  Inventory Turns[Fiscal Date] -> AshleyFiscalCalendar[Transaction Date]
+  Annualized Fcst[Week Ended] -> AshleyFiscalCalendar[Transaction Date]
+  Demand Data[Fiscal Date] -> AshleyFiscalCalendar[Transaction Date]
+  Forecast - Logility[Forecasted Month] -> AshleyFiscalCalendar[Transaction Date]
+  Demand Data[Warehouse Code] -> Warehouse Master[Warehouse Code]
+  Inventory Turns[Warehouse Code] -> Warehouse Master[Warehouse Code]
+  Annualized Fcst[Warehouse Code] -> Warehouse Master[Warehouse Code]
+  Placements[Reporting Business Type] -> Reporting Business Type[Reporting Business Type]
+  Placements - Wk[Reporting Business Type] -> Reporting Business Type[Reporting Business Type]
+  On Time[Warehouse] -> Warehouse Master[Warehouse Code]
+  Ordered Qty - Requested Week[Warehouse] -> Warehouse Master[Warehouse Code]
+  ATP Week Ending[Warehouse] -> Warehouse Master[Warehouse Code]
+  Future Orders - Month End[dfoWarehouse] -> Warehouse Master[Warehouse Code]
+  Future Orders - Current Mo[Location] -> Warehouse Master[Warehouse Code]
+  Forecast - Logility[dfcWarehouse] -> Warehouse Master[Warehouse Code]
+  Logility - Current Mo[Location] -> Warehouse Master[Warehouse Code]
+  SupplyPlanDetail[spdWarehouse] -> Warehouse Master[Warehouse Code]
+  Current SS/SI[spdWarehouse] -> Warehouse Master[Warehouse Code]
+  Demand Fulfillment[AFI Warehouse Code] -> Warehouse Master[Warehouse Code]
+  PSW[Whse] -> Warehouse Master[Warehouse Code]
+  Forecast Accuracy[AFI Warehouse Code] -> Warehouse Master[Warehouse Code]
+  Forecast Accuracy[Fiscal Date] -> AshleyFiscalCalendar[Transaction Date]
+  Inventory Velocity (Historicals)[AFI Warehouse Code] -> Warehouse Master[Warehouse Code]
+  Inventory Velocity (Historicals)[Fiscal Date] -> AshleyFiscalCalendar[Transaction Date]
+  Demand Data[Item SKU] -> Product Details[Item SKU]
+  Placements[Item SKU] -> Product Details[Item SKU]
+  Inventory Turns[Item SKU] -> Product Details[Item SKU]
+  Status[Item SKU] -> Product Details[Item SKU]
+  Placements - Wk[Item SKU] -> Product Details[Item SKU]
+  Planner[Item SKU] -> Product Details[Item SKU]
+  Annualized Fcst[Item SKU] -> Product Details[Item SKU]
+  On Time[Item SKU] -> Product Details[Item SKU]
+  Unit Price[Item SKU] -> Product Details[Item SKU]
+  ABC Codes[Item SKU] -> Product Details[Item SKU]
+  Ordered Qty - Requested Week[ItemSKU] -> Product Details[Item SKU]
+  ATP Week Ending[ItemSKU] -> Product Details[Item SKU]
+  Collective Class[Item SKU] -> Product Details[Item SKU]
+  Future Orders - Month End[dfoItemNum] -> Product Details[Item SKU]
+  Future Orders - Current Mo[Item-Lvl1] -> Product Details[Item SKU]
+  Forecast - Logility[dfcItem] -> Product Details[Item SKU]
+  Logility - Current Mo[Item-Lvl1] -> Product Details[Item SKU]
+  SupplyPlanDetail[spdItem] -> Product Details[Item SKU]
+  PSW[Item] -> Product Details[Item SKU]
+  Current SS/SI[spdItem] -> Product Details[Item SKU]
+  Inventory Velocity (Historicals)[SCP Item] -> Product Details[Item SKU]
+  Demand Fulfillment[DF Item] -> Product Details[Item SKU]
+  Forecast Accuracy[SCP Item] -> Product Details[Item SKU]
+  Vendor[dinItem] -> Product Details[Item SKU]
+  Vendor/SKU Lead Time[dinItem] -> Product Details[Item SKU]
+  Nailed[Item SKU] -> Product Details[Item SKU]
+  Sales Trend - AFI[Item SKU] -> Product Details[Item SKU]
+  Sales Trend - Ashcomm[Item SKU] -> Product Details[Item SKU]
+  Sales Trend - AFI[Fiscal Date] -> AshleyFiscalCalendar[Transaction Date]
+  Sales Trend - AFI[AFI Warehouse Code] -> Warehouse Master[Warehouse Code]
+  Sales Trend - Retail[Item SKU] -> Product Details[Item SKU]
+  Sales Trend - Retail[Fiscal Date] -> AshleyFiscalCalendar[Transaction Date]
+  ATP (2)[ItemSKU] -> Product Details[Item SKU]
+  ATP (2)[Warehouse] -> Warehouse Master[Warehouse Code]
+  ATP (2)[WeekEnding] -> AshleyFiscalCalendar[Transaction Date]
+  Forecast Accuracy[Item/Whse/Month] -> Seasonality[Item/Whse/Period] INACTIVE
+  Demand Data[Item/Whse/Month] -> Seasonality[Item/Whse/Period]
+  Product Details[Item SKU] -> PIM[id]
+  Product Details[Colors] -> Colors[Colors]
+  CurrentProductDetails[Item SKU] -> Status[Item SKU] INACTIVE
+  CurrentProductDetails[Item SKU] -> Planner[Item SKU] INACTIVE
+  CurrentProductDetails[Item SKU] -> Unit Price[Item SKU] INACTIVE
+  CurrentProductDetails[Item SKU] -> Product Details[Item SKU]

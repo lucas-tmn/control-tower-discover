@@ -1,0 +1,34 @@
+{
+  "formatVersion": "202502",
+  "computeEngineSettings": {
+    "allowModernEvaluationEngine": true
+  },
+  "name": "df_actual_demand",
+  "queryGroups": [],
+  "documentLocale": "en-US",
+  "queriesMetadata": {
+    "DimCustomers(AFISales_DW)": {
+      "queryId": "d34ea0f0-a2ce-4aac-95e8-fd38e1f4384b",
+      "queryName": "DimCustomers(AFISales_DW)",
+      "loadEnabled": false
+    },
+    "DimCustomers(AFISales_DW)_DataDestination": {
+      "queryId": "5c589df8-a3a4-4bba-9398-2393f6fbf43b",
+      "queryName": "DimCustomers(AFISales_DW)_DataDestination",
+      "isHidden": true,
+      "loadEnabled": false
+    }
+  },
+  "connections": [
+    {
+      "path": "ashley-edw.database.windows.net;ASHLEY_EDW",
+      "kind": "SQL",
+      "connectionId": "{\"ClusterId\":\"e6436dba-643f-44c3-ad6f-51a8cbc45b81\",\"DatasourceId\":\"67192c57-5e5c-4ad4-8801-858e75656fe4\"}"
+    },
+    {
+      "path": "Lakehouse",
+      "kind": "Lakehouse",
+      "connectionId": "{\"ClusterId\":\"e6436dba-643f-44c3-ad6f-51a8cbc45b81\",\"DatasourceId\":\"b4311980-3d3b-49be-bd11-7e2f8e424e19\"}"
+    }
+  ]
+}

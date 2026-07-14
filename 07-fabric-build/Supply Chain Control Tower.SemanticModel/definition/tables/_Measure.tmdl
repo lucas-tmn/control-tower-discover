@@ -1,0 +1,716 @@
+/// Central measure table for Control Tower KPIs and supporting calculations. Contains no business rows; used only to organize semantic model measures.
+table _Measure
+	lineageTag: 3cc2eedd-0d84-484f-80b3-32e5e823f881
+
+	/// Total consensus forecast quantity in the current filter context.
+	measure Qty_Forecast = SUM(fact_forecast_kpi[qty_forecast])
+		formatString: #,0.00
+		displayFolder: 1. Main KPIs - Forecast Accuracy
+		lineageTag: 9df2fe10-2b16-474c-ac57-8db761aea599
+
+	/// Total actual demand quantity in the current filter context.
+	measure Qty_Actual = SUM(fact_forecast_kpi[qty_actual])
+		formatString: #,0.00
+		displayFolder: 1. Main KPIs - Forecast Accuracy
+		lineageTag: 811b72b7-1d61-4996-aeea-f27e8f648237
+
+	/// Total signed forecast error, stored as Forecast minus Actual. Positive values indicate over-forecast.
+	measure Qty_Bias =
+			
+			SUM(fact_forecast_kpi[qty_fcst_error])
+		formatString: #,0
+		displayFolder: 1. Main KPIs - Forecast Accuracy
+		lineageTag: 91dff967-1957-4ab3-86b5-a2a1f677059c
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	/// Total naive forecast quantity used as a baseline comparison against the consensus forecast.
+	measure Qty_NForecast = SUM(fact_forecast_kpi[qty_naive_forecast])
+		formatString: #,0.00
+		displayFolder: 1. Main KPIs - Forecast Accuracy
+		lineageTag: 78ffc136-3f74-45fe-bca4-9bb6ea734e54
+
+	/// Total absolute forecast error used for wMAPE, MAPE, and forecast accuracy calculations.
+	measure Qty_Abs_Bias = SUM(fact_forecast_kpi[qty_abs_fcst_error])
+		formatString: #,0
+		displayFolder: 1. Main KPIs - Forecast Accuracy
+		lineageTag: e5764b17-327c-42c5-a09f-5524d507b239
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	/// Total signed naive forecast error used to evaluate baseline forecast performance.
+	measure Qty_NBias = [Qty_NForecast]-[Qty_Actual]
+		formatString: #,0
+		displayFolder: 1. Main KPIs - Forecast Accuracy
+		lineageTag: 390104c8-c8a5-43d4-9427-86fff6a9da46
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	/// Total absolute naive forecast error used for naive wMAPE and process value add calculations.
+	measure Qty_Abs_NBias = SUM(fact_forecast_kpi[qty_abs_naive_fcst_error])
+		formatString: #,0
+		displayFolder: 1. Main KPIs - Forecast Accuracy
+		lineageTag: bc6afe68-f211-4262-b959-08c14f7c2dc9
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	/// Weighted mean absolute percentage error: absolute forecast error divided by actual demand.
+	measure Pct_wMAPE = ```
+			DIVIDE([Qty_Abs_Bias] , [Qty_Actual] , BLANK() ) 
+			```
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: 1. Main KPIs - Forecast Accuracy
+		lineageTag: ec0572e3-a4ba-4bb0-a420-db626c8c8aad
+
+	/// Weighted signed forecast bias percentage: signed forecast error divided by actual demand. Positive values indicate over-forecast.
+	measure Pct_MPE = DIVIDE([Qty_Bias] , [Qty_Actual] , BLANK())
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: 1. Main KPIs - Forecast Accuracy
+		lineageTag: f02ed56f-1f56-4593-81df-672aca3cd9ae
+
+	/// Mean absolute percentage error across valid rows where actual demand is nonzero.
+	measure Pct_MAPE = AVERAGEX ( FILTER ( fact_forecast_kpi, fact_forecast_kpi[valid_actual_nonzero_flag] = 1 ), DIVIDE ( fact_forecast_kpi[qty_abs_fcst_error], fact_forecast_kpi[qty_actual] ) )
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: 1. Main KPIs - Forecast Accuracy
+		lineageTag: 5ea554a0-13f0-4a53-a329-23d55674b077
+
+	/// Root mean squared forecast error across valid observations. Penalizes larger forecast misses more heavily.
+	measure RMSE = SQRT ( DIVIDE ( SUM ( fact_forecast_kpi[qty_squared_fcst_error] ), SUM ( fact_forecast_kpi[valid_obs_flag] ) ) )
+		displayFolder: 1. Main KPIs - Forecast Accuracy
+		lineageTag: 5d8f3f9b-fe59-4908-a108-545ba165cbe7
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// Process value add: naive wMAPE minus forecast wMAPE. Positive values indicate the consensus forecast outperformed the naive baseline.
+	measure ProcessValueAdd = ```
+			[Pct_NwMAPE] - [Pct_wMAPE] 
+			```
+		formatString: #,0.0%;-#,0.0%;#,0.0%
+		displayFolder: 1. Main KPIs - Forecast Accuracy
+		lineageTag: 07e5c8e3-8fc7-4921-8925-63e5e2780bcf
+
+	/// Naive weighted mean absolute percentage error: absolute naive forecast error divided by actual demand.
+	measure Pct_NwMAPE = ```
+			DIVIDE([Qty_Abs_NBias] , [Qty_Actual] , BLANK() ) 
+			```
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: 1. Main KPIs - Forecast Accuracy
+		lineageTag: 8ef262eb-e12d-4ae0-b592-6aba3a04911f
+
+	/// Forecast accuracy percentage calculated as 1 minus wMAPE. Future fiscal periods return blank.
+	measure Pct_ForecastAccuracy = ```
+			
+			VAR MaxDateInRow = MAX('fact_forecast_kpi'[dt_fsc_month_last])
+			VAR CurrentDate = TODAY()
+			VAR wMAPE = [Pct_wMAPE]
+			
+			RETURN
+			IF (
+			    -- Điều kiện: Nếu ngày tháng dự báo nhỏ hơn hoặc bằng hôm nay
+			    MaxDateInRow <= CurrentDate,
+			    
+			    -- Thực hiện công thức gốc, cho phép kết quả âm
+			    1 - wMAPE,
+			    
+			    -- Nếu là ngày tương lai thì để trống
+			    BLANK()
+			)
+			```
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: 1. Main KPIs - Forecast Accuracy
+		lineageTag: 75955bb4-f1fd-453a-971a-9a5431dbd1c8
+
+	/// Forecast accuracy for the prior fiscal month window. For multi-month selections, compares against the same-length prior fiscal month window.
+	measure Pct_ForecastAccuracy_lm = ```
+			
+			VAR CurrentMonths =
+			    SELECTCOLUMNS(
+			        VALUES(dim_calendar[num_fsc_month_year]),
+			        "CurrentMonthKey", dim_calendar[num_fsc_month_year]
+			    )
+			
+			VAR PrevMonths =
+			    SELECTCOLUMNS(
+			        GENERATE(
+			            CurrentMonths,
+			            VAR CurrentMonthKey = [CurrentMonthKey]
+			            RETURN
+			                SELECTCOLUMNS(
+			                    TOPN(
+			                        1,
+			                        FILTER(
+			                            ALL(dim_calendar[num_fsc_month_year]),
+			                            dim_calendar[num_fsc_month_year] < CurrentMonthKey
+			                        ),
+			                        dim_calendar[num_fsc_month_year], DESC
+			                    ),
+			                    "PrevMonthKey", dim_calendar[num_fsc_month_year]
+			                )
+			        ),
+			        "num_fsc_month_year", [PrevMonthKey]
+			    )
+			
+			RETURN
+			CALCULATE(
+			    [Pct_ForecastAccuracy],
+			    REMOVEFILTERS(dim_calendar),
+			    TREATAS(
+			        PrevMonths,
+			        dim_calendar[num_fsc_month_year]
+			    )
+			)
+			
+			```
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: 1. Main KPIs - Forecast Accuracy
+		lineageTag: 0f86f9bd-ede3-42b5-87ed-6b422a38148f
+
+	/// Change in forecast accuracy versus the prior fiscal month comparison window.
+	measure Delta_ForecastAccuracy_MoM = ```
+			[Pct_ForecastAccuracy] - [Pct_ForecastAccuracy_lm] 
+			```
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: 1. Main KPIs - Forecast Accuracy
+		lineageTag: dc68ca40-69d4-4998-8b3f-82faed19749d
+
+	/// Difference between wMAPE and absolute signed bias percentage. Highlights error remaining after directional bias is removed.
+	measure TrueError = ```
+			[Pct_wMAPE] - ABS([Pct_MPE]) 
+			```
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: 1. Main KPIs - Forecast Accuracy
+		lineageTag: 375c4197-03e0-4c07-b087-41edab193e46
+
+	/// wMAPE filtered to Lag-0 forecast horizon.
+	measure Pct_wMAPE_Lag0 = CALCULATE([Pct_wMAPE] , dim_forecast_horizon[num_rank] = 1 )
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: 1. Main KPIs - Forecast Accuracy
+		lineageTag: 04fc3e4d-ab4a-4e2e-ac39-4119045b4eb1
+
+	/// wMAPE filtered to Lag-1 forecast horizon.
+	measure Pct_wMAPE_Lag1 = CALCULATE([Pct_wMAPE] , dim_forecast_horizon[num_rank] = 2 )
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: 1. Main KPIs - Forecast Accuracy
+		lineageTag: ba78b597-69ce-4d9e-9fbb-fdcb29000e60
+
+	/// wMAPE filtered to Lag-2 forecast horizon.
+	measure Pct_wMAPE_Lag2 = CALCULATE([Pct_wMAPE] , dim_forecast_horizon[num_rank] = 3 )
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: 1. Main KPIs - Forecast Accuracy
+		lineageTag: a0157ed3-170b-41f2-ad1b-68930bce90d8
+
+	/// wMAPE filtered to Lag-3 forecast horizon.
+	measure Pct_wMAPE_Lag3 = CALCULATE([Pct_wMAPE] , dim_forecast_horizon[num_rank] = 4 )
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: 1. Main KPIs - Forecast Accuracy
+		lineageTag: cb586b4c-8230-4b73-9c35-9fa2d55eb01b
+
+	/// wMAPE filtered to Lag-4 forecast horizon.
+	measure Pct_wMAPE_Lag4 = CALCULATE([Pct_wMAPE] , dim_forecast_horizon[num_rank] = 5 )
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: 1. Main KPIs - Forecast Accuracy
+		lineageTag: 550541ca-0fe4-493d-a43e-34fe1ba61295
+
+	/// Actual demand quantity filtered to the Lag-0 horizon. Legacy name references the prior 2-week label.
+	measure Qty_Actual_2W = CALCULATE(SUM(fact_forecast_kpi[qty_actual]), dim_forecast_horizon[num_rank] = 1)
+		displayFolder: 1. Main KPIs - Forecast Accuracy
+		lineageTag: 959f8982-718e-459d-9190-02b65417e70a
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// Total quantity from flat forecast/actual records where status is Invoice.
+	measure Qt_Invoice = ```
+			
+			    CALCULATE(
+			        SUM('fact_flat_forecast_actual'[qty]),
+			        'fact_flat_forecast_actual'[code_status] = "Invoice"
+			    )
+			```
+		displayFolder: 1. Main KPIs - Forecast Accuracy
+		lineageTag: 8129362f-2d6c-454b-b845-404d9aa055a6
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// Total quantity from flat forecast/actual records where status is Open Order.
+	measure Qt_Open_SO = ```
+			
+			    CALCULATE(
+			        SUM('fact_flat_forecast_actual'[qty]),
+			        'fact_flat_forecast_actual'[code_status] = "Open Order"
+			    )
+			```
+		displayFolder: 1. Main KPIs - Forecast Accuracy
+		lineageTag: 2e451320-d8bb-42a5-a000-4db59eff6733
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// Quantity for the latest available forecast version in the selected context. Used for version comparison visuals.
+	measure Qty_Latest_V =
+			
+			VAR VersionTable =
+			    FILTER(
+			        ALLSELECTED('fact_flat_forecast_actual'),
+			        LEFT('fact_flat_forecast_actual'[name_version], 2) = "V "
+			    )
+			
+			VAR LatestVersion =
+			    CALCULATE(
+			        MAX('fact_flat_forecast_actual'[name_version]),
+			        VersionTable
+			    )
+			
+			VAR YearText = MID(LatestVersion, 3, 4)
+			VAR MonthText = RIGHT(LatestVersion, 2)
+			
+			VAR DATE_VERSION =
+			    DATE(
+			        VALUE(YearText),
+			        VALUE(MonthText),
+			        1
+			    )
+			
+			RETURN
+			IF(
+			    MAX('fact_flat_forecast_actual'[dt_fsc_month_last]) >= DATE_VERSION,
+			    CALCULATE(
+			        SUM('fact_flat_forecast_actual'[qty]),
+			        'fact_flat_forecast_actual'[name_version] = LatestVersion
+			    ),
+			    BLANK()
+			)
+		displayFolder: 1. Main KPIs - Forecast Accuracy
+		lineageTag: 8db59774-8e5d-42eb-892c-307226212ea8
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// Quantity for the second latest available forecast version in the selected context.
+	measure Qty_V_2 =
+			
+			VAR VersionTable =
+			    FILTER(
+			        ALLSELECTED('fact_flat_forecast_actual'),
+			        LEFT('fact_flat_forecast_actual'[name_version], 2) = "V "
+			    )
+			
+			VAR LatestVersion =
+			    CALCULATE(
+			        MAX('fact_flat_forecast_actual'[name_version]),
+			        VersionTable
+			    )
+			
+			VAR SecondLatestVersion =
+			    CALCULATE(
+			        MAX('fact_flat_forecast_actual'[name_version]),
+			        FILTER(
+			            VersionTable,
+			            'fact_flat_forecast_actual'[name_version] < LatestVersion
+			        )
+			    )
+			
+			VAR YearText = MID(SecondLatestVersion, 3, 4)
+			VAR MonthText = RIGHT(SecondLatestVersion, 2)
+			
+			VAR DATE_VERSION =
+			    DATE(
+			        VALUE(YearText),
+			        VALUE(MonthText),
+			        1
+			    )
+			
+			RETURN
+			IF(
+			    MAX('fact_flat_forecast_actual'[dt_fsc_month_last]) >= DATE_VERSION,
+			    CALCULATE(
+			        SUM('fact_flat_forecast_actual'[qty]),
+			        'fact_flat_forecast_actual'[name_version] = SecondLatestVersion
+			    ),
+			    BLANK()
+			)
+		displayFolder: 1. Main KPIs - Forecast Accuracy
+		lineageTag: 87330796-96b6-4155-8a50-6c309eb55b59
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// Quantity for the third latest available forecast version in the selected context.
+	measure Qty_V_3 =
+			
+			VAR VersionTable =
+			    FILTER(
+			        ALLSELECTED('fact_flat_forecast_actual'),
+			        LEFT('fact_flat_forecast_actual'[name_version], 2) = "V "
+			    )
+			
+			VAR LatestVersion =
+			    CALCULATE(
+			        MAX('fact_flat_forecast_actual'[name_version]),
+			        VersionTable
+			    )
+			
+			VAR SecondLatestVersion =
+			    CALCULATE(
+			        MAX('fact_flat_forecast_actual'[name_version]),
+			        FILTER(
+			            VersionTable,
+			            'fact_flat_forecast_actual'[name_version] < LatestVersion
+			        )
+			    )
+			
+			VAR ThirdLatestVersion =
+			    CALCULATE(
+			        MAX('fact_flat_forecast_actual'[name_version]),
+			        FILTER(
+			            VersionTable,
+			            'fact_flat_forecast_actual'[name_version] < SecondLatestVersion
+			        )
+			    )
+			
+			VAR YearText = MID(ThirdLatestVersion, 3, 4)
+			VAR MonthText = RIGHT(ThirdLatestVersion, 2)
+			
+			VAR DATE_VERSION =
+			    DATE(
+			        VALUE(YearText),
+			        VALUE(MonthText),
+			        1
+			    )
+			
+			RETURN
+			IF(
+			    MAX('fact_flat_forecast_actual'[dt_fsc_month_last]) >= DATE_VERSION,
+			    CALCULATE(
+			        SUM('fact_flat_forecast_actual'[qty]),
+			        'fact_flat_forecast_actual'[name_version] = ThirdLatestVersion
+			    ),
+			    BLANK()
+			)
+		displayFolder: 1. Main KPIs - Forecast Accuracy
+		lineageTag: 38c00106-706d-43b3-807a-ec740b682601
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// Quantity for the fourth latest available forecast version in the selected context.
+	measure Qty_V_4 =
+			
+			VAR VersionTable =
+			    FILTER(
+			        ALLSELECTED('fact_flat_forecast_actual'),
+			        LEFT('fact_flat_forecast_actual'[name_version], 2) = "V "
+			    )
+			
+			VAR LatestVersion =
+			    CALCULATE(
+			        MAX('fact_flat_forecast_actual'[name_version]),
+			        VersionTable
+			    )
+			
+			VAR SecondLatestVersion =
+			    CALCULATE(
+			        MAX('fact_flat_forecast_actual'[name_version]),
+			        FILTER(
+			            VersionTable,
+			            'fact_flat_forecast_actual'[name_version] < LatestVersion
+			        )
+			    )
+			
+			VAR ThirdLatestVersion =
+			    CALCULATE(
+			        MAX('fact_flat_forecast_actual'[name_version]),
+			        FILTER(
+			            VersionTable,
+			            'fact_flat_forecast_actual'[name_version] < SecondLatestVersion
+			        )
+			    )
+			
+			VAR FourthLatestVersion =
+			    CALCULATE(
+			        MAX('fact_flat_forecast_actual'[name_version]),
+			        FILTER(
+			            VersionTable,
+			            'fact_flat_forecast_actual'[name_version] < ThirdLatestVersion
+			        )
+			    )
+			
+			VAR YearText = MID(FourthLatestVersion, 3, 4)
+			VAR MonthText = RIGHT(FourthLatestVersion, 2)
+			
+			VAR DATE_VERSION =
+			    DATE(
+			        VALUE(YearText),
+			        VALUE(MonthText),
+			        1
+			    )
+			
+			RETURN
+			IF(
+			    MAX('fact_flat_forecast_actual'[dt_fsc_month_last]) >= DATE_VERSION,
+			    CALCULATE(
+			        SUM('fact_flat_forecast_actual'[qty]),
+			        'fact_flat_forecast_actual'[name_version] = FourthLatestVersion
+			    ),
+			    BLANK()
+			)
+		displayFolder: 1. Main KPIs - Forecast Accuracy
+		lineageTag: cefe7e96-3dc7-4f7c-a4a9-d8c07383f511
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// Quantity for the fifth latest available forecast version in the selected context.
+	measure Qty_V_5 =
+			
+			VAR VersionTable =
+			    FILTER(
+			        ALLSELECTED('fact_flat_forecast_actual'),
+			        LEFT('fact_flat_forecast_actual'[name_version], 2) = "V "
+			    )
+			
+			VAR LatestVersion =
+			    CALCULATE(
+			        MAX('fact_flat_forecast_actual'[name_version]),
+			        VersionTable
+			    )
+			
+			VAR SecondLatestVersion =
+			    CALCULATE(
+			        MAX('fact_flat_forecast_actual'[name_version]),
+			        FILTER(
+			            VersionTable,
+			            'fact_flat_forecast_actual'[name_version] < LatestVersion
+			        )
+			    )
+			
+			VAR ThirdLatestVersion =
+			    CALCULATE(
+			        MAX('fact_flat_forecast_actual'[name_version]),
+			        FILTER(
+			            VersionTable,
+			            'fact_flat_forecast_actual'[name_version] < SecondLatestVersion
+			        )
+			    )
+			
+			VAR FourthLatestVersion =
+			    CALCULATE(
+			        MAX('fact_flat_forecast_actual'[name_version]),
+			        FILTER(
+			            VersionTable,
+			            'fact_flat_forecast_actual'[name_version] < ThirdLatestVersion
+			        )
+			    )
+			
+			VAR FifthLatestVersion =
+			    CALCULATE(
+			        MAX('fact_flat_forecast_actual'[name_version]),
+			        FILTER(
+			            VersionTable,
+			            'fact_flat_forecast_actual'[name_version] < FourthLatestVersion
+			        )
+			    )
+			
+			VAR YearText = MID(FifthLatestVersion, 3, 4)
+			VAR MonthText = RIGHT(FifthLatestVersion, 2)
+			
+			VAR DATE_VERSION =
+			    DATE(
+			        VALUE(YearText),
+			        VALUE(MonthText),
+			        1
+			    )
+			
+			RETURN
+			IF(
+			    MAX('fact_flat_forecast_actual'[dt_fsc_month_last]) >= DATE_VERSION,
+			    CALCULATE(
+			        SUM('fact_flat_forecast_actual'[qty]),
+			        'fact_flat_forecast_actual'[name_version] = FifthLatestVersion
+			    ),
+			    BLANK()
+			)
+		displayFolder: 1. Main KPIs - Forecast Accuracy
+		lineageTag: 14666e9f-f9d9-4e3c-bd36-f76c12ee79d4
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// Quantity for the sixth latest available forecast version in the selected context.
+	measure Qty_V_6 =
+			
+			VAR VersionTable =
+			    FILTER(
+			        ALLSELECTED('fact_flat_forecast_actual'),
+			        LEFT('fact_flat_forecast_actual'[name_version], 2) = "V "
+			    )
+			
+			VAR LatestVersion =
+			    CALCULATE(
+			        MAX('fact_flat_forecast_actual'[name_version]),
+			        VersionTable
+			    )
+			
+			VAR SecondLatestVersion =
+			    CALCULATE(
+			        MAX('fact_flat_forecast_actual'[name_version]),
+			        FILTER(
+			            VersionTable,
+			            'fact_flat_forecast_actual'[name_version] < LatestVersion
+			        )
+			    )
+			
+			VAR ThirdLatestVersion =
+			    CALCULATE(
+			        MAX('fact_flat_forecast_actual'[name_version]),
+			        FILTER(
+			            VersionTable,
+			            'fact_flat_forecast_actual'[name_version] < SecondLatestVersion
+			        )
+			    )
+			
+			VAR FourthLatestVersion =
+			    CALCULATE(
+			        MAX('fact_flat_forecast_actual'[name_version]),
+			        FILTER(
+			            VersionTable,
+			            'fact_flat_forecast_actual'[name_version] < ThirdLatestVersion
+			        )
+			    )
+			
+			VAR FifthLatestVersion =
+			    CALCULATE(
+			        MAX('fact_flat_forecast_actual'[name_version]),
+			        FILTER(
+			            VersionTable,
+			            'fact_flat_forecast_actual'[name_version] < FourthLatestVersion
+			        )
+			    )
+			
+			VAR SixthLatestVersion =
+			    CALCULATE(
+			        MAX('fact_flat_forecast_actual'[name_version]),
+			        FILTER(
+			            VersionTable,
+			            'fact_flat_forecast_actual'[name_version] < FifthLatestVersion
+			        )
+			    )
+			
+			VAR YearText = MID(SixthLatestVersion, 3, 4)
+			VAR MonthText = RIGHT(SixthLatestVersion, 2)
+			
+			VAR DATE_VERSION =
+			    DATE(
+			        VALUE(YearText),
+			        VALUE(MonthText),
+			        1
+			    )
+			
+			RETURN
+			IF(
+			    MAX('fact_flat_forecast_actual'[dt_fsc_month_last]) >= DATE_VERSION,
+			    CALCULATE(
+			        SUM('fact_flat_forecast_actual'[qty]),
+			        'fact_flat_forecast_actual'[name_version] = SixthLatestVersion
+			    ),
+			    BLANK()
+			)
+		displayFolder: 1. Main KPIs - Forecast Accuracy
+		lineageTag: 493af4d3-3f33-4b84-b59a-3f0d2cff0293
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// Root mean squared naive forecast error across valid observations. Used to compare the naive baseline against the consensus forecast.
+	measure RMSE_Naive = SQRT ( DIVIDE ( SUM ( fact_forecast_kpi[qty_squared_naive_fcst_error] ), SUM ( fact_forecast_kpi[valid_obs_flag] ) ) )
+		displayFolder: 1. Main KPIs - Forecast Accuracy
+		lineageTag: 10fc8df1-4b5c-4177-b855-1cdc8c64e26d
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// Forecast accuracy for the prior fiscal quarter comparison. For multi-month selections, compares against the same-length window shifted back one fiscal quarter.
+	measure Pct_ForecastAccuracy_lq =
+			VAR CurrentMonths =
+			    VALUES(dim_calendar[num_fsc_month_year])
+			VAR MonthCount =
+			    COUNTROWS(CurrentMonths)
+			VAR CurrentQuarters =
+			    VALUES(dim_calendar[num_fsc_quarter_year])
+			VAR PrevQuarter =
+			    SELECTCOLUMNS(
+			        CurrentQuarters,
+			        "num_fsc_quarter_year",
+			            VAR CurrentQuarterKey = dim_calendar[num_fsc_quarter_year]
+			            RETURN
+			                MAXX(
+			                    FILTER(
+			                        ALL(dim_calendar[num_fsc_quarter_year]),
+			                        dim_calendar[num_fsc_quarter_year] < CurrentQuarterKey
+			                    ),
+			                    dim_calendar[num_fsc_quarter_year]
+			                )
+			    )
+			VAR RollingPrevQuarterMonths =
+			    SELECTCOLUMNS(
+			        CurrentMonths,
+			        "num_fsc_month_year",
+			            VAR CurrentMonthKey = dim_calendar[num_fsc_month_year]
+			            VAR PriorThreeMonths =
+			                TOPN(
+			                    3,
+			                    FILTER(
+			                        ALL(dim_calendar[num_fsc_month_year]),
+			                        dim_calendar[num_fsc_month_year] < CurrentMonthKey
+			                    ),
+			                    dim_calendar[num_fsc_month_year], DESC
+			                )
+			            RETURN
+			                MINX(
+			                    PriorThreeMonths,
+			                    dim_calendar[num_fsc_month_year]
+			                )
+			    )
+			RETURN
+			IF(
+			    MonthCount = 1,
+			    CALCULATE(
+			        [Pct_ForecastAccuracy],
+			        REMOVEFILTERS(dim_calendar),
+			        TREATAS(
+			            PrevQuarter,
+			            dim_calendar[num_fsc_quarter_year]
+			        )
+			    ),
+			    CALCULATE(
+			        [Pct_ForecastAccuracy],
+			        REMOVEFILTERS(dim_calendar),
+			        TREATAS(
+			            RollingPrevQuarterMonths,
+			            dim_calendar[num_fsc_month_year]
+			        )
+			    )
+			)
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: 1. Main KPIs - Forecast Accuracy
+		lineageTag: 4f3c9dc7-00db-4d23-9073-436de685e8fa
+
+	/// Static background color value used for RMSE table visual conditional formatting.
+	measure RMSE_Table_Background_Color = "#D9D9D9"
+		displayFolder: 3. Narrative
+		lineageTag: ed672d4d-4f71-4299-b26c-cb3509a15ac6
+
+	/// Returns the current date for report refresh or display context.
+	measure UpdatedTime = TODAY()
+		formatString: Short Date
+		displayFolder: 1. Main KPIs - Forecast Accuracy
+		lineageTag: a6f930f8-9803-4f65-9c74-86c9964b885a
+
+	column Column
+		formatString: 0
+		lineageTag: 217e11fc-f4f8-4877-bbca-2be96a883c17
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Column]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition _Measure = calculated
+		mode: import
+		source = Row("Column", BLANK())
+
+	annotation PBI_Id = a0e04b233e184edda29637f74fe09972
+
+	annotation 436ba87b-9c83-4389-a31b-ebd06a36be98 = {"Expression":""}
+

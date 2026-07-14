@@ -1,0 +1,11 @@
+-- Auto Generated (Do not modify) 343A1D1193DF110E52897A9B8E76A0FC882091DA3EF996DA077C628D75C99B04
+
+CREATE   VIEW bronze.vw_ref_forecast_horizon AS
+SELECT 'Lag-0' AS code_horizon, 1 AS num_rank UNION ALL
+SELECT 'Lag-1', 2 UNION ALL
+SELECT 'Lag-2', 3 UNION ALL
+SELECT 'Lag-3', 4 UNION ALL
+SELECT 'Lag-4', 5 UNION ALL
+SELECT '>Lag-4', 6 UNION ALL
+SELECT 'Actual demand', 7 UNION ALL
+SELECT 'Naive forecast', 8

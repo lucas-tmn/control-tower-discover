@@ -1,0 +1,125 @@
+fingerprint,model,report_table,primary_base_object,norm_len
+76ed2e2611e8,Act+Fcst by WNK & MILL Prod Resource,ActDemand,SupplyChain_Enh.ActualsCustItemWH_AFI,924
+5e7232a50674,Act+Fcst by WNK & MILL Prod Resource,Fcast,SupplyChain_Enh.DemandForecastSnapshot,4064
+96c48590a1bf,Act+Fcst by WNK & MILL Prod Resource,ProdCapacity,Supplychain_History.ProductionCapacity,825
+a36c42f779a8,Act+Fcst by WNK & MILL Prod Resource,VendorShipped,Manufacturing_Inventory_WNK.IMHIST,3308
+5b3282a03338,Act+Fcst by WNK & MILL Prod Resource,z_ItemWHProdResource,SupplyChain_Enh.DemandInventorySnapshot,5098
+02419a7f296d,Act+Fcst vs Manufacturing,ActDemand,SupplyChain_Enh.ActualsCustItemWH_AFI,930
+df27f86f7483,Act+Fcst vs Manufacturing,Fcast,SupplyChain_Enh.DemandForecastSnapshot,4098
+2bd6b94d6f04,Act+Fcst vs Manufacturing,ProdCapacity,Supplychain_History.ProductionCapacity,831
+a36c42f779a8,Act+Fcst vs Manufacturing,VendorShipped,Manufacturing_Inventory_WNK.IMHIST,3308
+5b3282a03338,Act+Fcst vs Manufacturing,z_ItemWHProdResource,SupplyChain_Enh.DemandInventorySnapshot,5098
+80dd9d17c3d4,AFT_SI-SS_PSW,Current,SupplyChain_Enh.PSWWeeklyExtractSnapshot,15209
+89ed2112c9d3,AFT_SI-SS_PSW,DELIVERY TIME,Wholesale_Purchasing_AFI.VENNAM,625
+b51d5015d1b2,AFT_SI-SS_PSW,Demand Fulfillment,PowerBI_SupplyChain.SupplyPlanDetailCurrentDay,7659
+4c875edcd65d,AFT_SI-SS_PSW,DUE,Enterprise_DW.DimDate,293
+4c875edcd65d,AFT_SI-SS_PSW,ETD,Enterprise_DW.DimDate,293
+504de0c89e38,AFT_SI-SS_PSW,Item Desc,Inventory_DW.DimItemMaster,1151
+2e220e5ee03a,AFT_SI-SS_PSW,Old Snap,SupplyChain_Enh.PSWWeeklyExtractSnapshot,15284
+d973313e3972,AFT_SI-SS_PSW,Past Week,SupplyChain_Enh.PSWWeeklyExtractSnapshot,15519
+6028748a6966,AFT_SI-SS_PSW,PO,SupplyChain_Enh.PSWWeeklyExtractSnapshot,14625
+767e790ff4dd,AFT_SI-SS_PSW,Product Filter,Manufacturing_MasterData.FlatBOM,7675
+c8d7bcd0f30b,AFT_SI-SS_PSW,Vendor Split,Wholesale_Vendors_WNK.VendorPricing,575
+6670e04e86ca,Amazon POS Sales and Forecast,AMZNFC,SupplyChain_Enh.AmazonCustomerForecast,257
+bcf512d1c5fe,Amazon POS Sales and Forecast,AMZNInv,SupplyChain_Enh.AmazonCustomerInventory,383
+24578a40b6cc,Amazon POS Sales and Forecast,AMZNPOS,SupplyChain_Enh.AmazonCustomerPOS,492
+dcc4a2146e83,Amazon POS Sales and Forecast,AMZNWholesale,SupplyChain_Enh.ActualsCustItemWH_AFI,697
+5c6557736000,Demand Review,Bedroom_Additional_Detail,Enterprise_DW.DimItemMaster,815
+bf5aab7baef4,Demand Review,Fcst_Average_Promo,SupplyChain_Enh.DemandForecastSnapshot,5459
+2eebb18f8eef,Demand Review,Fcst_Container,Wholesale_SalesHistory_AFI.OrderHistory,2916
+a289cf1f8868,Demand Review,Fcst_Current_Published,SupplyChain_Enh.CurFcstSnapshotDaily,447
+5e797a975f6f,Demand Review,Fcst_Published_CurMonth_30d,SupplyChain_Enh.CurFcstSnapshotDaily,582
+106cda48cd17,Demand Review,Fcst_Snapshots,SupplyChain_Enh.DemandForecastSnapshot,4635
+fc0be17476c3,Demand Review,ItWhAccy,SupplyChain_Enh.DemandForecastSnapshot,6003
+f7f0633cb7f6,Demand Review,Join,PowerBI_SupplyChain.CustomerAcctMaster_AFI,1181
+5578ced2ab2d,Demand Review,Orders_Current_Month_Futo,SupplyChain_Enh.DemandForecastSnapshot,710
+523ab76408fc,Demand Review,OrdHist,SupplyChain_Enh.ActualsCustItemWH_AFI,2126
+3100a0f27603,Demand Review,Placement_History,PowerBI_Wholesale.WeeklyPlacements,1230
+be43bacafd37,Demand Review,Placements_ABC,PowerBI_Wholesale.WeeklyPlacements,1202
+ea3dd64d6d4d,Demand Review,Sub-Categories,SupplyChain_DW.DimCurrentProductDetails,571
+93f24aaf9e55,Demand Review,SupplyPlanDetail,Wholesale_DemandPlanning_AFI.SupplyPlanDetail,2484
+4be1222ed9f1,Demand Review,TargetConsumption,,10929
+25c5a8ae2891,Demand Review,Week_2_ATP,SupplyChain_Enh.ATPWeekEnding,1679
+f7adebe8341f,Demand Review,z_drop_dates,PowerBI_SupplyChain.DemandFulfillmentCommonContainer_Logility,1107
+9a00fb1916b4,DvC  - WanekMillenium,Current Product Detail,PowerBI_SupplyChain.CurrentProductDetails,165
+40e1125e08dc,DvC  - WanekMillenium,Latest Update,DW_Developer.TableDictionary,107
+cc09f717710f,DvC  - WanekMillenium,Production Resource Master,SupplyChain_Enh.ProductionConversion,1699
+9b23aa000237,DvC  - WanekMillenium,PSW,SupplyChain_Enh.ForecastCommonContainer_Logility,6754
+f67db988a6a5,DvC  - WanekMillenium,SISS Timeline,Wholesale_DemandPlanning_AFI.SupplyPlanDetail,329
+4d892547a31d,Forecast Accuracy (Cust_ItWh),CustItWHAccy,Enterprise_DW.dimDate_nonRetail,16020
+dc8f233dfed7,Forecast Accuracy (Cust_ItWh),Month End Status Snapshots,PowerBI_SupplyChain.DemandFulfillmentCommonContainer_Logility,1151
+cd24834f04f5,Forecast Accuracy (Cust_ItWh),z_CustomerMaster_AFI,PowerBI_SupplyChain.CustomerAcctMaster_AFI,97
+b72fdf7dfd69,Forecast Accuracy (ItWh),ItWHAccy,SupplyChain_Enh.DemandForecastSnapshot,9189
+5af17a5775ee,Forecast Accuracy (ItWh),Month End Status Snapshots,PowerBI_SupplyChain.DemandFulfillmentCommonContainer_Logility,1151
+1d6e3baedf2f,GF Act+Fcst,L1ACTD,SupplyChain_Enh.DemandForecastHistorySnapshot,986
+a06aebb854ab,GF Act+Fcst,L1Fcst,SupplyChain_Enh.DemandForecastSnapshot,2337
+fbfddebc09c7,GF Act+Fcst,OrderHist,SupplyChain_Enh.ActualsCustItemWH_AFI,1274
+d7209fee1481,GF Act+Fcst,z_CustomerMaster_AFI,PowerBI_SupplyChain.CustomerAcctMaster_AFI,1575
+a0a6a1a708e6,Inv Management,Inv Age,Distribution_Warehouse_Wholesale.t_stored_item,4493
+1d65499252d7,Inv Management,Inventory,Wholesale_DemandPlanning_AFI.SupplyPlanDetail,9647
+2605efee4024,Inv Management,Last Update - Inv Age,DW_Developer.TableDictionary,151
+942084a37da1,Inv Management,Latest Update - Excess,DW_Developer.TableDictionary,137
+17e83f2c3ec9,Inv Management,SI at US Warehouse,Wholesale_ProductSourcing_AFI.DeliveryTimes,764
+75a511b2cbe2,Inv Management,W2 SS Change,Wholesale_DemandPlanning_AFI.SupplyPlanDetail,971
+0cf83e0fffb1,Inventory Health,ATPInStock,SupplyChain_Enh.ATPWeekEnding,2082
+a88ba881cbc0,Inventory Health,InvHealth,SupplyChain_Enh.DemandForecastSnapshot,18104
+941938c73560,Inventory Health,z_KitMkt,SupplyChain_DW.DimCurrentProductDetails,565
+a94de134592e,Inventory Transactions and Item Balance Detail,Inventory Transaction History,Inventory_Enh.InventoryTransactionsWeeklySummary,1981
+0ffa4ec1e2b0,Inventory Transactions and Item Balance Detail,Item Balance,Inventory_Enh_History.ItemBalance,969
+718eee8c3658,JadeTeam Inventory Health,Inventory Health,Wholesale_DemandPlanning_AFI.SupplyPlanDetail,3939
+b5ad052baecc,On Time % by Customer,On Time (day),AFISales_Enh.OnTimeDeliveryDetail,3347
+4e33ec7a5c52,On Time % by Customer,On Time (week),AFISales_Enh.OnTimeDeliveryDetail,3181
+fb600a5221f1,On Time % by Customer,WH335OnTime,Wholesale_SalesHistory_AFI.InvoiceDetail,4097
+c8dfee6098b7,Plan Drop 1,Query1,SupplyChain_Enh.ForecastCommonContainer_Logility,1029
+a5e99276f8ec,Product Review (NEW),Actuals,Wholesale_SalesHistory_AFI.InvoiceDetail,5052
+95b72dc28327,Product Review (NEW),AnnualCurFcst,SupplyChain_Enh.CurFcstSnapshotWeekly,508
+a09f2f38eadb,Product Review (NEW),AnnualWrkFcst_Snapshots,SupplyChain_Enh.ForecastCommonContainer_Logility,1939
+106ef13f2cdd,Product Review (NEW),CustItAccy,SupplyChain_Enh.DemandForecastSnapshot,12479
+1162e119be0a,Product Review (NEW),FC by Customer Group,SupplyChain_Enh.DemandForecastSnapshot,2090
+3970f7decfc0,Product Review (NEW),Hist Weekly FC,SupplyChain_Enh.DemandForecastSnapshot,1419
+752e27efcc15,Product Review (NEW),Join,PowerBI_SupplyChain.CustomerAcctMaster_AFI,864
+adbb35a81298,Product Review (NEW),OrdHist,SupplyChain_Enh.ActualsCustItemWH_AFI,2034
+be43bacafd37,Product Review (NEW),Placements ABC,PowerBI_Wholesale.WeeklyPlacements,1202
+3100a0f27603,Product Review (NEW),PlacementsOverTime,PowerBI_Wholesale.WeeklyPlacements,1230
+93f24aaf9e55,Product Review (NEW),SupplyPlanDetail,Wholesale_DemandPlanning_AFI.SupplyPlanDetail,2484
+25c5a8ae2891,Product Review (NEW),Week_2_ATP,SupplyChain_Enh.ATPWeekEnding,1679
+0d4ee2be95b8,Product Review (NEW),WeeklyForecast,Wholesale_DemandPlanning_AFI.DemandForecast,1379
+43ecce5df054,Production Capacity Vs Forecast,Forecast,SupplyChain_Enh.DemandInventorySnapshot,3757
+10518814e11d,Production Capacity Vs Forecast,MOrds,Manufacturing_ProductionPlanning_AFI.MOMAST,439
+47781950b409,Production Capacity Vs Forecast,PlandSupply,SupplyChain_Enh.PlannedRequirementsLogility,1558
+6a86d824a841,Production Capacity Vs Forecast,POrds,PowerBI_SupplyChain.SCPPurchaseOrders_AFI,377
+57f80a20c65a,Production Capacity Vs Forecast,Receipts,Manufacturing_Inventory_AFI.IMHIST,1428
+817fc249251a,Production Capacity Vs Forecast,z_ItLocPr,Wholesale_ProductSourcing_AFI.PoDetail,1254
+87e4e2919c22,Production Capacity Vs Forecast,z_LocMaster,PowerBI_SupplyChain.VendorMaster,612
+c5e490ada387,Receipts,On-Order/In-Transit,PowerBI_SupplyChain.Receipts,46
+cacbb2bb7901,Receipts,Query1,PowerBI_SupplyChain.TotalReceipts,673
+e987281ded6d,Receipts,Query2,PowerBI_SupplyChain.PurReceipts,185
+8316bc8ce4dc,Receipts,Query3,Wholesale_DemandPlanning_AFI.SupplyPlanDetail,87
+e27156907c97,Rolling Report - Wanek Millen,Firm and Roll,SupplyChain_Enh.PSWWeeklyExtractSnapshot,4753
+e2827d75deef,Rolling Report - Wanek Millen,Late ASN,Wholesale_ProductSourcing_AFI.PoAuditLog,1276
+c5a81d4fd593,Rolling Report - Wanek Millen,Latest Update,DW_Developer.TableDictionary,132
+23eac385bb5c,Safety Stock Analysis,GFIO,SupplyChain_Enh.IOExportedItemOutputsSnapshot,3394
+076ae227a90b,Safety Stock Analysis,InvGoal,SupplyChain_Enh.DemandForecastSnapshot,1754
+96cd0b2a8c3a,Safety Stock Analysis,InvHist,Wholesale_DemandPlanning_AFI.SupplyPlanDetail,7484
+f5c63d7ce91a,Safety Stock Analysis,InvTurns,Inventory_Enh_History.MonthEndItemRevision,6120
+99d8f9c5913e,Safety Stock Analysis,z_CostDefault,MasterData_ItemMaster_AFI.ITEMASA,571
+b787cdd8eddb,Safety Stock Analysis,z_ItemWHMaster,SupplyChain_Enh.DemandInventorySnapshot,1365
+941938c73560,Safety Stock Analysis,z_KitMkt,SupplyChain_DW.DimCurrentProductDetails,565
+603c30dc9b9a,Safety Stock Analysis,z_MattKitType,Manufacturing_DW.DimBOMDetails,625
+7197a35e8a93,Supplier On-Time Performance,ABC Coding by volume,PowerBI_SupplyChain.PSWContainersCurrentDay,234
+ee89d0c34033,Supplier On-Time Performance,Ashton_PSW,SupplyChain_Enh.PSWWeeklyExtractSnapshot,1038
+ea37b188d8b1,Supplier On-Time Performance,DimDate,Enterprise_DW.DimDate,194
+388133b1bcf9,Supplier On-Time Performance,Item Master,PowerBI_SupplyChain.CurrentProductDetails,216
+914524b6f00f,Supplier On-Time Performance,PSWHistoricalSnapshots,SupplyChain_Enh.PSWWeeklyExtractSnapshot,2319
+8ec6a2501a14,Supplier On-Time Performance,QA Team,Wholesale_ProductSourcing_AFI.vendor,74
+e0bd58f957be,Supply Plan Detail Accuracy,SPDsnapshots,Wholesale_DemandPlanning_AFI.SupplyPlanDetail,6391
+2f069478d68e,Supply Plan Detail,SupplyPlanDetail,Wholesale_DemandPlanning_AFI.SupplyPlanDetail,3340
+9498c5e56fff,Top Negatives,CurrentProductDetails,PowerBI_SupplyChain.CurrentProductDetails,2099
+fcf110a30765,Top Negatives,PDT SI,SupplyChain_Enh.PlanDetailTimelineSnapshot,822
+01a4be2e36d7,Top Negatives,SPD2,PowerBI_SupplyChain.TopNegatives,3031
+6a37d182d8ae,Top Negatives,Vendor,PowerBI_SupplyChain.TopNegatives_Vendor,53
+a5e99276f8ec,Weekly Trend Analysis,Actuals,Wholesale_SalesHistory_AFI.InvoiceDetail,5052
+65366ade795b,Weekly Trend Analysis,FcstAccuracy,SupplyChain_Enh.DemandForecastSnapshot,2892
+0d4ee2be95b8,Weekly Trend Analysis,Forecast,Wholesale_DemandPlanning_AFI.DemandForecast,1379
+7a028f041e29,Weekly Trend Analysis,FutOrd,SupplyChain_Enh.DemandForecastSnapshot,669
+3251089363b3,When to Disco v2,When to Disco,MasterData_ItemMaster_AFI.ITEMBL,8374

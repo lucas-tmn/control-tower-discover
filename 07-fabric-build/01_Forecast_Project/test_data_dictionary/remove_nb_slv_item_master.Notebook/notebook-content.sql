@@ -1,0 +1,262 @@
+-- Fabric notebook source
+
+-- METADATA ********************
+
+-- META {
+-- META   "kernel_info": {
+-- META     "name": "synapse_pyspark"
+-- META   },
+-- META   "dependencies": {
+-- META     "lakehouse": {
+-- META       "default_lakehouse": "62a3081e-4093-4f46-856c-f50aa58732fa",
+-- META       "default_lakehouse_name": "SupplyChain_Lakehouse",
+-- META       "default_lakehouse_workspace_id": "c8d9fc83-18b6-4e1d-8264-0b49eed36fe0",
+-- META       "known_lakehouses": [
+-- META         {
+-- META           "id": "62a3081e-4093-4f46-856c-f50aa58732fa"
+-- META         }
+-- META       ]
+-- META     }
+-- META   }
+-- META }
+
+-- CELL ********************
+
+-- MAGIC %%sql
+-- MAGIC /* SILVER LAYER: ITEM MASTER - MASTER TABLE
+-- MAGIC    Target: dbo.slv_item_master
+-- MAGIC    Logic: ITEM MASTER TABLE
+-- MAGIC */
+-- MAGIC 
+-- MAGIC CREATE OR REPLACE TABLE dbo.slv_item_master AS
+-- MAGIC SELECT *
+-- MAGIC     -- Keys
+-- MAGIC     CAST(RowID AS INT)                                   AS sk_item,
+-- MAGIC     TRIM(ItemSKU)                                        AS id_item_sku,
+-- MAGIC     TRIM(ItemKey)                                        AS id_item_key,
+-- MAGIC     TRIM(Item)                                           AS id_item,
+-- MAGIC     TRIM(ItemCode)                                       AS code_item,
+-- MAGIC     TRIM(FrameNumber)                                    AS code_frame,
+-- MAGIC 
+-- MAGIC     -- Series
+-- MAGIC     TRIM(SeriesNumber)                                   AS code_series,
+-- MAGIC     TRIM(ExtSeriesNumber)                                AS code_ext_series,
+-- MAGIC 
+-- MAGIC     -- Dimensions - Metric
+-- MAGIC     CAST(ProductHeightMeters AS DECIMAL(10,2))           AS val_product_height_meters,
+-- MAGIC     CAST(ProductWidthMeters AS DECIMAL(10,2))            AS val_product_width_meters,
+-- MAGIC     CAST(ProductDepthMeters AS DECIMAL(10,2))            AS val_product_depth_meters,
+-- MAGIC     CAST(CartonHeightMeters AS DECIMAL(10,2))            AS val_carton_height_meters,
+-- MAGIC     CAST(CartonWidthMeters AS DECIMAL(10,2))             AS val_carton_width_meters,
+-- MAGIC     CAST(CartonDepthMeters AS DECIMAL(10,2))             AS val_carton_depth_meters,
+-- MAGIC 
+-- MAGIC     -- Dimensions - Imperial
+-- MAGIC     CAST(ProductHeightInches AS DECIMAL(10,2))           AS val_product_height_inches,
+-- MAGIC     CAST(ProductWidthInches AS DECIMAL(10,2))            AS val_product_width_inches,
+-- MAGIC     CAST(ProductDepthInches AS DECIMAL(10,2))            AS val_product_depth_inches,
+-- MAGIC     CAST(CartonHeightInches AS DECIMAL(10,2))            AS val_carton_height_inches,
+-- MAGIC     CAST(CartonWidthInches AS DECIMAL(10,2))             AS val_carton_width_inches,
+-- MAGIC     CAST(CartonDepthInches AS DECIMAL(10,2))             AS val_carton_depth_inches,
+-- MAGIC     CAST(Cubes AS DECIMAL(10,2))                         AS val_cubes,
+-- MAGIC     CAST(Seats AS DECIMAL(10,2))                         AS num_seats,
+-- MAGIC 
+-- MAGIC     -- Weight
+-- MAGIC     CAST(SuppWeightNetWeightLbs AS DECIMAL(10,2))        AS val_net_weight_lbs,
+-- MAGIC     CAST(UnitWeightLbs AS DECIMAL(10,2))                 AS val_unit_weight_lbs,
+-- MAGIC 
+-- MAGIC     -- Item Info
+-- MAGIC     CAST(QtyInBox AS INT)                                AS num_qty_in_box,
+-- MAGIC     TRIM(UOM)                                            AS code_uom,
+-- MAGIC     TRIM(UPC)                                            AS code_upc,
+-- MAGIC 
+-- MAGIC     -- Descriptions
+-- MAGIC     TRIM(ItemDescription)                                AS name_item_description,
+-- MAGIC     TRIM(SeriesName)                                     AS name_series,
+-- MAGIC     TRIM(SeriesColor)                                    AS name_series_color,
+-- MAGIC     TRIM(Colors)                                         AS name_color,
+-- MAGIC     TRIM(ItemDescriptionSeries)                          AS name_item_description_series,
+-- MAGIC     TRIM(SHItemDescriptionSeries)                        AS name_sh_item_description_series,
+-- MAGIC     TRIM(SHSeriesDescription)                            AS name_sh_series_description,
+-- MAGIC     TRIM(ItemDescriptionSeriesItemColor)                  AS name_item_desc_series_color,
+-- MAGIC     TRIM(ItemName)                                       AS name_item,
+-- MAGIC     TRIM(ItemConsumerDescription)                        AS name_item_consumer_description,
+-- MAGIC     TRIM(SeriesDescription)                              AS name_series_description,
+-- MAGIC     TRIM(FriendlyDimensions)                             AS name_friendly_dimensions,
+-- MAGIC 
+-- MAGIC     -- Style & Category
+-- MAGIC     TRIM(ChildStyleDescription)                          AS name_child_style,
+-- MAGIC     TRIM(ParentStyleDescription)                         AS name_parent_style,
+-- MAGIC     TRIM(RetailTypeDescription)                          AS name_retail_type,
+-- MAGIC     TRIM(Lifestyle)                                      AS name_lifestyle,
+-- MAGIC     TRIM(MerchandisingCategory)                          AS name_merchandising_category,
+-- MAGIC     TRIM(PricePoint)                                     AS name_price_point,
+-- MAGIC     TRIM(ItemGrouping)                                   AS name_item_grouping,
+-- MAGIC     TRIM(SeriesGrouping)                                 AS name_series_grouping,
+-- MAGIC     TRIM(AssociationCode)                                AS code_association,
+-- MAGIC 
+-- MAGIC     -- Classification - Item
+-- MAGIC     TRIM(ItemClassCode)                                  AS code_item_class,
+-- MAGIC     TRIM(ItemClassName)                                  AS name_item_class,
+-- MAGIC     TRIM(ItemClass)                                      AS name_item_class_full,
+-- MAGIC     TRIM(ItemStyleCode)                                  AS code_item_style,
+-- MAGIC     TRIM(ItemStyleGroup)                                 AS name_item_style_group,
+-- MAGIC     TRIM(ItemStyle)                                      AS name_item_style,
+-- MAGIC     TRIM(ItemType)                                       AS code_item_type,
+-- MAGIC     TRIM(CollectiveClass)                                AS name_collective_class,
+-- MAGIC 
+-- MAGIC     -- Classification - Product Line & Retail
+-- MAGIC     TRIM(ProductLine)                                    AS name_product_line,
+-- MAGIC     TRIM(RetailCategoryCode)                             AS code_retail_category,
+-- MAGIC     TRIM(RetailCategoryDescription)                      AS name_retail_category,
+-- MAGIC     TRIM(RetailCategoryName)                             AS name_retail_category_full,
+-- MAGIC     TRIM(RetailDepartmentName)                           AS name_retail_department,
+-- MAGIC     TRIM(RetailCategoryGroup)                            AS name_retail_category_group,
+-- MAGIC     TRIM(RetailCategoryChargeType)                       AS code_retail_charge_type,
+-- MAGIC     TRIM(RetailBrandName)                                AS name_retail_brand,
+-- MAGIC 
+-- MAGIC     -- Classification - Sales
+-- MAGIC     TRIM(SalesClassCode)                                 AS code_sales_class,
+-- MAGIC     TRIM(SalesClassDescription)                          AS name_sales_class_description,
+-- MAGIC     TRIM(SalesClass)                                     AS name_sales_class,
+-- MAGIC     TRIM(AFISalesCategoryCode)                           AS code_afi_sales_category,
+-- MAGIC     TRIM(AFISalesCategory)                               AS name_afi_sales_category,
+-- MAGIC     TRIM(AFISalesDivisionCode)                           AS code_afi_sales_division,
+-- MAGIC     TRIM(AFISalesDivision)                               AS name_afi_sales_division,
+-- MAGIC     TRIM(AFIFinanceDivision)                             AS name_afi_finance_division,
+-- MAGIC     TRIM(AFIFinanceDivisionCode)                         AS code_afi_finance_division,
+-- MAGIC     TRIM(Division)                                       AS name_division,
+-- MAGIC 
+-- MAGIC     -- Classification - Discount/Commission/Freight
+-- MAGIC     TRIM(DiscountClassCode)                              AS code_discount_class,
+-- MAGIC     TRIM(DiscountClassDescription)                       AS name_discount_class_description,
+-- MAGIC     TRIM(DiscountClass)                                  AS name_discount_class,
+-- MAGIC     TRIM(CommissionClassCode)                            AS code_commission_class,
+-- MAGIC     TRIM(CommissionClassDescription)                     AS name_commission_class_description,
+-- MAGIC     TRIM(CommissionClass)                                AS name_commission_class,
+-- MAGIC     TRIM(FreightClassCode)                               AS code_freight_class,
+-- MAGIC     TRIM(FreightClassDescription)                        AS name_freight_class_description,
+-- MAGIC     TRIM(FreightClass)                                   AS name_freight_class,
+-- MAGIC 
+-- MAGIC     -- Office & Origin
+-- MAGIC     TRIM(ResponsibleOffice)                              AS code_responsible_office,
+-- MAGIC     TRIM(ResponsibleOfficeName)                          AS name_responsible_office,
+-- MAGIC     TRIM(ImportDomesticCode)                             AS code_import_domestic,
+-- MAGIC     TRIM(CountryofOrigin)                                AS name_country_of_origin,
+-- MAGIC     TRIM(CEXCode)                                        AS code_cex,
+-- MAGIC     TRIM(PrimaryVendor)                                  AS code_primary_vendor,
+-- MAGIC     TRIM(MasterGroupCode)                                AS code_master_group,
+-- MAGIC 
+-- MAGIC     -- Status
+-- MAGIC     TRIM(AFIItemStatus)                                  AS code_afi_item_status,
+-- MAGIC     TRIM(SellableItemFlag)                               AS code_sellable_item,
+-- MAGIC     TRIM(ManufacturingStatus)                            AS code_manufacturing_status,
+-- MAGIC     CAST(ManufacturingStatusChangeDate AS DATE)           AS dt_manufacturing_status_change,
+-- MAGIC     TRIM(MarketingItemStatus)                            AS code_marketing_item_status,
+-- MAGIC     TRIM(MarketingStatusDescription)                     AS name_marketing_status,
+-- MAGIC     TRIM(PreviousStatusCode)                             AS code_previous_status,
+-- MAGIC     CAST(StatusCodeChangeDate AS DATE)                   AS dt_status_code_change,
+-- MAGIC 
+-- MAGIC     -- Flags - Boolean
+-- MAGIC     CASE WHEN TRIM(MainPieceItem) = 'True' THEN true ELSE false END AS is_main_piece,
+-- MAGIC     CASE WHEN TRIM(StandAloneFlag) = 'True' THEN true ELSE false END AS is_standalone,
+-- MAGIC     CAST(KeyItem AS INT)                                 AS num_key_item,
+-- MAGIC     CAST(CommodityItem AS INT)                           AS num_commodity_item,
+-- MAGIC     CAST(F123ProductFlag AS INT)                         AS is_f123_product,
+-- MAGIC     CAST(HSCoreProductFlag AS INT)                       AS is_hs_core_product,
+-- MAGIC     CAST(HSProprietaryProductFlag AS INT)                AS is_hs_proprietary_product,
+-- MAGIC     CAST(HSExclusiveFlag AS INT)                         AS is_hs_exclusive,
+-- MAGIC     CAST(BerklineProductFlag AS INT)                     AS is_berkline_product,
+-- MAGIC     CAST(BenchcraftProductFlag AS INT)                   AS is_benchcraft_product,
+-- MAGIC     CAST(NewMillenniumProductFlag AS INT)                AS is_new_millennium_product,
+-- MAGIC     CAST(BardiniProductFlag AS INT)                      AS is_bardini_product,
+-- MAGIC     CAST(ShanghaiStore AS INT)                           AS is_shanghai_store,
+-- MAGIC     CAST(DefaultGroup AS INT)                            AS num_default_group,
+-- MAGIC     CAST(NewItemFlag AS INT)                             AS is_new_item,
+-- MAGIC     CAST(DiscontinuedFlag AS INT)                        AS is_discontinued,
+-- MAGIC     TRIM(DiscontinuedYearPeriod)                         AS code_discontinued_period,
+-- MAGIC     TRIM(CommonCarrierFlag)                              AS code_common_carrier,
+-- MAGIC     TRIM(ExpressShipFlag)                                AS code_express_ship,
+-- MAGIC     CAST(DiscontinuedDate AS DATE)                       AS dt_discontinued,
+-- MAGIC     CAST(SeriesDateArchived AS DATE)                     AS dt_series_archived,
+-- MAGIC     CAST(SeriesDiscontinuedFlag AS INT)                  AS is_series_discontinued,
+-- MAGIC     TRIM(ConsumerChoiceFlag)                             AS code_consumer_choice,
+-- MAGIC     TRIM(EligibleForProtectionPlan)                      AS code_eligible_protection_plan,
+-- MAGIC     TRIM(IsProtectionPlan)                               AS code_is_protection_plan,
+-- MAGIC     TRIM(ItemIsRTA)                                      AS code_item_is_rta,
+-- MAGIC 
+-- MAGIC     -- Pricing
+-- MAGIC     CAST(FOBArcPrice AS DECIMAL(14,2))                   AS amt_fob_arc_price,
+-- MAGIC     CAST(CurrentUnitCost AS DECIMAL(14,8))               AS amt_current_unit_cost,
+-- MAGIC     TRIM(GoodBetterBestForPricePoint)                    AS code_good_better_best,
+-- MAGIC     CAST(GBBSortId AS INT)                               AS num_gbb_sort,
+-- MAGIC     TRIM(ItemPricePointRating)                           AS name_price_point_rating,
+-- MAGIC     CAST(DivisionRanking AS STRING)                      AS code_division_ranking,
+-- MAGIC     TRIM(GroupPriceIncr)                                  AS val_group_price_incr,
+-- MAGIC     TRIM(GroupPricePointType)                             AS code_group_price_point_type,
+-- MAGIC 
+-- MAGIC     -- Market
+-- MAGIC     TRIM(MarketIntroducedAt)                             AS name_market_introduced_at,
+-- MAGIC     CAST(MarketBeginDate AS DATE)                        AS dt_market_begin,
+-- MAGIC     CAST(MarketEndDate AS DATE)                          AS dt_market_end,
+-- MAGIC     TRIM(Showroom)                                       AS name_showroom,
+-- MAGIC 
+-- MAGIC     -- Invoice & Forecast
+-- MAGIC     TRIM(InitialInvoicePeriod)                           AS code_initial_invoice_period,
+-- MAGIC     CAST(InitialInvoiceQty AS INT)                       AS qty_initial_invoice,
+-- MAGIC     TRIM(ItemForecastPlannerID)                          AS id_item_forecast_planner,
+-- MAGIC 
+-- MAGIC     -- Multi-channel
+-- MAGIC     TRIM(PrimaryChannelSku)                              AS id_primary_channel_sku,
+-- MAGIC     TRIM(PrimarySeriesName)                              AS name_primary_series,
+-- MAGIC     TRIM(PrimarySeriesNumber)                            AS code_primary_series,
+-- MAGIC     TRIM(ERetailChannelSku)                              AS id_eretail_channel_sku,
+-- MAGIC     TRIM(ERetailSeriesName)                              AS name_eretail_series,
+-- MAGIC     TRIM(ERetailSeriesNumber)                            AS code_eretail_series,
+-- MAGIC 
+-- MAGIC     -- Product Attributes
+-- MAGIC     TRIM(ItemTableShapeType)                             AS name_table_shape,
+-- MAGIC     TRIM(ItemBedSizeType)                                AS name_bed_size,
+-- MAGIC     TRIM(ItemBedStyleType)                               AS name_bed_style,
+-- MAGIC     TRIM(ItemGeneralColor)                               AS name_general_color,
+-- MAGIC 
+-- MAGIC     -- Series Flags
+-- MAGIC     TRIM(SofaTableSeriesFlag)                            AS code_sofa_table_series,
+-- MAGIC     TRIM(ReclinerSeriesFlag)                             AS code_recliner_series,
+-- MAGIC     TRIM(PowerMotionSeriesFlag)                          AS code_power_motion_series,
+-- MAGIC     TRIM(WedgeSeriesFlag)                                AS code_wedge_series,
+-- MAGIC     TRIM(DiningSeriesFlag)                               AS code_dining_series,
+-- MAGIC     TRIM(ItemThirdPartyItem)                             AS code_item_third_party,
+-- MAGIC     TRIM(SeriesThirdParty)                               AS code_series_third_party,
+-- MAGIC 
+-- MAGIC     -- Homestore & eComm
+-- MAGIC     TRIM(ItemHomeStoreProductLine)                       AS name_homestore_product_line,
+-- MAGIC     TRIM(ItemEcomMerchantNotes)                          AS name_ecom_merchant_notes,
+-- MAGIC     TRIM(ItemAmazonBrandOwner)                           AS name_amazon_brand_owner,
+-- MAGIC     TRIM(ItemSupplierDirectShipOnly)                     AS code_supplier_direct_ship_only,
+-- MAGIC 
+-- MAGIC     -- Images & Visual
+-- MAGIC     TRIM(ItemImage)                                      AS code_item_image,
+-- MAGIC     TRIM(TrendArrow)                                     AS code_trend_arrow,
+-- MAGIC     TRIM(ItemMerchGridOverridePhoto)                     AS code_merch_grid_override_photo,
+-- MAGIC     TRIM(ExclusiveComment)                               AS name_exclusive_comment,
+-- MAGIC     TRIM(SeriesImage)                                    AS code_series_image,
+-- MAGIC     TRIM(SeriesPrimary)                                  AS code_series_primary,
+-- MAGIC     TRIM(SeriesMainImage)                                AS code_series_main_image,
+-- MAGIC     TRIM(Knockout)                                       AS code_knockout,
+-- MAGIC     TRIM(Scene7ImageSet)                                 AS code_scene7_image_set,
+-- MAGIC     TRIM(FluffAFI)                                       AS code_fluff_afi,
+-- MAGIC 
+-- MAGIC     -- Warranty & Material
+-- MAGIC     TRIM(MfgWarranty)                                    AS code_mfg_warranty,
+-- MAGIC     TRIM(Material)                                       AS name_material,
+-- MAGIC     TRIM(SeriesFeatures)                                 AS name_series_features
+-- MAGIC 
+-- MAGIC FROM dbo.brz_masterdata_dw__dimitemmaster
+-- MAGIC -- WHERE ItemSKU IS NOT NULL
+
+-- METADATA ********************
+
+-- META {
+-- META   "language": "sparksql",
+-- META   "language_group": "synapse_pyspark"
+-- META }

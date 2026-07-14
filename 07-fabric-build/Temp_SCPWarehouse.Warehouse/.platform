@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Warehouse",
+    "displayName": "Temp_SCPWarehouse"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "cf1778ea-bb72-ab1b-4f50-666b3ca38f6c"
+  }
+}

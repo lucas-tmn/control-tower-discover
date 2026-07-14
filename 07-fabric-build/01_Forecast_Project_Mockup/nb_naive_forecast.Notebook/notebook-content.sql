@@ -1,0 +1,126 @@
+-- Fabric notebook source
+
+-- METADATA ********************
+
+-- META {
+-- META   "kernel_info": {
+-- META     "name": "synapse_pyspark"
+-- META   },
+-- META   "dependencies": {
+-- META     "lakehouse": {
+-- META       "default_lakehouse": "62a3081e-4093-4f46-856c-f50aa58732fa",
+-- META       "default_lakehouse_name": "SupplyChain_Lakehouse",
+-- META       "default_lakehouse_workspace_id": "c8d9fc83-18b6-4e1d-8264-0b49eed36fe0",
+-- META       "known_lakehouses": [
+-- META         {
+-- META           "id": "62a3081e-4093-4f46-856c-f50aa58732fa"
+-- META         }
+-- META       ]
+-- META     }
+-- META   }
+-- META }
+
+-- CELL ********************
+
+-- MAGIC %%sql
+-- MAGIC /* SILVER LAYER: NAIVE FORECAST (FINAL ALIGNED)
+-- MAGIC    Target: dbo.slv_naive_forecast
+-- MAGIC    Logic: 2-Month Lag + Weekly Pro-rate + TRIM Fix
+-- MAGIC    Schema: Aligned with Reference Image (7 columns)
+-- MAGIC */
+-- MAGIC 
+-- MAGIC CREATE OR REPLACE TABLE dbo.slv_naive_forecast AS
+-- MAGIC 
+-- MAGIC -- 1. Fiscal Calendar: Tính số tuần mỗi tháng tài chính
+-- MAGIC WITH FiscalCalendar AS (
+-- MAGIC     SELECT 
+-- MAGIC         make_date(CAST(FiscalMonthYear / 100 AS INT), CAST(FiscalMonthYear % 100 AS INT), 1) AS FiscalMonthYearDate,
+-- MAGIC         COUNT(DISTINCT FiscalWeekLastDate) AS NumWeeks
+-- MAGIC     FROM dbo.brz2_Enterprise_DW__DimDate
+-- MAGIC     GROUP BY 1
+-- MAGIC ),
+-- MAGIC 
+-- MAGIC -- 2. Mapping tháng: Mục tiêu lùi 2 tháng tài chính
+-- MAGIC FiscalMonthRanked AS (
+-- MAGIC     SELECT 
+-- MAGIC         make_date(CAST(FiscalMonthYear / 100 AS INT), CAST(FiscalMonthYear % 100 AS INT), 1) AS FiscalMonthYearDate,
+-- MAGIC         ROW_NUMBER() OVER (ORDER BY make_date(CAST(FiscalMonthYear / 100 AS INT), CAST(FiscalMonthYear % 100 AS INT), 1)) AS MonthSeq
+-- MAGIC     FROM (SELECT DISTINCT FiscalMonthYear FROM dbo.brz2_Enterprise_DW__DimDate)
+-- MAGIC ),
+-- MAGIC FiscalMonth2MoAgo AS (
+-- MAGIC     SELECT 
+-- MAGIC         T.FiscalMonthYearDate AS TargetFiscalMonthYear,
+-- MAGIC         P.FiscalMonthYearDate AS Prior2MoFiscalMonthYear
+-- MAGIC     FROM FiscalMonthRanked T
+-- MAGIC     INNER JOIN FiscalMonthRanked P ON P.MonthSeq = T.MonthSeq - 2
+-- MAGIC ),
+-- MAGIC 
+-- MAGIC -- 3. Dimension Customers: TRIM để chống lệch Join
+-- MAGIC Dim_Customers AS (
+-- MAGIC     SELECT DC.*, TRIM(DCG.CustomerGroup) as CustomerGroup
+-- MAGIC     FROM dbo.brz2_AFISales_DW__DimCustomers DC
+-- MAGIC     LEFT JOIN (
+-- MAGIC         SELECT DISTINCT TRIM(CustomerNumber) as CustomerNumber, TRIM(CustomerGroup) as CustomerGroup 
+-- MAGIC         FROM dbo.brz2_Wholesale_ProductSourcing_AFI__CustomerGrouping
+-- MAGIC     ) DCG ON TRIM(DC.`Customer Account Number`) = DCG.CustomerNumber
+-- MAGIC ),
+-- MAGIC 
+-- MAGIC -- 4. Actual Demand Aggregation: Invoiced + Open Orders (Bỏ Amt)
+-- MAGIC ActualDemandAgg AS (
+-- MAGIC     SELECT CustomerGroup, ItemSKU, Warehouse, FiscalMonthYear, 
+-- MAGIC            SUM(ActualQty) AS ActualQty
+-- MAGIC     FROM (
+-- MAGIC         -- Nhánh Hóa đơn
+-- MAGIC         SELECT 
+-- MAGIC             DC.CustomerGroup, TRIM(INV.ItemNumber) AS ItemSKU, TRIM(INV.Warehouse) AS Warehouse,
+-- MAGIC             make_date(CAST(year(DD.FiscalWeekLastDate) AS INT), CAST(month(DD.FiscalWeekLastDate) AS INT), 1) AS FiscalMonthYear,
+-- MAGIC             SUM(INV.QuantityShipped) AS ActualQty
+-- MAGIC         FROM dbo.brz2_Wholesale_SalesHistory_AFI__InvoiceDetail AS INV
+-- MAGIC         LEFT JOIN Dim_Customers AS DC 
+-- MAGIC             ON TRIM(INV.CustomerNumber) = TRIM(DC.`Customer Account Number`) 
+-- MAGIC             AND TRIM(INV.ShiptoNumber) = TRIM(DC.`Customer ShipTo Number`)
+-- MAGIC         INNER JOIN dbo.brz2_Enterprise_DW__DimDate AS DD ON to_date(INV.CurrentRequestDate) = to_date(DD.DateID)
+-- MAGIC         WHERE INV.QuantityShipped > 0 
+-- MAGIC           AND to_date(INV.CurrentRequestDate) >= add_months(current_date(), -24)
+-- MAGIC           AND TRIM(INV.ItemNumber) IN ('M1X1272','M1B0191','M44511','M1X1372','M12671','M1B0141','M1X1102B','M1B0131','9810317','9810366','5020546','5020555','2940202','9810364','5200338','8721338','7741238','7790116','8070325','8430431','M1X1432A','M20151','M33231','M41511','P458-846','P790-825','P801-820','P790-851','P465-822','P008-898','P801-838','P014-898','P560-835','P671-601A','P695-821','P704-702')
+-- MAGIC         GROUP BY 1,2,3,4
+-- MAGIC 
+-- MAGIC         UNION ALL
+-- MAGIC 
+-- MAGIC         -- Nhánh Đơn hàng mở
+-- MAGIC         SELECT 
+-- MAGIC             DC.CustomerGroup, TRIM(OO.`Item Sku`) AS ItemSKU, TRIM(OO.Warehouse) AS Warehouse,
+-- MAGIC             make_date(CAST(year(DD.FiscalWeekLastDate) AS INT), CAST(month(DD.FiscalWeekLastDate) AS INT), 1) AS FiscalMonthYear,
+-- MAGIC             SUM(OO.`Open Order Quantity`) AS ActualQty
+-- MAGIC         FROM dbo.brz2_AFISales_DW__FactOpenOrders AS OO
+-- MAGIC         LEFT JOIN Dim_Customers AS DC ON TRIM(OO.`Account And ShipTo Number`) = TRIM(DC.`Account And ShipTo Number`)
+-- MAGIC         INNER JOIN dbo.brz2_Enterprise_DW__DimDate AS DD ON to_date(OO.`Current Request Date`) = to_date(DD.DateID)
+-- MAGIC         WHERE OO.`Inventory Allocated Flag` = '2' 
+-- MAGIC           AND to_date(OO.`Current Request Date`) >= add_months(current_date(), -24)
+-- MAGIC           AND TRIM(OO.`Item Sku`) IN ('M1X1272','M1B0191','M44511','M1X1372','M12671','M1B0141','M1X1102B','M1B0131','9810317','9810366','5020546','5020555','2940202','9810364','5200338','8721338','7741238','7790116','8070325','8430431','M1X1432A','M20151','M33231','M41511','P458-846','P790-825','P801-820','P790-851','P465-822','P008-898','P801-838','P014-898','P560-835','P671-601A','P695-821','P704-702')
+-- MAGIC         GROUP BY 1,2,3,4
+-- MAGIC     )
+-- MAGIC     GROUP BY 1, 2, 3, 4
+-- MAGIC )
+-- MAGIC 
+-- MAGIC -- 5. FINAL TABLE: Output 7 cột khớp y chang hình ảnh tham chiếu
+-- MAGIC SELECT 
+-- MAGIC     A.ItemSKU,
+-- MAGIC     A.Warehouse,
+-- MAGIC     A.CustomerGroup,
+-- MAGIC     FM.TargetFiscalMonthYear AS FiscalMonthYear,
+-- MAGIC     -- Naive Qty (Pro-rated)
+-- MAGIC     CAST(CASE WHEN FC_Prior.NumWeeks > 0 THEN (A.ActualQty * 1.0 / FC_Prior.NumWeeks) * FC_Target.NumWeeks ELSE 0 END AS DOUBLE) AS Qty,
+-- MAGIC     'Naive Forecast' AS Version,
+-- MAGIC     'Naive Forecast' AS Status
+-- MAGIC FROM FiscalMonth2MoAgo FM
+-- MAGIC INNER JOIN ActualDemandAgg A ON A.FiscalMonthYear = FM.Prior2MoFiscalMonthYear
+-- MAGIC INNER JOIN FiscalCalendar FC_Prior ON FC_Prior.FiscalMonthYearDate = FM.Prior2MoFiscalMonthYear
+-- MAGIC INNER JOIN FiscalCalendar FC_Target ON FC_Target.FiscalMonthYearDate = FM.TargetFiscalMonthYear;
+
+-- METADATA ********************
+
+-- META {
+-- META   "language": "sparksql",
+-- META   "language_group": "synapse_pyspark"
+-- META }

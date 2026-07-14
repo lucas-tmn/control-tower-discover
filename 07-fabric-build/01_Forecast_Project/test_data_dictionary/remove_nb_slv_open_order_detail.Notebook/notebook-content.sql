@@ -1,0 +1,134 @@
+-- Fabric notebook source
+
+-- METADATA ********************
+
+-- META {
+-- META   "kernel_info": {
+-- META     "name": "synapse_pyspark"
+-- META   },
+-- META   "dependencies": {
+-- META     "lakehouse": {
+-- META       "default_lakehouse": "62a3081e-4093-4f46-856c-f50aa58732fa",
+-- META       "default_lakehouse_name": "SupplyChain_Lakehouse",
+-- META       "default_lakehouse_workspace_id": "c8d9fc83-18b6-4e1d-8264-0b49eed36fe0",
+-- META       "known_lakehouses": [
+-- META         {
+-- META           "id": "62a3081e-4093-4f46-856c-f50aa58732fa"
+-- META         }
+-- META       ]
+-- META     }
+-- META   }
+-- META }
+
+-- CELL ********************
+
+-- MAGIC %%sql
+-- MAGIC /* SILVER LAYER: OPEN SALES ORDER DETAIL - FACT TABLE
+-- MAGIC    Target: dbo.slv_open_order_detail
+-- MAGIC    Source: dbo.brz_wholesale_codis_afi__codatan
+-- MAGIC    Logic: OPEN ORDER DETAIL - FACT TABLE
+-- MAGIC */
+-- MAGIC 
+-- MAGIC CREATE OR REPLACE TABLE dbo.slv_open_order_detail AS
+-- MAGIC SELECT
+-- MAGIC     -- Keys & Identifiers
+-- MAGIC     TRIM(ORDNO)                                         AS id_order,
+-- MAGIC     TRIM(ITNBR)                                         AS id_item_sku,
+-- MAGIC     TRIM(HOUSE)                                         AS code_warehouse,
+-- MAGIC     CAST(ITMSQ AS INT)                                  AS num_item_sequence,
+-- MAGIC 
+-- MAGIC     -- Quantities
+-- MAGIC     CAST(COQTY AS DECIMAL(12,3))                        AS qty_ordered,
+-- MAGIC     CAST(QTYSH AS DECIMAL(12,3))                        AS qty_shipped,
+-- MAGIC     CAST(QTYBO AS DECIMAL(12,3))                        AS qty_backordered,
+-- MAGIC 
+-- MAGIC     -- Pricing - Current
+-- MAGIC     CAST(INSAM AS DECIMAL(12,2))                        AS amt_extended_selling,
+-- MAGIC     CAST(ISLPR AS DECIMAL(12,4))                        AS amt_list_price,
+-- MAGIC     CAST(PRICE AS DECIMAL(12,4))                        AS amt_selling_price,
+-- MAGIC     CAST(UNITC AS DECIMAL(14,8))                        AS amt_unit_cost,
+-- MAGIC     CAST(NEGPR AS DECIMAL(12,4))                        AS amt_negotiated_price,
+-- MAGIC     CAST(UNTPO AS DECIMAL(12,4))                        AS amt_unit_purchase_order,
+-- MAGIC     CAST(PRADJ AS DECIMAL(12,2))                        AS amt_price_adjustment,
+-- MAGIC     CAST(ISCPR AS DECIMAL(14,7))                        AS amt_selling_price_current,
+-- MAGIC 
+-- MAGIC     -- Pricing - Original
+-- MAGIC     CAST(ISLPO AS DECIMAL(12,4))                        AS amt_list_price_original,
+-- MAGIC     CAST(INSAO AS DECIMAL(12,2))                        AS amt_extended_selling_original,
+-- MAGIC 
+-- MAGIC     -- Pricing - History
+-- MAGIC     CAST(PRICH AS DECIMAL(12,4))                        AS amt_price_history,
+-- MAGIC     CAST(ISLPH AS DECIMAL(12,4))                        AS amt_list_price_history,
+-- MAGIC     CAST(INSAH AS DECIMAL(12,2))                        AS amt_extended_selling_history,
+-- MAGIC     CAST(ISCPH AS DECIMAL(14,7))                        AS amt_selling_price_history,
+-- MAGIC 
+-- MAGIC     -- Weight
+-- MAGIC     CAST(WEGHT AS DECIMAL(12,3))                        AS val_weight,
+-- MAGIC     CAST(EXTWT AS DECIMAL(12,3))                        AS val_extended_weight,
+-- MAGIC     CAST(EXTWO AS DECIMAL(12,3))                        AS val_extended_weight_original,
+-- MAGIC 
+-- MAGIC     -- Dates - Integer format
+-- MAGIC     to_date(CAST(RQIDT AS STRING), 'yyyyMMdd')          AS dt_requested,
+-- MAGIC     to_date(CAST(MFIDT AS STRING), 'yyyyMMdd')          AS dt_manufactured,
+-- MAGIC 
+-- MAGIC     -- Dates - Timestamp format
+-- MAGIC     CAST(LSLDDTCH AS TIMESTAMP)                         AS dt_last_schedule_change,
+-- MAGIC     CAST(PRVLDDTE AS TIMESTAMP)                         AS dt_previous_load,
+-- MAGIC     CAST(PRLDDTCH AS TIMESTAMP)                         AS dt_prior_load_change,
+-- MAGIC     CAST(EARLDDT AS TIMESTAMP)                          AS dt_earliest_load,
+-- MAGIC     CAST(LATLDDT AS TIMESTAMP)                          AS dt_latest_load,
+-- MAGIC     CAST(ITMLTLDDT AS TIMESTAMP)                        AS dt_item_latest_load,
+-- MAGIC 
+-- MAGIC     -- Customer & Routing
+-- MAGIC     TRIM(CCUSNO)                                        AS id_customer,
+-- MAGIC     TRIM(CSHPNO)                                        AS code_ship_to,
+-- MAGIC     TRIM(MARKFOR)                                       AS name_mark_for,
+-- MAGIC 
+-- MAGIC     -- Item Attributes
+-- MAGIC     TRIM(ITDSC)                                         AS name_item_description,
+-- MAGIC     TRIM(ITDSI)                                         AS name_item_description_short,
+-- MAGIC     TRIM(ITCLS)                                         AS code_item_class,
+-- MAGIC     TRIM(ITTYP)                                         AS code_item_type,
+-- MAGIC     TRIM(UNMSR)                                         AS code_unit_measure,
+-- MAGIC     TRIM(RCDCD)                                         AS code_record,
+-- MAGIC     TRIM(WHSLC)                                         AS code_wholesale,
+-- MAGIC     TRIM(CRCOD)                                         AS code_carrier,
+-- MAGIC     TRIM(PTRCD)                                         AS code_pattern,
+-- MAGIC     TRIM(LSTUM)                                         AS code_last_unit_measure,
+-- MAGIC     TRIM(TXIND)                                         AS code_tax_indicator,
+-- MAGIC     TRIM(COREL)                                         AS code_correlation,
+-- MAGIC     TRIM(MORDN)                                         AS code_merge_order,
+-- MAGIC     TRIM(EXPAD)                                         AS code_expedite_ad,
+-- MAGIC     TRIM(ARRVLMODE)                                     AS code_arrival_mode,
+-- MAGIC     TRIM(ITMPRCSTS)                                     AS code_item_price_status,
+-- MAGIC 
+-- MAGIC     -- Counts
+-- MAGIC     CAST(NUMLDDTCHG AS INT)                             AS num_load_date_changes,
+-- MAGIC     CAST(LPMNO AS INT)                                  AS num_last_promo,
+-- MAGIC     CAST(PMULT AS INT)                                  AS num_price_multiple,
+-- MAGIC     CAST(QPDPT AS INT)                                  AS num_qty_per_dept,
+-- MAGIC 
+-- MAGIC     -- Flags
+-- MAGIC     TRIM(IAFLG)                                         AS code_allocation_flag,
+-- MAGIC     CASE WHEN CAST(NOINV AS INT) != 0 THEN true ELSE false END  AS is_no_invoice,
+-- MAGIC     CASE WHEN CAST(UPDMC AS INT) != 0 THEN true ELSE false END  AS is_update_mc,
+-- MAGIC     CASE WHEN CAST(UPDMP AS DECIMAL(10,3)) != 0 THEN true ELSE false END AS is_update_mp,
+-- MAGIC     CASE WHEN CAST(ORFLG AS INT) != 0 THEN true ELSE false END  AS is_order_flag,
+-- MAGIC     CASE WHEN CAST(RDOVR AS INT) != 0 THEN true ELSE false END  AS is_round_override,
+-- MAGIC     CASE WHEN CAST(MDOVR AS INT) != 0 THEN true ELSE false END  AS is_method_override,
+-- MAGIC     CASE WHEN CAST(NEGRH AS DECIMAL(10,3)) != 0 THEN true ELSE false END AS is_negotiated_history,
+-- MAGIC     CASE WHEN TRIM(MOFLG) = '1' THEN true ELSE false END        AS is_merge_order_flag,
+-- MAGIC     CASE WHEN TRIM(SAFLG) = '1' THEN true ELSE false END        AS is_sale_flag,
+-- MAGIC 
+-- MAGIC     -- Date - Other
+-- MAGIC     TRIM(MRDTE)                                         AS code_merge_date
+-- MAGIC 
+-- MAGIC FROM dbo.brz_wholesale_codis_afi__codatan
+-- MAGIC WHERE ORDNO IS NOT NULL
+
+-- METADATA ********************
+
+-- META {
+-- META   "language": "sparksql",
+-- META   "language_group": "synapse_pyspark"
+-- META }

@@ -1,0 +1,115 @@
+-- Fabric notebook source
+
+-- METADATA ********************
+
+-- META {
+-- META   "kernel_info": {
+-- META     "name": "synapse_pyspark"
+-- META   },
+-- META   "dependencies": {
+-- META     "lakehouse": {
+-- META       "default_lakehouse": "62a3081e-4093-4f46-856c-f50aa58732fa",
+-- META       "default_lakehouse_name": "SupplyChain_Lakehouse",
+-- META       "default_lakehouse_workspace_id": "c8d9fc83-18b6-4e1d-8264-0b49eed36fe0",
+-- META       "known_lakehouses": [
+-- META         {
+-- META           "id": "62a3081e-4093-4f46-856c-f50aa58732fa"
+-- META         }
+-- META       ]
+-- META     }
+-- META   }
+-- META }
+
+-- CELL ********************
+
+-- MAGIC %%sql
+-- MAGIC /* SILVER LAYER: OPEN SALES ORDER HEADER EXTENDED - FACT TABLE
+-- MAGIC    Target: dbo.slv_open_order_header_extended
+-- MAGIC    Logic: OPEN ORDER HEADER EXTENDED - FACT TABLE
+-- MAGIC */
+-- MAGIC 
+-- MAGIC CREATE OR REPLACE TABLE slv_open_order_header_extended AS
+-- MAGIC SELECT
+-- MAGIC     -- Keys & Identifiers
+-- MAGIC     TRIM(XORDNO)                                        AS id_order,
+-- MAGIC     TRIM(CUSTNO)                                        AS id_customer,
+-- MAGIC     TRIM(`SHPTO#`)                                      AS code_ship_to,
+-- MAGIC     CAST(CSRPID AS INT)                                 AS id_csr,
+-- MAGIC 
+-- MAGIC     -- Order Attributes
+-- MAGIC     TRIM(ORDARR)                                        AS code_order_arrangement,
+-- MAGIC     TRIM(ORTYPE)                                        AS code_order_type,
+-- MAGIC     TRIM(ORDUSE)                                        AS code_order_use,
+-- MAGIC     TRIM(ORDREF)                                        AS code_order_reference,
+-- MAGIC     CAST(ORDLNK AS INT)                                 AS num_order_link,
+-- MAGIC     CAST(NOSETS AS INT)                                  AS num_sets,
+-- MAGIC     TRIM(ORDUSR)                                        AS name_order_user,
+-- MAGIC 
+-- MAGIC     -- Order Type Flags
+-- MAGIC     TRIM(OTTYP1)                                        AS code_order_type_1,
+-- MAGIC     TRIM(OTTYP2)                                        AS code_order_type_2,
+-- MAGIC     TRIM(OTTYP3)                                        AS code_order_type_3,
+-- MAGIC     TRIM(OTTYP4)                                        AS code_order_type_4,
+-- MAGIC 
+-- MAGIC     -- Scheduling & Dates
+-- MAGIC     to_date(CAST(RQSDAT AS STRING), 'yyyyMMdd')         AS dt_requested_ship,
+-- MAGIC     to_date(CAST(TKNDAT AS STRING), 'yyyyMMdd')         AS dt_taken,
+-- MAGIC     to_date(CAST(FRZDAT AS STRING), 'yyyyMMdd')         AS dt_freeze,
+-- MAGIC     to_date(CAST(HDATE AS STRING), 'yyyyMMdd')          AS dt_hold,
+-- MAGIC     to_date(CAST(CAPRDT AS STRING), 'yyyyMMdd')         AS dt_capacity,
+-- MAGIC     to_date(CAST(CBDDAT AS STRING), 'yyyyMMdd')         AS dt_cbd,
+-- MAGIC     to_date(CAST(DATMNT AS STRING), 'yyyyMMdd')         AS dt_maintenance,
+-- MAGIC     TRIM(TIMMNT)                                        AS code_time_maintenance,
+-- MAGIC 
+-- MAGIC     -- Shipping & Location
+-- MAGIC     TRIM(WHSE)                                          AS code_warehouse,
+-- MAGIC     TRIM(SHPNAM)                                        AS name_ship_to,
+-- MAGIC     TRIM(ZIPCOD)                                        AS code_zip,
+-- MAGIC     TRIM(EXTCTY)                                        AS code_city,
+-- MAGIC     TRIM(EXTSTE)                                        AS code_state,
+-- MAGIC     TRIM(TERRCD)                                        AS code_territory,
+-- MAGIC     TRIM(ARZONE)                                        AS code_ar_zone,
+-- MAGIC     CAST(ARSEQ AS INT)                                  AS num_ar_sequence,
+-- MAGIC     to_date(CAST(ARDATE AS STRING), 'yyyyMMdd')         AS dt_ar,
+-- MAGIC 
+-- MAGIC     -- Trip & Routing
+-- MAGIC     CAST(`TRPNO` AS INT)                                AS num_trip,
+-- MAGIC     CAST(`DROP#` AS INT)                                AS num_drop,
+-- MAGIC     CAST(`TRIP#` AS INT)                                AS num_trip_sequence,
+-- MAGIC     TRIM(ADVTSP)                                        AS code_advance_transport,
+-- MAGIC 
+-- MAGIC     -- Contact
+-- MAGIC     TRIM(CONTAC)                                        AS name_contact,
+-- MAGIC     TRIM(`PHONE#`)                                      AS code_phone,
+-- MAGIC 
+-- MAGIC     -- Credit & Approval
+-- MAGIC     TRIM(CREDVW)                                        AS code_credit_review,
+-- MAGIC     TRIM(APVCHK)                                        AS code_approval_check,
+-- MAGIC     TRIM(APPROV)                                        AS name_approver,
+-- MAGIC     CAST(RCVCSH AS INT)                                 AS num_received_cash,
+-- MAGIC     TRIM(CROVRD)                                        AS code_credit_override,
+-- MAGIC     to_date(CAST(CROVDT AS STRING), 'yyyyMMdd')         AS dt_credit_override,
+-- MAGIC     TRIM(CRANOV)                                        AS code_credit_analysis_override,
+-- MAGIC 
+-- MAGIC     -- Pricing & Commission
+-- MAGIC     TRIM(COMMCO)                                        AS code_commission,
+-- MAGIC     TRIM(DSCNCO)                                        AS code_discount,
+-- MAGIC     TRIM(PRICCO)                                        AS code_price,
+-- MAGIC     TRIM(FRGHCO)                                        AS code_freight,
+-- MAGIC     TRIM(PRMNBR)                                        AS code_promo,
+-- MAGIC 
+-- MAGIC     -- Maintenance
+-- MAGIC     CAST(MNTCNT AS INT)                                 AS num_maintenance_count,
+-- MAGIC     TRIM(USRMNT)                                        AS name_maintenance_user,
+-- MAGIC     TRIM(HLDUSR)                                        AS name_hold_user,
+-- MAGIC     TRIM(REFNUM)                                        AS code_reference_number
+-- MAGIC 
+-- MAGIC FROM brz_wholesale_codis_afi__extord
+-- MAGIC WHERE XORDNO IS NOT NULL
+
+-- METADATA ********************
+
+-- META {
+-- META   "language": "sparksql",
+-- META   "language_group": "synapse_pyspark"
+-- META }

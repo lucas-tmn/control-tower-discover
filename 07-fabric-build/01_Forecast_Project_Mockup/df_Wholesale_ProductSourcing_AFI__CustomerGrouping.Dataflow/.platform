@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Dataflow",
+    "displayName": "df_Wholesale_ProductSourcing_AFI__CustomerGrouping"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "f2c2ed04-7f9b-81c8-4501-d3b88df4e3b4"
+  }
+}

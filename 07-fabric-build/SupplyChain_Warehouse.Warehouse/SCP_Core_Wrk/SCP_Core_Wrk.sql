@@ -1,0 +1,1 @@
+CREATE SCHEMA SCP_Core_Wrk;

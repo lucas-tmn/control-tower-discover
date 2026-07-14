@@ -1,0 +1,1992 @@
+﻿{
+  "compatibilityLevel": 1567,
+  "model": {
+    "annotations": [
+      {
+        "name": "__PBI_TimeIntelligenceEnabled",
+        "value": "0"
+      },
+      {
+        "name": "PBI_QueryOrder",
+        "value": "[\"Data\"]"
+      }
+    ],
+    "culture": "en-US",
+    "cultures": [
+      {
+        "name": "en-US",
+        "linguisticMetadata": {
+          "content": {
+            "Agents": {
+              "Internal": {
+                "Version": "1.1.0"
+              }
+            },
+            "Entities": {
+              "data": {
+                "Definition": {
+                  "Binding": {
+                    "ConceptualEntity": "Data"
+                  }
+                },
+                "State": "Generated",
+                "Terms": [
+                  {
+                    "data": {
+                      "State": "Generated"
+                    }
+                  },
+                  {
+                    "information": {
+                      "Source": {
+                        "Agent": "Thesaurus"
+                      },
+                      "State": "Suggested",
+                      "Type": "Noun",
+                      "Weight": 0.736
+                    }
+                  },
+                  {
+                    "fact": {
+                      "Source": {
+                        "Agent": "Thesaurus"
+                      },
+                      "State": "Suggested",
+                      "Type": "Noun",
+                      "Weight": 0.736
+                    }
+                  },
+                  {
+                    "info": {
+                      "Source": {
+                        "Agent": "Thesaurus"
+                      },
+                      "State": "Suggested",
+                      "Type": "Noun",
+                      "Weight": 0.736
+                    }
+                  },
+                  {
+                    "statistic": {
+                      "Source": {
+                        "Agent": "Thesaurus"
+                      },
+                      "State": "Suggested",
+                      "Type": "Noun",
+                      "Weight": 0.736
+                    }
+                  },
+                  {
+                    "document": {
+                      "Source": {
+                        "Agent": "Thesaurus"
+                      },
+                      "State": "Suggested",
+                      "Type": "Noun",
+                      "Weight": 0.714
+                    }
+                  },
+                  {
+                    "figure": {
+                      "Source": {
+                        "Agent": "Thesaurus"
+                      },
+                      "State": "Suggested",
+                      "Type": "Noun",
+                      "Weight": 0.714
+                    }
+                  },
+                  {
+                    "record": {
+                      "Source": {
+                        "Agent": "Thesaurus"
+                      },
+                      "State": "Suggested",
+                      "Type": "Noun",
+                      "Weight": 0.714
+                    }
+                  }
+                ]
+              },
+              "data.collective_class": {
+                "Definition": {
+                  "Binding": {
+                    "ConceptualEntity": "Data",
+                    "ConceptualProperty": "Collective Class"
+                  }
+                },
+                "State": "Generated",
+                "Terms": [
+                  {
+                    "collective class": {
+                      "State": "Generated"
+                    }
+                  },
+                  {
+                    "class": {
+                      "State": "Generated",
+                      "Weight": 0.97
+                    }
+                  },
+                  {
+                    "collective classification": {
+                      "Source": {
+                        "Agent": "Thesaurus"
+                      },
+                      "State": "Suggested",
+                      "Type": "Noun",
+                      "Weight": 0.75
+                    }
+                  },
+                  {
+                    "collective category": {
+                      "Source": {
+                        "Agent": "Thesaurus"
+                      },
+                      "State": "Suggested",
+                      "Type": "Noun",
+                      "Weight": 0.75
+                    }
+                  },
+                  {
+                    "collective genre": {
+                      "Source": {
+                        "Agent": "Thesaurus"
+                      },
+                      "State": "Suggested",
+                      "Type": "Noun",
+                      "Weight": 0.75
+                    }
+                  },
+                  {
+                    "classification": {
+                      "Source": {
+                        "Agent": "Thesaurus"
+                      },
+                      "State": "Suggested",
+                      "Type": "Noun",
+                      "Weight": 0.736
+                    }
+                  },
+                  {
+                    "category": {
+                      "Source": {
+                        "Agent": "Thesaurus"
+                      },
+                      "State": "Suggested",
+                      "Type": "Noun",
+                      "Weight": 0.736
+                    }
+                  },
+                  {
+                    "genre": {
+                      "Source": {
+                        "Agent": "Thesaurus"
+                      },
+                      "State": "Suggested",
+                      "Type": "Noun",
+                      "Weight": 0.736
+                    }
+                  },
+                  {
+                    "collective course": {
+                      "Source": {
+                        "Agent": "Thesaurus"
+                      },
+                      "State": "Suggested",
+                      "Type": "Noun",
+                      "Weight": 0.727
+                    }
+                  },
+                  {
+                    "collective grade": {
+                      "Source": {
+                        "Agent": "Thesaurus"
+                      },
+                      "State": "Suggested",
+                      "Type": "Noun",
+                      "Weight": 0.727
+                    }
+                  },
+                  {
+                    "collective lecture": {
+                      "Source": {
+                        "Agent": "Thesaurus"
+                      },
+                      "State": "Suggested",
+                      "Type": "Noun",
+                      "Weight": 0.727
+                    }
+                  },
+                  {
+                    "collective lesson": {
+                      "Source": {
+                        "Agent": "Thesaurus"
+                      },
+                      "State": "Suggested",
+                      "Type": "Noun",
+                      "Weight": 0.727
+                    }
+                  }
+                ]
+              },
+              "data.current_status": {
+                "Definition": {
+                  "Binding": {
+                    "ConceptualEntity": "Data",
+                    "ConceptualProperty": "Current Status"
+                  }
+                },
+                "State": "Generated",
+                "Terms": [
+                  {
+                    "current status": {
+                      "State": "Generated"
+                    }
+                  },
+                  {
+                    "current category": {
+                      "Source": {
+                        "Agent": "Thesaurus"
+                      },
+                      "State": "Suggested",
+                      "Type": "Noun",
+                      "Weight": 0.75
+                    }
+                  },
+                  {
+                    "current importance": {
+                      "Source": {
+                        "Agent": "Thesaurus"
+                      },
+                      "State": "Suggested",
+                      "Type": "Noun",
+                      "Weight": 0.75
+                    }
+                  },
+                  {
+                    "current prestige": {
+                      "Source": {
+                        "Agent": "Thesaurus"
+                      },
+                      "State": "Suggested",
+                      "Type": "Noun",
+                      "Weight": 0.75
+                    }
+                  },
+                  {
+                    "current prominence": {
+                      "Source": {
+                        "Agent": "Thesaurus"
+                      },
+                      "State": "Suggested",
+                      "Type": "Noun",
+                      "Weight": 0.75
+                    }
+                  },
+                  {
+                    "current condition": {
+                      "Source": {
+                        "Agent": "Thesaurus"
+                      },
+                      "State": "Suggested",
+                      "Type": "Noun",
+                      "Weight": 0.727
+                    }
+                  },
+                  {
+                    "current class": {
+                      "Source": {
+                        "Agent": "Thesaurus"
+                      },
+                      "State": "Suggested",
+                      "Type": "Noun",
+                      "Weight": 0.727
+                    }
+                  },
+                  {
+                    "current grade": {
+                      "Source": {
+                        "Agent": "Thesaurus"
+                      },
+                      "State": "Suggested",
+                      "Type": "Noun",
+                      "Weight": 0.727
+                    }
+                  },
+                  {
+                    "current level": {
+                      "Source": {
+                        "Agent": "Thesaurus"
+                      },
+                      "State": "Suggested",
+                      "Type": "Noun",
+                      "Weight": 0.727
+                    }
+                  },
+                  {
+                    "current position": {
+                      "Source": {
+                        "Agent": "Thesaurus"
+                      },
+                      "State": "Suggested",
+                      "Type": "Noun",
+                      "Weight": 0.727
+                    }
+                  },
+                  {
+                    "current rank": {
+                      "Source": {
+                        "Agent": "Thesaurus"
+                      },
+                      "State": "Suggested",
+                      "Type": "Noun",
+                      "Weight": 0.727
+                    }
+                  }
+                ]
+              },
+              "data.exclusive_comment": {
+                "Definition": {
+                  "Binding": {
+                    "ConceptualEntity": "Data",
+                    "ConceptualProperty": "ExclusiveComment"
+                  }
+                },
+                "State": "Generated",
+                "Terms": [
+                  {
+                    "exclusive comment": {
+                      "State": "Generated"
+                    }
+                  },
+                  {
+                    "ExclusiveComment": {
+                      "State": "Generated",
+                      "Type": "Noun",
+                      "Weight": 0.99
+                    }
+                  },
+                  {
+                    "comment": {
+                      "State": "Generated",
+                      "Weight": 0.97
+                    }
+                  },
+                  {
+                    "exclusive clarification": {
+                      "Source": {
+                        "Agent": "Thesaurus"
+                      },
+                      "State": "Suggested",
+                      "Type": "Noun",
+                      "Weight": 0.75
+                    }
+                  },
+                  {
+                    "exclusive commentary": {
+                      "Source": {
+                        "Agent": "Thesaurus"
+                      },
+                      "State": "Suggested",
+                      "Type": "Noun",
+                      "Weight": 0.75
+                    }
+                  },
+                  {
+                    "exclusive explanation": {
+                      "Source": {
+                        "Agent": "Thesaurus"
+                      },
+                      "State": "Suggested",
+                      "Type": "Noun",
+                      "Weight": 0.75
+                    }
+                  },
+                  {
+                    "exclusive feedback": {
+                      "Source": {
+                        "Agent": "Thesaurus"
+                      },
+                      "State": "Suggested",
+                      "Type": "Noun",
+                      "Weight": 0.75
+                    }
+                  },
+                  {
+                    "exclusive observation": {
+                      "Source": {
+                        "Agent": "Thesaurus"
+                      },
+                      "State": "Suggested",
+                      "Type": "Noun",
+                      "Weight": 0.75
+                    }
+                  },
+                  {
+                    "clarification": {
+                      "Source": {
+                        "Agent": "Thesaurus"
+                      },
+                      "State": "Suggested",
+                      "Type": "Noun",
+                      "Weight": 0.736
+                    }
+                  },
+                  {
+                    "commentary": {
+                      "Source": {
+                        "Agent": "Thesaurus"
+                      },
+                      "State": "Suggested",
+                      "Type": "Noun",
+                      "Weight": 0.736
+                    }
+                  },
+                  {
+                    "explanation": {
+                      "Source": {
+                        "Agent": "Thesaurus"
+                      },
+                      "State": "Suggested",
+                      "Type": "Noun",
+                      "Weight": 0.736
+                    }
+                  },
+                  {
+                    "feedback": {
+                      "Source": {
+                        "Agent": "Thesaurus"
+                      },
+                      "State": "Suggested",
+                      "Type": "Noun",
+                      "Weight": 0.736
+                    }
+                  },
+                  {
+                    "observation": {
+                      "Source": {
+                        "Agent": "Thesaurus"
+                      },
+                      "State": "Suggested",
+                      "Type": "Noun",
+                      "Weight": 0.736
+                    }
+                  }
+                ]
+              },
+              "data.future_status": {
+                "Definition": {
+                  "Binding": {
+                    "ConceptualEntity": "Data",
+                    "ConceptualProperty": "Future Status"
+                  }
+                },
+                "State": "Generated",
+                "Terms": [
+                  {
+                    "future status": {
+                      "State": "Generated"
+                    }
+                  },
+                  {
+                    "future category": {
+                      "Source": {
+                        "Agent": "Thesaurus"
+                      },
+                      "State": "Suggested",
+                      "Type": "Noun",
+                      "Weight": 0.75
+                    }
+                  },
+                  {
+                    "future importance": {
+                      "Source": {
+                        "Agent": "Thesaurus"
+                      },
+                      "State": "Suggested",
+                      "Type": "Noun",
+                      "Weight": 0.75
+                    }
+                  },
+                  {
+                    "future prestige": {
+                      "Source": {
+                        "Agent": "Thesaurus"
+                      },
+                      "State": "Suggested",
+                      "Type": "Noun",
+                      "Weight": 0.75
+                    }
+                  },
+                  {
+                    "future prominence": {
+                      "Source": {
+                        "Agent": "Thesaurus"
+                      },
+                      "State": "Suggested",
+                      "Type": "Noun",
+                      "Weight": 0.75
+                    }
+                  },
+                  {
+                    "future condition": {
+                      "Source": {
+                        "Agent": "Thesaurus"
+                      },
+                      "State": "Suggested",
+                      "Type": "Noun",
+                      "Weight": 0.727
+                    }
+                  },
+                  {
+                    "future class": {
+                      "Source": {
+                        "Agent": "Thesaurus"
+                      },
+                      "State": "Suggested",
+                      "Type": "Noun",
+                      "Weight": 0.727
+                    }
+                  },
+                  {
+                    "future grade": {
+                      "Source": {
+                        "Agent": "Thesaurus"
+                      },
+                      "State": "Suggested",
+                      "Type": "Noun",
+                      "Weight": 0.727
+                    }
+                  },
+                  {
+                    "future level": {
+                      "Source": {
+                        "Agent": "Thesaurus"
+                      },
+                      "State": "Suggested",
+                      "Type": "Noun",
+                      "Weight": 0.727
+                    }
+                  },
+                  {
+                    "future position": {
+                      "Source": {
+                        "Agent": "Thesaurus"
+                      },
+                      "State": "Suggested",
+                      "Type": "Noun",
+                      "Weight": 0.727
+                    }
+                  },
+                  {
+                    "future rank": {
+                      "Source": {
+                        "Agent": "Thesaurus"
+                      },
+                      "State": "Suggested",
+                      "Type": "Noun",
+                      "Weight": 0.727
+                    }
+                  }
+                ]
+              },
+              "data.i_d_code": {
+                "Definition": {
+                  "Binding": {
+                    "ConceptualEntity": "Data",
+                    "ConceptualProperty": "I/D Code"
+                  }
+                },
+                "State": "Generated",
+                "Terms": [
+                  {
+                    "i/d code": {
+                      "State": "Generated"
+                    }
+                  },
+                  {
+                    "i d code": {
+                      "State": "Generated",
+                      "Weight": 0.97
+                    }
+                  },
+                  {
+                    "d code": {
+                      "State": "Generated",
+                      "Weight": 0.97
+                    }
+                  },
+                  {
+                    "i/d id": {
+                      "Source": {
+                        "Agent": "Thesaurus"
+                      },
+                      "State": "Suggested",
+                      "Type": "Noun",
+                      "Weight": 0.771
+                    }
+                  },
+                  {
+                    "i d id": {
+                      "Source": {
+                        "Agent": "Thesaurus"
+                      },
+                      "State": "Suggested",
+                      "Type": "Noun",
+                      "Weight": 0.762
+                    }
+                  },
+                  {
+                    "d id": {
+                      "Source": {
+                        "Agent": "Thesaurus"
+                      },
+                      "State": "Suggested",
+                      "Type": "Noun",
+                      "Weight": 0.75
+                    }
+                  },
+                  {
+                    "i/d key": {
+                      "Source": {
+                        "Agent": "Thesaurus"
+                      },
+                      "State": "Suggested",
+                      "Type": "Noun",
+                      "Weight": 0.748
+                    }
+                  },
+                  {
+                    "i d key": {
+                      "Source": {
+                        "Agent": "Thesaurus"
+                      },
+                      "State": "Suggested",
+                      "Type": "Noun",
+                      "Weight": 0.739
+                    }
+                  },
+                  {
+                    "d key": {
+                      "Source": {
+                        "Agent": "Thesaurus"
+                      },
+                      "State": "Suggested",
+                      "Type": "Noun",
+                      "Weight": 0.727
+                    }
+                  }
+                ]
+              },
+              "data.issue_count": {
+                "Definition": {
+                  "Binding": {
+                    "ConceptualEntity": "Data",
+                    "ConceptualProperty": "Issue Count"
+                  }
+                },
+                "State": "Generated",
+                "Terms": [
+                  {
+                    "issue count": {
+                      "State": "Generated"
+                    }
+                  },
+                  {
+                    "issue amount": {
+                      "Source": {
+                        "Agent": "Thesaurus"
+                      },
+                      "State": "Suggested",
+                      "Type": "Noun",
+                      "Weight": 0.727
+                    }
+                  }
+                ]
+              },
+              "data.itemLvl1": {
+                "Definition": {
+                  "Binding": {
+                    "ConceptualEntity": "Data",
+                    "ConceptualProperty": "Item-Lvl1"
+                  }
+                },
+                "State": "Generated",
+                "Terms": [
+                  {
+                    "item-Lvl1": {
+                      "State": "Generated"
+                    }
+                  },
+                  {
+                    "item Lvl1": {
+                      "State": "Generated",
+                      "Weight": 0.97
+                    }
+                  },
+                  {
+                    "product -lvl1": {
+                      "Source": {
+                        "Agent": "Thesaurus"
+                      },
+                      "State": "Suggested",
+                      "Type": "Noun",
+                      "Weight": 0.609
+                    }
+                  },
+                  {
+                    "element -lvl1": {
+                      "Source": {
+                        "Agent": "Thesaurus"
+                      },
+                      "State": "Suggested",
+                      "Type": "Noun",
+                      "Weight": 0.609
+                    }
+                  },
+                  {
+                    "entry -lvl1": {
+                      "Source": {
+                        "Agent": "Thesaurus"
+                      },
+                      "State": "Suggested",
+                      "Type": "Noun",
+                      "Weight": 0.609
+                    }
+                  },
+                  {
+                    "product lvl1": {
+                      "Source": {
+                        "Agent": "Thesaurus"
+                      },
+                      "State": "Suggested",
+                      "Type": "Noun",
+                      "Weight": 0.6
+                    }
+                  },
+                  {
+                    "element lvl1": {
+                      "Source": {
+                        "Agent": "Thesaurus"
+                      },
+                      "State": "Suggested",
+                      "Type": "Noun",
+                      "Weight": 0.6
+                    }
+                  },
+                  {
+                    "entry lvl1": {
+                      "Source": {
+                        "Agent": "Thesaurus"
+                      },
+                      "State": "Suggested",
+                      "Type": "Noun",
+                      "Weight": 0.6
+                    }
+                  },
+                  {
+                    "article -lvl1": {
+                      "Source": {
+                        "Agent": "Thesaurus"
+                      },
+                      "State": "Suggested",
+                      "Type": "Noun",
+                      "Weight": 0.591
+                    }
+                  },
+                  {
+                    "object -lvl1": {
+                      "Source": {
+                        "Agent": "Thesaurus"
+                      },
+                      "State": "Suggested",
+                      "Type": "Noun",
+                      "Weight": 0.591
+                    }
+                  },
+                  {
+                    "piece -lvl1": {
+                      "Source": {
+                        "Agent": "Thesaurus"
+                      },
+                      "State": "Suggested",
+                      "Type": "Noun",
+                      "Weight": 0.591
+                    }
+                  },
+                  {
+                    "token -lvl1": {
+                      "Source": {
+                        "Agent": "Thesaurus"
+                      },
+                      "State": "Suggested",
+                      "Type": "Noun",
+                      "Weight": 0.591
+                    }
+                  }
+                ]
+              },
+              "data.market_introduced_at": {
+                "Definition": {
+                  "Binding": {
+                    "ConceptualEntity": "Data",
+                    "ConceptualProperty": "Market Introduced At"
+                  }
+                },
+                "State": "Generated",
+                "Terms": [
+                  {
+                    "market introduced at": {
+                      "State": "Generated"
+                    }
+                  },
+                  {
+                    "marketplace introduced at": {
+                      "Source": {
+                        "Agent": "Thesaurus"
+                      },
+                      "State": "Suggested",
+                      "Type": "Noun",
+                      "Weight": 0.508
+                    }
+                  },
+                  {
+                    "souk introduced at": {
+                      "Source": {
+                        "Agent": "Thesaurus"
+                      },
+                      "State": "Suggested",
+                      "Type": "Noun",
+                      "Weight": 0.508
+                    }
+                  },
+                  {
+                    "bazaar introduced at": {
+                      "Source": {
+                        "Agent": "Thesaurus"
+                      },
+                      "State": "Suggested",
+                      "Type": "Noun",
+                      "Weight": 0.508
+                    }
+                  },
+                  {
+                    "shop introduced at": {
+                      "Source": {
+                        "Agent": "Thesaurus"
+                      },
+                      "State": "Suggested",
+                      "Type": "Noun",
+                      "Weight": 0.492
+                    }
+                  },
+                  {
+                    "arcade introduced at": {
+                      "Source": {
+                        "Agent": "Thesaurus"
+                      },
+                      "State": "Suggested",
+                      "Type": "Noun",
+                      "Weight": 0.492
+                    }
+                  },
+                  {
+                    "fair introduced at": {
+                      "Source": {
+                        "Agent": "Thesaurus"
+                      },
+                      "State": "Suggested",
+                      "Type": "Noun",
+                      "Weight": 0.492
+                    }
+                  }
+                ]
+              },
+              "data.planner": {
+                "Definition": {
+                  "Binding": {
+                    "ConceptualEntity": "Data",
+                    "ConceptualProperty": "Planner"
+                  }
+                },
+                "State": "Generated",
+                "Terms": [
+                  {
+                    "planner": {
+                      "State": "Generated"
+                    }
+                  },
+                  {
+                    "organizer": {
+                      "Source": {
+                        "Agent": "Thesaurus"
+                      },
+                      "State": "Suggested",
+                      "Type": "Noun",
+                      "Weight": 0.491
+                    }
+                  },
+                  {
+                    "developer": {
+                      "Source": {
+                        "Agent": "Thesaurus"
+                      },
+                      "State": "Suggested",
+                      "Type": "Noun",
+                      "Weight": 0.491
+                    }
+                  },
+                  {
+                    "arranger": {
+                      "Source": {
+                        "Agent": "Thesaurus"
+                      },
+                      "State": "Suggested",
+                      "Type": "Noun",
+                      "Weight": 0.491
+                    }
+                  },
+                  {
+                    "proposer": {
+                      "Source": {
+                        "Agent": "Thesaurus"
+                      },
+                      "State": "Suggested",
+                      "Type": "Noun",
+                      "Weight": 0.491
+                    }
+                  },
+                  {
+                    "manager": {
+                      "Source": {
+                        "Agent": "Thesaurus"
+                      },
+                      "State": "Suggested",
+                      "Type": "Noun",
+                      "Weight": 0.491
+                    }
+                  },
+                  {
+                    "schemer": {
+                      "Source": {
+                        "Agent": "Thesaurus"
+                      },
+                      "State": "Suggested",
+                      "Type": "Noun",
+                      "Weight": 0.491
+                    }
+                  },
+                  {
+                    "director": {
+                      "Source": {
+                        "Agent": "Thesaurus"
+                      },
+                      "State": "Suggested",
+                      "Type": "Noun",
+                      "Weight": 0.491
+                    }
+                  },
+                  {
+                    "designer": {
+                      "Source": {
+                        "Agent": "Thesaurus"
+                      },
+                      "State": "Suggested",
+                      "Type": "Noun",
+                      "Weight": 0.476
+                    }
+                  },
+                  {
+                    "architect": {
+                      "Source": {
+                        "Agent": "Thesaurus"
+                      },
+                      "State": "Suggested",
+                      "Type": "Noun",
+                      "Weight": 0.476
+                    }
+                  },
+                  {
+                    "engineer": {
+                      "Source": {
+                        "Agent": "Thesaurus"
+                      },
+                      "State": "Suggested",
+                      "Type": "Noun",
+                      "Weight": 0.476
+                    }
+                  }
+                ]
+              },
+              "data.planner_assignment_issue": {
+                "Definition": {
+                  "Binding": {
+                    "ConceptualEntity": "Data",
+                    "ConceptualProperty": "Planner Assignment Issue"
+                  }
+                },
+                "State": "Generated",
+                "Terms": [
+                  {
+                    "planner assignment issue": {
+                      "State": "Generated"
+                    }
+                  },
+                  {
+                    "issue": {
+                      "State": "Generated",
+                      "Weight": 0.97
+                    }
+                  },
+                  {
+                    "assignment issue": {
+                      "State": "Generated",
+                      "Weight": 0.97
+                    }
+                  },
+                  {
+                    "planner assignment topic": {
+                      "Source": {
+                        "Agent": "Thesaurus"
+                      },
+                      "State": "Suggested",
+                      "Type": "Noun",
+                      "Weight": 0.508
+                    }
+                  },
+                  {
+                    "assignment topic": {
+                      "Source": {
+                        "Agent": "Thesaurus"
+                      },
+                      "State": "Suggested",
+                      "Type": "Noun",
+                      "Weight": 0.5
+                    }
+                  },
+                  {
+                    "planner assignment subject": {
+                      "Source": {
+                        "Agent": "Thesaurus"
+                      },
+                      "State": "Suggested",
+                      "Type": "Noun",
+                      "Weight": 0.492
+                    }
+                  },
+                  {
+                    "planner assignment matter": {
+                      "Source": {
+                        "Agent": "Thesaurus"
+                      },
+                      "State": "Suggested",
+                      "Type": "Noun",
+                      "Weight": 0.492
+                    }
+                  },
+                  {
+                    "planner assignment question": {
+                      "Source": {
+                        "Agent": "Thesaurus"
+                      },
+                      "State": "Suggested",
+                      "Type": "Noun",
+                      "Weight": 0.492
+                    }
+                  },
+                  {
+                    "planner assignment problem": {
+                      "Source": {
+                        "Agent": "Thesaurus"
+                      },
+                      "State": "Suggested",
+                      "Type": "Noun",
+                      "Weight": 0.492
+                    }
+                  },
+                  {
+                    "planner assignment concern": {
+                      "Source": {
+                        "Agent": "Thesaurus"
+                      },
+                      "State": "Suggested",
+                      "Type": "Noun",
+                      "Weight": 0.492
+                    }
+                  },
+                  {
+                    "planner assignment dispute": {
+                      "Source": {
+                        "Agent": "Thesaurus"
+                      },
+                      "State": "Suggested",
+                      "Type": "Noun",
+                      "Weight": 0.492
+                    }
+                  },
+                  {
+                    "topic": {
+                      "Source": {
+                        "Agent": "Thesaurus"
+                      },
+                      "State": "Suggested",
+                      "Type": "Noun",
+                      "Weight": 0.491
+                    }
+                  },
+                  {
+                    "assignment subject": {
+                      "Source": {
+                        "Agent": "Thesaurus"
+                      },
+                      "State": "Suggested",
+                      "Type": "Noun",
+                      "Weight": 0.485
+                    }
+                  },
+                  {
+                    "Planner Assignment Flag": {
+                      "Source": {
+                        "Agent": "PowerBI.VisualColumnRename",
+                        "Type": "External"
+                      },
+                      "State": "Suggested",
+                      "Weight": 0.9
+                    }
+                  }
+                ]
+              },
+              "data.series": {
+                "Definition": {
+                  "Binding": {
+                    "ConceptualEntity": "Data",
+                    "ConceptualProperty": "Series"
+                  }
+                },
+                "State": "Generated",
+                "Terms": [
+                  {
+                    "series": {
+                      "State": "Generated"
+                    }
+                  },
+                  {
+                    "succession": {
+                      "Source": {
+                        "Agent": "Thesaurus"
+                      },
+                      "State": "Suggested",
+                      "Type": "Noun",
+                      "Weight": 0.491
+                    }
+                  },
+                  {
+                    "progression": {
+                      "Source": {
+                        "Agent": "Thesaurus"
+                      },
+                      "State": "Suggested",
+                      "Type": "Noun",
+                      "Weight": 0.491
+                    }
+                  },
+                  {
+                    "sequence": {
+                      "Source": {
+                        "Agent": "Thesaurus"
+                      },
+                      "State": "Suggested",
+                      "Type": "Noun",
+                      "Weight": 0.476
+                    }
+                  },
+                  {
+                    "run": {
+                      "Source": {
+                        "Agent": "Thesaurus"
+                      },
+                      "State": "Suggested",
+                      "Type": "Noun",
+                      "Weight": 0.476
+                    }
+                  },
+                  {
+                    "chain": {
+                      "Source": {
+                        "Agent": "Thesaurus"
+                      },
+                      "State": "Suggested",
+                      "Type": "Noun",
+                      "Weight": 0.476
+                    }
+                  },
+                  {
+                    "string": {
+                      "Source": {
+                        "Agent": "Thesaurus"
+                      },
+                      "State": "Suggested",
+                      "Type": "Noun",
+                      "Weight": 0.476
+                    }
+                  },
+                  {
+                    "cycle": {
+                      "Source": {
+                        "Agent": "Thesaurus"
+                      },
+                      "State": "Suggested",
+                      "Type": "Noun",
+                      "Weight": 0.476
+                    }
+                  }
+                ]
+              },
+              "data.status": {
+                "Definition": {
+                  "Binding": {
+                    "ConceptualEntity": "Data",
+                    "ConceptualProperty": "Status"
+                  }
+                },
+                "State": "Generated",
+                "Terms": [
+                  {
+                    "status": {
+                      "State": "Generated"
+                    }
+                  },
+                  {
+                    "category": {
+                      "Source": {
+                        "Agent": "Thesaurus"
+                      },
+                      "State": "Suggested",
+                      "Type": "Noun",
+                      "Weight": 0.736
+                    }
+                  },
+                  {
+                    "importance": {
+                      "Source": {
+                        "Agent": "Thesaurus"
+                      },
+                      "State": "Suggested",
+                      "Type": "Noun",
+                      "Weight": 0.736
+                    }
+                  },
+                  {
+                    "prestige": {
+                      "Source": {
+                        "Agent": "Thesaurus"
+                      },
+                      "State": "Suggested",
+                      "Type": "Noun",
+                      "Weight": 0.736
+                    }
+                  },
+                  {
+                    "prominence": {
+                      "Source": {
+                        "Agent": "Thesaurus"
+                      },
+                      "State": "Suggested",
+                      "Type": "Noun",
+                      "Weight": 0.736
+                    }
+                  },
+                  {
+                    "condition": {
+                      "Source": {
+                        "Agent": "Thesaurus"
+                      },
+                      "State": "Suggested",
+                      "Type": "Noun",
+                      "Weight": 0.714
+                    }
+                  },
+                  {
+                    "grade": {
+                      "Source": {
+                        "Agent": "Thesaurus"
+                      },
+                      "State": "Suggested",
+                      "Type": "Noun",
+                      "Weight": 0.714
+                    }
+                  },
+                  {
+                    "level": {
+                      "Source": {
+                        "Agent": "Thesaurus"
+                      },
+                      "State": "Suggested",
+                      "Type": "Noun",
+                      "Weight": 0.714
+                    }
+                  },
+                  {
+                    "position": {
+                      "Source": {
+                        "Agent": "Thesaurus"
+                      },
+                      "State": "Suggested",
+                      "Type": "Noun",
+                      "Weight": 0.714
+                    }
+                  }
+                ]
+              }
+            },
+            "Language": "en-US",
+            "Relationships": {
+              "data_has_collective_class": {
+                "Binding": {
+                  "ConceptualEntity": "Data"
+                },
+                "Phrasings": [
+                  {
+                    "Attribute": {
+                      "Object": {
+                        "Role": "data.collective_class"
+                      },
+                      "Subject": {
+                        "Role": "data"
+                      }
+                    },
+                    "ID": "data_have_collective_classes",
+                    "State": "Generated",
+                    "Weight": 0.99
+                  }
+                ],
+                "Roles": {
+                  "data": {
+                    "Target": {
+                      "Entity": "data"
+                    }
+                  },
+                  "data.collective_class": {
+                    "Target": {
+                      "Entity": "data.collective_class"
+                    }
+                  }
+                },
+                "State": "Generated"
+              },
+              "data_has_current_status": {
+                "Binding": {
+                  "ConceptualEntity": "Data"
+                },
+                "Phrasings": [
+                  {
+                    "Attribute": {
+                      "Object": {
+                        "Role": "data.current_status"
+                      },
+                      "Subject": {
+                        "Role": "data"
+                      }
+                    },
+                    "ID": "data_have_current_statuses",
+                    "State": "Generated",
+                    "Weight": 0.99
+                  }
+                ],
+                "Roles": {
+                  "data": {
+                    "Target": {
+                      "Entity": "data"
+                    }
+                  },
+                  "data.current_status": {
+                    "Target": {
+                      "Entity": "data.current_status"
+                    }
+                  }
+                },
+                "State": "Generated"
+              },
+              "data_has_exclusive_comment": {
+                "Binding": {
+                  "ConceptualEntity": "Data"
+                },
+                "Phrasings": [
+                  {
+                    "Attribute": {
+                      "Object": {
+                        "Role": "data.exclusive_comment"
+                      },
+                      "Subject": {
+                        "Role": "data"
+                      }
+                    },
+                    "ID": "data_have_exclusive_comments",
+                    "State": "Generated",
+                    "Weight": 0.99
+                  }
+                ],
+                "Roles": {
+                  "data": {
+                    "Target": {
+                      "Entity": "data"
+                    }
+                  },
+                  "data.exclusive_comment": {
+                    "Target": {
+                      "Entity": "data.exclusive_comment"
+                    }
+                  }
+                },
+                "State": "Generated"
+              },
+              "data_has_future_status": {
+                "Binding": {
+                  "ConceptualEntity": "Data"
+                },
+                "Phrasings": [
+                  {
+                    "Attribute": {
+                      "Object": {
+                        "Role": "data.future_status"
+                      },
+                      "Subject": {
+                        "Role": "data"
+                      }
+                    },
+                    "ID": "data_have_future_statuses",
+                    "State": "Generated",
+                    "Weight": 0.99
+                  }
+                ],
+                "Roles": {
+                  "data": {
+                    "Target": {
+                      "Entity": "data"
+                    }
+                  },
+                  "data.future_status": {
+                    "Target": {
+                      "Entity": "data.future_status"
+                    }
+                  }
+                },
+                "State": "Generated"
+              },
+              "data_has_i_d_code": {
+                "Binding": {
+                  "ConceptualEntity": "Data"
+                },
+                "Phrasings": [
+                  {
+                    "Attribute": {
+                      "Object": {
+                        "Role": "data.i_d_code"
+                      },
+                      "Subject": {
+                        "Role": "data"
+                      }
+                    },
+                    "ID": "data_have_i_d_codes",
+                    "State": "Generated",
+                    "Weight": 0.99
+                  }
+                ],
+                "Roles": {
+                  "data": {
+                    "Target": {
+                      "Entity": "data"
+                    }
+                  },
+                  "data.i_d_code": {
+                    "Target": {
+                      "Entity": "data.i_d_code"
+                    }
+                  }
+                },
+                "State": "Generated"
+              },
+              "data_has_issue_count": {
+                "Binding": {
+                  "ConceptualEntity": "Data"
+                },
+                "Phrasings": [
+                  {
+                    "Attribute": {
+                      "Object": {
+                        "Role": "data.issue_count"
+                      },
+                      "Subject": {
+                        "Role": "data"
+                      }
+                    },
+                    "ID": "data_have_issue_count",
+                    "State": "Generated",
+                    "Weight": 0.99
+                  }
+                ],
+                "Roles": {
+                  "data": {
+                    "Target": {
+                      "Entity": "data"
+                    }
+                  },
+                  "data.issue_count": {
+                    "Target": {
+                      "Entity": "data.issue_count"
+                    }
+                  }
+                },
+                "State": "Generated"
+              },
+              "data_has_itemLvl1": {
+                "Binding": {
+                  "ConceptualEntity": "Data"
+                },
+                "Phrasings": [
+                  {
+                    "Attribute": {
+                      "Object": {
+                        "Role": "data.itemLvl1"
+                      },
+                      "Subject": {
+                        "Role": "data"
+                      }
+                    },
+                    "ID": "data_have_itemLvl1",
+                    "State": "Generated",
+                    "Weight": 0.99
+                  }
+                ],
+                "Roles": {
+                  "data": {
+                    "Target": {
+                      "Entity": "data"
+                    }
+                  },
+                  "data.itemLvl1": {
+                    "Target": {
+                      "Entity": "data.itemLvl1"
+                    }
+                  }
+                },
+                "State": "Generated"
+              },
+              "data_has_market_introduced_at": {
+                "Binding": {
+                  "ConceptualEntity": "Data"
+                },
+                "Phrasings": [
+                  {
+                    "Attribute": {
+                      "Object": {
+                        "Role": "data.market_introduced_at"
+                      },
+                      "Subject": {
+                        "Role": "data"
+                      }
+                    },
+                    "ID": "data_have_market_introduced_at",
+                    "State": "Generated",
+                    "Weight": 0.99
+                  }
+                ],
+                "Roles": {
+                  "data": {
+                    "Target": {
+                      "Entity": "data"
+                    }
+                  },
+                  "data.market_introduced_at": {
+                    "Target": {
+                      "Entity": "data.market_introduced_at"
+                    }
+                  }
+                },
+                "State": "Generated"
+              },
+              "data_has_planner": {
+                "Binding": {
+                  "ConceptualEntity": "Data"
+                },
+                "Phrasings": [
+                  {
+                    "Attribute": {
+                      "Object": {
+                        "Role": "data.planner"
+                      },
+                      "Subject": {
+                        "Role": "data"
+                      }
+                    },
+                    "ID": "data_have_planners",
+                    "State": "Generated",
+                    "Weight": 0.99
+                  },
+                  {
+                    "ID": "planners_plan_data",
+                    "State": "Generated",
+                    "Verb": {
+                      "Object": {
+                        "Role": "data"
+                      },
+                      "Subject": {
+                        "Role": "data.planner"
+                      },
+                      "Verbs": [
+                        {
+                          "plan": {
+                            "State": "Generated"
+                          }
+                        }
+                      ]
+                    },
+                    "Weight": 0.75
+                  },
+                  {
+                    "Attribute": {
+                      "Object": {
+                        "Role": "data"
+                      },
+                      "Subject": {
+                        "Role": "data.planner"
+                      }
+                    },
+                    "ID": "planners_have_data",
+                    "State": "Generated",
+                    "Weight": 0.99
+                  }
+                ],
+                "Roles": {
+                  "data": {
+                    "Target": {
+                      "Entity": "data"
+                    }
+                  },
+                  "data.planner": {
+                    "Target": {
+                      "Entity": "data.planner"
+                    }
+                  }
+                },
+                "State": "Generated"
+              },
+              "data_has_planner_assignment_issue": {
+                "Binding": {
+                  "ConceptualEntity": "Data"
+                },
+                "Phrasings": [
+                  {
+                    "Attribute": {
+                      "Object": {
+                        "Role": "data.planner_assignment_issue"
+                      },
+                      "Subject": {
+                        "Role": "data"
+                      }
+                    },
+                    "ID": "data_have_planner_assignment_issues",
+                    "State": "Generated",
+                    "Weight": 0.99
+                  }
+                ],
+                "Roles": {
+                  "data": {
+                    "Target": {
+                      "Entity": "data"
+                    }
+                  },
+                  "data.planner_assignment_issue": {
+                    "Target": {
+                      "Entity": "data.planner_assignment_issue"
+                    }
+                  }
+                },
+                "State": "Generated"
+              },
+              "data_has_series": {
+                "Binding": {
+                  "ConceptualEntity": "Data"
+                },
+                "Phrasings": [
+                  {
+                    "Attribute": {
+                      "Object": {
+                        "Role": "data.series"
+                      },
+                      "Subject": {
+                        "Role": "data"
+                      }
+                    },
+                    "ID": "data_have_series",
+                    "State": "Generated",
+                    "Weight": 0.99
+                  }
+                ],
+                "Roles": {
+                  "data": {
+                    "Target": {
+                      "Entity": "data"
+                    }
+                  },
+                  "data.series": {
+                    "Target": {
+                      "Entity": "data.series"
+                    }
+                  }
+                },
+                "State": "Generated"
+              },
+              "data_has_status": {
+                "Binding": {
+                  "ConceptualEntity": "Data"
+                },
+                "Phrasings": [
+                  {
+                    "Attribute": {
+                      "Object": {
+                        "Role": "data.status"
+                      },
+                      "Subject": {
+                        "Role": "data"
+                      }
+                    },
+                    "ID": "data_have_statuses",
+                    "State": "Generated",
+                    "Weight": 0.99
+                  }
+                ],
+                "Roles": {
+                  "data": {
+                    "Target": {
+                      "Entity": "data"
+                    }
+                  },
+                  "data.status": {
+                    "Target": {
+                      "Entity": "data.status"
+                    }
+                  }
+                },
+                "State": "Generated"
+              }
+            },
+            "Version": "4.1.0"
+          },
+          "contentType": "json"
+        }
+      }
+    ],
+    "dataAccessOptions": {
+      "legacyRedirects": true,
+      "returnErrorValuesAsNull": true
+    },
+    "defaultPowerBIDataSourceVersion": "powerBI_V3",
+    "sourceQueryCulture": "en-US",
+    "tables": [
+      {
+        "name": "Data",
+        "annotations": [
+          {
+            "name": "PBI_ResultType",
+            "value": "Table"
+          },
+          {
+            "name": "PBI_NavigationStepName",
+            "value": "Navigation"
+          }
+        ],
+        "columns": [
+          {
+            "name": "Item-Lvl1",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "lineageTag": "0fbeecb5-25b9-47a2-ab6b-520677e51630",
+            "sourceColumn": "Item-Lvl1",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Planner",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "lineageTag": "bed630e9-9d4b-4ea2-a5cc-e11da53651d1",
+            "sourceColumn": "Planner",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Series",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "lineageTag": "dfbecd5d-a444-461f-a3d0-fcbbdce8f4b1",
+            "sourceColumn": "Series",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Collective Class",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "lineageTag": "0816d0c2-dc08-4187-ab1c-39f25dad67f0",
+            "sourceColumn": "Collective Class",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Current Status",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "lineageTag": "93f26209-eb82-40aa-88a0-ace5676dd1d8",
+            "sourceColumn": "Current Status",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Future Status",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "lineageTag": "58a4473c-99de-4981-996b-8727acc26c58",
+            "sourceColumn": "Future Status",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "I/D Code",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "lineageTag": "140cc1cc-3c4d-4df7-9b76-fd3cf3a20304",
+            "sourceColumn": "I/D Code",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "ExclusiveComment",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "lineageTag": "edf4f9e6-f5bc-47b4-9217-2067c67b992b",
+            "sourceColumn": "ExclusiveComment",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Market Introduced At",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "lineageTag": "cead4027-98f3-490e-ba56-5e0a6104945f",
+            "sourceColumn": "Market Introduced At",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Status",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "lineageTag": "58338783-adba-430a-a63c-ea3deb6d6ab2",
+            "sourceColumn": "Status",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Planner Assignment Issue",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "lineageTag": "955ac9f7-6161-4819-a619-a31a6b4dd524",
+            "sourceColumn": "Planner Assignment Issue",
+            "summarizeBy": "none"
+          }
+        ],
+        "lineageTag": "af20f049-c816-4a7b-99fe-ef5cd2081493",
+        "measures": [
+          {
+            "name": "Issue Count",
+            "expression": [
+              "",
+              "COUNTROWS(",
+              "    FILTER(",
+              "        'Data',",
+              "        NOT(ISBLANK('Data'[Planner Assignment Issue]))",
+              "    )",
+              ")"
+            ],
+            "formatString": "0",
+            "lineageTag": "e772c60d-d345-44af-a6da-21207245422b"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "Data",
+            "mode": "import",
+            "source": {
+              "expression": [
+                "let",
+                "    Source = Sql.Database(\"Ashley-edw.database.windows.net\", \"Ashley_edw\", [Query=\"SELECT DISTINCT#(lf)    FCC.[Item-Lvl1],#(lf)    IPK.[ienForecastPlannerID] AS [Planner],#(lf)    CPD.[Item Ext Series Number] AS [Series],#(lf)    CPD.[Collective Class],#(lf)    CPD.[AFI Item Status] AS [Current Status],#(lf)    IPK.[ienFutureStatus] AS [Future Status],#(lf)    CPD.[Import/Domestic Code] AS [I/D Code],#(lf)    [IM].[ExclusiveComment],#(lf)    CPD.[Market Introduced At],#(lf)    CASE#(lf)        WHEN CPD.[AFI Item Status] = 'D'#(lf)            THEN 'Disco'#(lf)        WHEN IPK.[ienFutureStatus] IN ('P', 'F','E','L')#(lf)            THEN 'Drop'#(lf)        WHEN [IM].[ExclusiveComment] = 'Homestore'#(lf)            THEN 'Homestore Exclusive'#(lf)        WHEN CPD.[Market Introduced At] LIKE 'INT%'#(lf)            THEN 'INT Exclusive'#(lf)        ELSE 'Inline'#(lf)    END AS [Status]#(lf)FROM [SupplyChain_Enh].[ForecastCommonContainer_Logility] AS FCC#(lf)INNER JOIN [SupplyChain_DW].[DimCurrentProductDetails] AS CPD#(lf)    ON CPD.[Item SKU] = FCC.[Item-Lvl1]#(lf)LEFT JOIN [Enterprise_DW].[DimItemMaster] AS [IM]#(lf)    ON CPD.[Item SKU] = [IM].[ItemSKU]#(lf)LEFT JOIN [MasterData_ProductKnowledge].[Item_ENV] AS IPK#(lf)    ON CPD.[Item SKU] = IPK.[ienItemNumber]#(lf)   AND IPK.[ienEnvironmentCode] = 'AFI'#(lf)WHERE FCC.[FileDate] = (#(lf)        SELECT MAX([FileDate])#(lf)        FROM [SupplyChain_Enh].[ForecastCommonContainer_Logility]#(lf)    )#(lf)  AND FCC.[Location] NOT IN ('C','12','101','151','16','20','213')#(lf)ORDER BY FCC.[Item-Lvl1];\", CreateNavigationProperties=false]),",
+                "    #\"Added Planner Assignment Issue\" = Table.AddColumn(",
+                "        Source,",
+                "        \"Planner Assignment Issue\",",
+                "        each",
+                "            if [Status] = \"Disco\" and [Planner] <> \"SKUJAK\" then \"Disco - Should be SKUJAK\"",
+                "            else if [Status] = \"Homestore Exclusive\" and [Planner] <> \"TMANGAN\" then \"Homestore Exclusive - Should be TMANGAN\"",
+                "            else if [Status] = \"INT Exclusive\" and [Planner] <> \"TRACYHO\" then \"INT Exclusive - Should be TRACYHO\"",
+                "            else if [Status] = \"Drop\" and [Collective Class] = \"BEDDING\" and Text.Contains(Text.Upper(Text.From([Market Introduced At])), \"INT\") and [Planner] <> \"SLYONS\" then \"Drop INT Bedding - Should be SLYONS\"",
+                "            else if [Status] = \"Drop\" and List.Contains({\"HNGUYEN2\", \"VHA\", \"KHHO\"}, [Planner]) then \"Wrong Planner\"",
+                "            else if [Status] = \"Inline\" and not List.Contains({\"HNGUYEN2\", \"VHA\", \"KHHO\"}, [Planner]) then \"Wrong Planner\"",
+                "            else null",
+                "    )",
+                "in",
+                "    #\"Added Planner Assignment Issue\""
+              ],
+              "type": "m"
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

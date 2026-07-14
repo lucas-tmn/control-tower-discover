@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Notebook",
+    "displayName": "Test_CICD_Ankit"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "20869ebb-202c-9a52-4944-d9a0bb23b9de"
+  }
+}

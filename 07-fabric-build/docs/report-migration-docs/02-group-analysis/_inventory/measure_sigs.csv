@@ -1,0 +1,880 @@
+model,measure,signature,referenced_tables,dax_len
+Act+Fcst by WNK & MILL Prod Resource,Act - Invoiced,"calculate(sum(col),col=str)",ActDemand,66
+Act+Fcst by WNK & MILL Prod Resource,Act - Open Ord,"calculate(sum(col),col=str)",ActDemand,67
+Act+Fcst by WNK & MILL Prod Resource,Fcast - Result,"calculate(sum(col),col=str)",Fcast,51
+Act+Fcst by WNK & MILL Prod Resource,Fcast - Promo,"calculate(sum(col),col=str)",Fcast,49
+Act+Fcst by WNK & MILL Prod Resource,Fcast - Total,meas+meas,,34
+Act+Fcst by WNK & MILL Prod Resource,Act+Fcast,"calculate(sum(col),col<num)+(meas+meas)",ActDemand; z_FiscalCal,111
+Act+Fcst by WNK & MILL Prod Resource,Act+Fcast Weekly Qty,"divide(meas,meas)",,40
+Act+Fcst by WNK & MILL Prod Resource,FiscalWeeksinMonth,calculate(average(col)),z_FiscalCal,51
+Act+Fcst by WNK & MILL Prod Resource,Prod Capacity,calculate(sum(col)),ProdCapacity,45
+Act+Fcst by WNK & MILL Prod Resource,ETD Fcast,"calculate(sum(col),col=str,userelationship(col,col))+calculate(sum(col),col=str,userelationship(col,col))",Fcast; z_FiscalCal,239
+Act+Fcst by WNK & MILL Prod Resource,Past Due Qty,"calculate(meas,col<num)",z_FiscalCal,64
+Act+Fcst by WNK & MILL Prod Resource,FcstAverageWeekly,"divide(calculate(meas,and(col>num,col<=num)),num)",z_FiscalCal,114
+Act+Fcst by WNK & MILL Prod Resource,Vendor Shipped,calculate(sum(col)),VendorShipped,42
+Act+Fcst by WNK & MILL Prod Resource,ETA Vendor Shipped,"calculate(sum(col),userelationship(col,col))",VendorShipped; z_FiscalCal,119
+Act+Fcst vs Manufacturing,Act - Invoiced,"calculate(sum(col),col=str)",ActDemand,66
+Act+Fcst vs Manufacturing,Act - Open Ord,"calculate(sum(col),col=str)",ActDemand,67
+Act+Fcst vs Manufacturing,Fcast - Result,"calculate(sum(col),col=str)",Fcast,51
+Act+Fcst vs Manufacturing,Fcast - Promo,"calculate(sum(col),col=str)",Fcast,49
+Act+Fcst vs Manufacturing,Fcast - Total,meas+meas,,34
+Act+Fcst vs Manufacturing,Act+Fcast,"calculate(sum(col),col<num)+(meas+meas)",ActDemand; z_FiscalCal,111
+Act+Fcst vs Manufacturing,Act+Fcast Weekly Qty,"divide(meas,meas)",,40
+Act+Fcst vs Manufacturing,FiscalWeeksinMonth,calculate(average(col)),z_FiscalCal,51
+Act+Fcst vs Manufacturing,Prod Capacity,calculate(sum(col)),ProdCapacity,45
+Act+Fcst vs Manufacturing,ETD Fcast,"calculate(sum(col),col=str,userelationship(col,col))+calculate(sum(col),col=str,userelationship(col,col))",Fcast; z_FiscalCal,239
+Act+Fcst vs Manufacturing,Past Due Qty,"calculate(meas,col<num)",z_FiscalCal,64
+Act+Fcst vs Manufacturing,FcstAverageWeekly,"divide(calculate(meas,and(col>num,col<=num)),num)",z_FiscalCal,114
+Act+Fcst vs Manufacturing,Vendor Shipped,calculate(sum(col)),VendorShipped,42
+Act+Fcst vs Manufacturing,ETA Vendor Shipped,"calculate(sum(col),userelationship(col,col))",VendorShipped; z_FiscalCal,119
+AFT_SI-SS_PSW,Demand Fulfill CO,"if((sum(col)/sum(col))>=num,num,(sum(col)/sum(col)))",Demand Fulfillment,202
+AFT_SI-SS_PSW,Demand Fulfill SI,sum(col)/sum(col),Demand Fulfillment,77
+AFT_SI-SS_PSW,Demand Fulfill SS,(sum(col)+(sum(col)))/(sum(col)+sum(col)),Demand Fulfillment,177
+AFT_SI-SS_PSW,Last Refreshed (Local),"format(lastdate(col),str)",LastRefresh_Local,76
+AFT_SI-SS_PSW,Background color DUE,"if(max(meas)=num,str,if(max(meas)=blank(),blank(),if(max(meas)=num,str,if(max(meas)=num,str,if(max(meas)=num,str,if(max(meas)=num,str,if(max(meas)=num,str,if(max(meas)=num,str,if(max(meas)=num,str,if(max(meas)=num,str,if(max(meas)=num,str,if(max(meas)=num,str,blank()))))))))))))",,455
+AFT_SI-SS_PSW,Background color DUE WHSE,"if(max(meas)=num,str,if(max(meas)=blank(),blank(),if(max(meas)=num,str,if(max(meas)=num,str,if(max(meas)=num,str,if(max(meas)=num,str,if(max(meas)=num,str,if(max(meas)=num,str,if(max(meas)=num,str,if(max(meas)=num,str,if(max(meas)=num,str,if(max(meas)=num,str,blank()))))))))))))",,515
+AFT_SI-SS_PSW,Background color ETD,"if(max(meas)=num,str,if(max(meas)=blank(),blank(),if(max(meas)=num,str,if(max(meas)=num,str,if(max(meas)=num,str,if(max(meas)=num,str,if(max(meas)=num,str,if(max(meas)=num,str,if(max(meas)=num,str,if(max(meas)=num,str,if(max(meas)=num,str,if(max(meas)=num,str,blank()))))))))))))",,455
+AFT_SI-SS_PSW,Background color ETD WHSE,"if(max(meas)=num,str,if(max(meas)=blank(),blank(),if(max(meas)=num,str,if(max(meas)=num,str,if(max(meas)=num,str,if(max(meas)=num,str,if(max(meas)=num,str,if(max(meas)=num,str,if(max(meas)=num,str,if(max(meas)=num,str,if(max(meas)=num,str,if(max(meas)=num,str,blank()))))))))))))",,515
+AFT_SI-SS_PSW,SS% DUE,"(calculate(sum(col),col=str)/calculate(sum(col),col=str))",PO,132
+AFT_SI-SS_PSW,SS% ETD,"(calculate(sum(col),col=str)/calculate(sum(col),col=str))",PO,132
+AFT_SI-SS_PSW,Due Color,"if(meas>selectedvalue(col),str,str)",Percent,73
+AFT_SI-SS_PSW,SS% Test,"(calculate(sum(col),col=str)/calculate(sum(col),col=str))",PO,132
+Amazon POS Sales and Forecast,90+ Day Inventory,calculate(sum(col)),AMZNInv,38
+Amazon POS Sales and Forecast,AFI Order Qty,calculate(sum(col)),AMZNWholesale,46
+Amazon POS Sales and Forecast,FC Qty,calculate(sum(col)),AMZNFC,32
+Amazon POS Sales and Forecast,Open PO Qty,calculate(sum(col)),AMZNInv,38
+Amazon POS Sales and Forecast,POS Qty,calculate(sum(col)),AMZNPOS,34
+Amazon POS Sales and Forecast,POS + FC Qty,meas+meas,,20
+Amazon POS Sales and Forecast,Sellable On-Hand Inv,calculate(sum(col)),AMZNInv,47
+Demand Review,FC Bias - 90d - last 3 Mo,"calculate(meas,col>=-num)",z_FiscalCal,66
+Demand Review,FC Bias - 30d - last 3 Mo,"calculate(meas,col>=-num)",z_FiscalCal,66
+Demand Review,FC Bias - 90d,"calculate(meas,col=str)",Fcst_Accuracy_Cust_It_Wh,72
+Demand Review,orders_qty_cur_req_date_mdc,"calculate(sum(col),col<>str)",OrdHist; z_WarehouseMaster,83
+Demand Review,In Stock,"calculate(divide(sum(col),sum(col)),col<>str)",Week_2_ATP; z_ProductDetails,118
+Demand Review,In Stock - Last 3 Mo,"calculate(meas,col>=-num)",z_FiscalCal,64
+Demand Review,fcst_qty_wrk_rh_adjusted,"calculate(meas,col<>str,col=num)+calculate(sum(col))",FC by Customer Group (in progress of discontinuing); z_FiscalCal; RH_FC,181
+Demand Review,Demand Fulfillment (last 3mo),"calculate(meas,col>-num)",z_FiscalCal,71
+Demand Review,consumption_rate_wrk,"divide(meas,meas)",,50
+Demand Review,consumption_rate_wrk_this_month,"calculate(meas,col=num)",z_FiscalCal,71
+Demand Review,FC Bias - 30d,"calculate(meas,col=str)",Fcst_Accuracy_Cust_It_Wh,74
+Demand Review,In Stock - last 6 Mo,"calculate(meas,col>=-num)",z_FiscalCal,63
+Demand Review,placements_at_risk_cur,"calculate(sum(col),col=num)",Placement_History; z_FiscalCal,94
+Demand Review,placements_cur,calculate(sum(col)),Placement_History,55
+Demand Review,orders_qty_cur_req_date_last_year (2),"calculate(sum(col),col=-num)",OrdHist; z_FiscalCal,79
+Demand Review,orders_qty_cur_req_date_two_yrs_ago,"calculate(sum(col),col=-num)",OrdHist; z_FiscalCal,79
+Demand Review,orders_qty_cur_req_date_this_year (2),"calculate(sum(col),col=num,col<num)",OrdHist; z_FiscalCal,118
+Demand Review,orders_qty_cur_req_date_future,"calculate(sum(col),col=num,col>=num)",OrdHist; z_FiscalCal,119
+Demand Review,On Hand,"calculate(sum(col),col<num)",DemandFulfillment; z_FiscalCal,85
+Demand Review,SI,"calculate(sum(col),col>=num)",SupplyPlanDetail; z_FiscalCal,74
+Demand Review,OH + SI,meas+meas,,16
+Demand Review,orders_net$_cur_req_date_r12,"calculate(sum(col),col<num,col>=-num)",OrdHist; z_FiscalCal,118
+Demand Review,Weekly SI,"divide(calculate(sum(col),col>=num),distinctcountnoblank(col))",SupplyPlanDetail; z_FiscalCal,139
+Demand Review,fcst_qty_wrk_promo,"calculate(meas,col=col)",Fcst_Snapshots,110
+Demand Review,FG Excess Current Week,"calculate(meas,col=num)",z_FiscalCal,65
+Demand Review,In Stock This Year,"calculate(meas,col=num)",z_FiscalCal,60
+Demand Review,YTD Growth,"divide(meas-meas,meas)",,41
+Demand Review,orders_fob$_cur_req_date_all,"calculate(sum(col))+calculate(sum(col),col<>str)",OrdHist; RH_Sales,108
+Demand Review,fcst_fob$_logility,"calculate(sum(col),col=col)",Fcst_Snapshots,122
+Demand Review,Act+Fcst $,"calculate(meas,col<num)+meas",z_FiscalCal,103
+Demand Review,Seas Monthly,meas,,31
+Demand Review,Seas Annualized 3 M Hist,"calculate(sum(col),col<num,col>=-num)*num",OrdHist; z_FiscalCal,133
+Demand Review,FC 3M,"calculate(meas,col=num,col<num)",z_FiscalCal,112
+Demand Review,Seas Annualized 3 M FC,"calculate(meas,col>=num,col<num)",z_FiscalCal,119
+Demand Review,fcst_qty_wrk_r12_all,"```calculate(meas,removefilters(col),col=num)```",z_FiscalCal,114
+Demand Review,Seas Adj TY,"calculate(meas,col=num)",z_FiscalCal,81
+Demand Review,Snapshot,max(col),FC by Customer Group (in progress of discontinuing),72
+Demand Review,Seas Annualized,meas*num,,36
+Demand Review,orders_plus_fcst_wrk_seas_adj,"calculate(sum(col),col<num,col<>str)+calculate(sum(col),col=col,col>=num)",OrdHist; z_FiscalCal; z_WarehouseMaster; Fcst_Snapshots,298
+Demand Review,YTG Growth,"divide(meas-meas,meas)",,40
+Demand Review,YTD ACT,"calculate(meas,col=num,col<num)",z_FiscalCal,116
+Demand Review,YTD-1 ACT,"calculate(meas,col=-num,col<-num)",z_FiscalCal,119
+Demand Review,YTG-1 ACT,"calculate(meas,col=-num,col>=-num)",z_FiscalCal,120
+Demand Review,YTG FC,"calculate(meas,col=num,col>=num)",z_FiscalCal,114
+Demand Review,Seas Calc,"divide(calculate(sum(col),allexcept(z_fiscalcal,col),col<num,col<num,allexcept('z_productdetails',col)),calculate(sum(col),removefilters(z_fiscalcal),col<num,allexcept(z_productdetails,col)))",OrdHist; z_FiscalCal; z_ProductDetails,413
+Demand Review,YTD-2 ACT,"calculate(meas,col=-num,col<-num)",z_FiscalCal,119
+Demand Review,YTG-2 ACT,"calculate(meas,col=-num,col>=-num)",z_FiscalCal,120
+Demand Review,YTD-1 Growth,"divide(meas-meas,meas)",,43
+Demand Review,YTG-1 Growth,"divide(meas-meas,meas)",,43
+Demand Review,YTD Qty Growth,meas-meas,,21
+Demand Review,YTG Qty Growth,meas-meas,,20
+Demand Review,YTG % of Growth by Lifecycle Status Grp,"divide(meas-meas,abs(calculate(meas,removefilters(col))))",z_ProductDetails,116
+Demand Review,YTD % of Growth by Lifecycle Status Grp,"divide(meas-meas,abs(calculate(meas,removefilters(col))))",z_ProductDetails,117
+Demand Review,FC Bias,"divide(sum(col)-sum(col),sum(col))",Fcst_Accuracy_Cust_It_Wh,143
+Demand Review,FC Bias - 90d - last 12 Mo,"calculate(meas,col>=-num)",z_FiscalCal,67
+Demand Review,FC - 30d,"calculate(sum(col),col=str)",Fcst_Accuracy_Cust_It_Wh,108
+Demand Review,FC Error - 30d,"calculate(sum(col)-sum(col),col=str)",Fcst_Accuracy_Cust_It_Wh,153
+Demand Review,FC Error - 90d,"calculate(sum(col)-sum(col),col=str)",Fcst_Accuracy_Cust_It_Wh,153
+Demand Review,FC Bias - 90d - Y0,"calculate(meas,removefilters(col),col=num)",z_FiscalCal,113
+Demand Review,Demand Fulfillment (last month),"calculate(meas,col=-num)",z_FiscalCal,70
+Demand Review,FC Error - 30d M-1,"calculate(sum(col)-sum(col),col=str,col=-num)",Fcst_Accuracy_Cust_It_Wh; z_FiscalCal,192
+Demand Review,Exception Flag,"switch(true(),abs(meas)>col,num,and(abs(meas)>col,abs(meas)>col),num,and(abs(meas)>col,abs(meas)>col),num,num)",Parameter_Fcst_Change_Threshold; Bias Threshold; Parameter,380
+Demand Review,FC Bias - 30d - LAST MONTH,"calculate(meas,col=-num)",z_FiscalCal,65
+Demand Review,FC Bias - 90d - last month,"calculate(meas,col=-num)",z_FiscalCal,65
+Demand Review,FC Error - 90d M-1,"calculate(sum(col)-sum(col),col=str,col=-num)",Fcst_Accuracy_Cust_It_Wh; z_FiscalCal,192
+Demand Review,In Stock - Last Mo,"calculate(meas,col=-num)",z_FiscalCal,63
+Demand Review,orders_qty_cur_req_r12_logility,"calculate(meas,removefilters(col),col=-num)",z_FiscalCal,124
+Demand Review,fcst_growth_qty_r12_logility,meas-meas,,63
+Demand Review,R12 CP vs PP,meas-meas,,55
+Demand Review,LM 90d Abs It Error,"calculate(sumx(summarize(fcst_accuracy_cust_it_wh,col,col,col),varitemforecast=calculate(sum(col))varitemdemand=calculate(sum(col))returnabs(itemforecast-itemdemand)),col=str,col=-num)--calculate(sum(col),col=str,col=-num)",Fcst_Accuracy_Cust_It_Wh; z_FiscalCal; ItLevelErr,581
+Demand Review,LM Abs It Err %,"divide(meas,calculate(sum(col),col=-num,col=str))",ItWHAccy; z_FiscalCal,142
+Demand Review,Prior 12M Actual Sales $,"calculate(meas,removefilters(col),col=-num)",z_FiscalCal,120
+Demand Review,Seas Adj Trend (3M vs 6M),"divide(divide(calculate(sum(col),removefilters(z_fiscalcal),col>=-num,col<num),num)-divide(calculate(sum(col),removefilters(z_fiscalcal),col>=-num,col<num),num),divide(calculate(sum(col),removefilters(z_fiscalcal),col>=-num,col<num),num))",OrdHist; z_FiscalCal,511
+Demand Review,Promo $,"calculate(sum(col),col=str)",FC by Customer Group (in progress of discontinuing),149
+Demand Review,fcst_growth_qty_this_year,"divide(meas-meas,meas)",,101
+Demand Review,90d Lag Fcst,"calculate(sum(col),col=str)",Fcst_Accuracy_Cust_It_Wh,108
+Demand Review,90d Lag Act,"calculate(sum(col),col=str)",Fcst_Accuracy_Cust_It_Wh,107
+Demand Review,Seas Adj Act,"calculate(sum(col),col<num)",OrdHist; z_FiscalCal,88
+Demand Review,fcst_seas_adj_qty_wrk,"calculate(meas,col=col)",Fcst_Snapshots,113
+Demand Review,orders_plus_fcst_qty_cur_req_wrk_all,"calculate(meas,col<num)+calculate(meas,col>=num)",z_FiscalCal,149
+Demand Review,Trend (3M vs 6M),"divide(divide(calculate(meas,removefilters(z_fiscalcal),col>=-num,col<num),num)-divide(calculate(meas,removefilters(z_fiscalcal),col>=-num,col<num),num),divide(calculate(meas,removefilters(z_fiscalcal),col>=-num,col<num),num))",z_FiscalCal,487
+Demand Review,PoP Item vs Series Change,abs(average(col)-abs(meas)),z_ProductDetails,78
+Demand Review,Series vs Item x WRk Plan,meas*meas,,66
+Demand Review,PoP Item Ratio Change Rank,meas*average(col)*meas*meas,z_ProductDetails,135
+Demand Review,Seas 3M Fc vs Act,"divide(meas,meas)-num",,61
+Demand Review,Item vs Series Growth,"abs(divide(abs(average(col))-abs(meas),abs(meas)))",z_ProductDetails,118
+Demand Review,R12 Act $,"calculate(meas,removefilters(col),col=-num)",z_FiscalCal,120
+Demand Review,R12 Fcst + Est Promo $,"calculate(meas,removefilters(col),col>=num,col<num)+meas",z_FiscalCal,173
+Demand Review,fcst_growth_FOB$_YoY%_This_Year,"divide(meas-meas,meas)",,53
+Demand Review,orders_qty_cur_req_date_r12_previous,"calculate(meas,removefilters(col),col=-num)",z_FiscalCal,119
+Demand Review,Act+Fcst Qty,"calculate(meas,col<num)+meas",z_FiscalCal,105
+Demand Review,fcst_qty_wrk_logility,"calculate(sum(col),col=col)",Fcst_Snapshots,114
+Demand Review,FC Bias - 90d (RH Adj),"divide(meas-calculate(sum(col),col=str)-sum(col),calculate(sum(col),col=str)+sum(col))",Fcst_Accuracy_Cust_It_Wh; RH_Sales,282
+Demand Review,90d Fcst (logility-RH_Bedding),"calculate(sum(col),col=str)-calculate(sum(col),col=str,col=str)",Fcst_Accuracy_Cust_It_Wh,276
+Demand Review,30d Fcst (logility-RH_Bedding),"calculate(sum(col),col=str)-calculate(sum(col),col=str,col=str)",Fcst_Accuracy_Cust_It_Wh,276
+Demand Review,FC Bias - 30d (RH Adj),"divide(meas-calculate(sum(col),col=str)-sum(col),calculate(sum(col),col=str)+sum(col))",Fcst_Accuracy_Cust_It_Wh; RH_Sales,282
+Demand Review,30d Fcst (RH non_Bedding CC),"if(selectedvalue(col)=str,calculate(sum(col),removefilters(col,col),col=str,col=str),num)",z_ProductDetails; Fcst_Accuracy_Cust_It_Wh,329
+Demand Review,fcst_qty_wrk_rh_drop_ship,"calculate(sum(col),col=num,col=str,removefilters(z_warehousemaster))-calculate(meas,col=str,col=num,col=str,removefilters(z_warehousemaster))",RH_FC; z_FiscalCal; z_ProductDetails; Fcst_Snapshots,335
+Demand Review,fcst_growth_qty_r12,"divide(meas-meas,meas)",,105
+Demand Review,orders_qty_r12_mdc (use this one),"calculate(meas,removefilters(col),removefilters(col),col=-num)",z_FiscalCal,159
+Demand Review,orders_qty_r12_mdc_previous,"calculate(meas,removefilters(col),col=-num)",z_FiscalCal,119
+Demand Review,orders_fob$_cur_req_date_mdc,"```calculate(sum(col),col<>str)```",OrdHist; z_WarehouseMaster,87
+Demand Review,R12 Act $ (MDC),"calculate(meas,removefilters(col),col=-num)",z_FiscalCal,120
+Demand Review,fcst_qty_prior_r12_mdc,"calculate(meas+meas,col=num)",z_FiscalCal,98
+Demand Review,R12 $ YoY% (MDC),"divide(meas-meas,meas)",,71
+Demand Review,fcst_qty_prior_r12_all,meas+meas+meas+meas,,105
+Demand Review,fcst_qty_prior_rhDS,"calculate(sum(col),removefilters(col),col=num)-calculate(meas,col=str,removefilters(col),col=num)",RH_FC (Prior_Plan); z_FiscalCal; Fcst_Snapshots,274
+Demand Review,fcst_change_%_r12_wrk_v_prior_all,"divide(meas-meas,meas)",,81
+Demand Review,fcst_fob$_all,meas+sum(col)+sum(col),Fcst_Average_Promo; Fcst_Container,95
+Demand Review,R12 Fcst $ (all),"calculate(meas,removefilters(col),col>=num,col<num)+calculate(meas,removefilters(col))+calculate(sum(col),removefilters(col),col>=num,col<num)",z_FiscalCal; Fcst_Container,393
+Demand Review,R12 Fcst (Other),meas+meas,,50
+Demand Review,FC Bias - 2wk - LAST MONTH,"calculate(meas,col=-num)",z_FiscalCal,65
+Demand Review,FC Bias - 2wk,"calculate(meas,col=str)",Fcst_Accuracy_Cust_It_Wh,73
+Demand Review,FC Error - 2wk,"calculate(sum(col)-sum(col),col=str)",Fcst_Accuracy_Cust_It_Wh,152
+Demand Review,FC Error - 2wk - LAST MONTH,"calculate(sum(col)-sum(col),col=str,col=-num)",Fcst_Accuracy_Cust_It_Wh; z_FiscalCal,191
+Demand Review,FC - 90d - Last Month,"calculate(sum(col),col=str,col=-num)",Fcst_Accuracy_Cust_It_Wh; z_FiscalCal,147
+Demand Review,FC - 90d - Last Month Act,"calculate(sum(col),col=str,col=-num)",Fcst_Accuracy_Cust_It_Wh; z_FiscalCal,146
+Demand Review,3M Average,"divide(calculate(meas,removefilters(z_fiscalcal),col>=-num,col<num),num)",z_FiscalCal,159
+Demand Review,6M Average,"divide(calculate(meas,removefilters(z_fiscalcal),col>=-num,col<num),num)",z_FiscalCal,159
+Demand Review,fcst_avg_qty_wrk_month9_through_month12_logility_nonPromo,"divide(calculate(meas,col>=num,col<num),num)",z_FiscalCal,135
+Demand Review,6M Avg Forecast,"divide(calculate(sum(col),col<>str,col<num)+calculate(sum(col),col<num),num)",FC by Customer Group (in progress of discontinuing); z_FiscalCal; RH_FC,274
+Demand Review,Working vs Current Forecast,meas-col,Fcst_Current_Published,74
+Demand Review,Working vs Current Forecast % Change,"divide(meas-col,col)",Fcst_Current_Published,129
+Demand Review,consumption_target_rate,"divide(meas,sum(col))",TargetConsumption,69
+Demand Review,consumption_target_qty_wrk,```sum(col)```,TargetConsumption,52
+Demand Review,consumption_gap_qty_wrk,"meas-meas--(switch(true(),meas>meas,meas-meas,meas<meas,meas-meas,num))",,286
+Demand Review,Abs Plan Change,abs(meas-meas),,65
+Demand Review,Baseline Plan Change,meas-meas,,77
+Demand Review,Baseline Plan Change %,"divide(meas,meas)",,70
+Demand Review,fcst_change_qty_r12_wrk_v_prior_logility,```meas-meas```,,67
+Demand Review,fcst_change_%_r12_wrk_v_prior_logility,"divide(meas,meas)",,80
+Demand Review,fcst_qty_prior_logility,"calculate(sum(col),removefilters('cycle_dates'),removefilters(col),col=col)+switch(true(),max(col)=date(num,num,num),calculate(meas,col=str,col=str,col=str),num)",Fcst_Snapshots; z_FiscalCal; z_ProductDetails; z_CustomerMaster,420
+Demand Review,fcst_qty_prior_r12_logility_nonPromo,"calculate(sum(col),removefilters('cycle_dates'),col=col,col=num)",Fcst_Snapshots; z_FiscalCal,176
+Demand Review,fcst_qty_wrk_r12_logility,"calculate(meas,removefilters(col),col=num)",z_FiscalCal,111
+Demand Review,fcst_fob$_wrk_r12_logility,"calculate(sum(col),removefilters('cycle_dates'),col=col)",Fcst_Snapshots,153
+Demand Review,fcst_qty_wrk_r12_logility_nonPromo,"calculate(meas,removefilters(col),col=num)",z_FiscalCal,119
+Demand Review,fcst_qty_wrk_loglity_nonPromo,"calculate(sum(col),removefilters('cycle_dates'),col=col,removefilters(col),col=num)",Fcst_Snapshots; z_FiscalCal,226
+Demand Review,fcst_qty_logility,sum(col),Fcst_Snapshots,31
+Demand Review,consumption_gap_rate_wrk,"(switch(true(),meas=num,-num,meas>meas,meas-meas,meas<meas,meas-meas,num))",,315
+Demand Review,Chronic Bias Flag,"switch(true(),min(col)=str,str,and(meas>num,and(meas>.num,meas>.num)),str,and(meas<-num,and(meas<-.num,meas<-.num)),str,str)",InvSegGlobalCC,351
+Demand Review,orders_qty_cur_req_date_nonRH,sum(col),OrdHist,28
+Demand Review,orders_qty_cur_req_date_all,"sum(col)+calculate(sum(col),removefilters(z_warehousemaster))+calculate(sum(col),removefilters(z_warehousemaster))",OrdHist; RH_DropShip_Sales_2024; RH_Sales,174
+Demand Review,orders_qty_cur_req_date_this_month_all,"calculate(meas,removefilters(z_fiscalcal),col=num)",z_FiscalCal,105
+Demand Review,fcst_qty_prior_r12_logility,"calculate(meas,removefilters(col),col=num)",z_FiscalCal,116
+Demand Review,fcst_qty_90d_logility,"calculate(sum(col),removefilters('cycle_dates'),removefilters(col),col=col)",Fcst_Snapshots; z_FiscalCal,177
+Demand Review,fcst_qty_90d_r12_logility,"calculate(meas,removefilters(col),col=num)",z_FiscalCal,114
+Demand Review,label_prior_plan_date,str&max(col),Fcst_Snapshots,54
+Demand Review,label_90d_plan_date,str&max(col),Fcst_Snapshots,55
+Demand Review,fcst_change_qty_r12_wrk_v_90d_logility,```meas-meas```,,65
+Demand Review,fcst_change_%_r12_wrk_v_90d_logility,"divide(meas,meas)",,76
+Demand Review,orders_qty_cur_req_date_this_month_mdc,"calculate(meas,col=num)",z_FiscalCal,80
+Demand Review,fcst_qty_wrk_seas_adjusted,sum(col),Fcst_Snapshots,40
+Demand Review,fcst_qty_logility_nonPromo,sum(col),Fcst_Snapshots,35
+Demand Review,fcst_qty_logility_Promo,sum(col),Fcst_Snapshots,31
+Demand Review,fcst_qty_wrk_all,meas+meas+meas+meas,,101
+Demand Review,orders_qty_cur_req_date_r12_logility,"calculate(meas,removefilters(col),col=-num)",z_FiscalCal,124
+Demand Review,orders_qty_cur_req_date_logility,"calculate(sum(col),col<>str)",OrdHist; z_WarehouseMaster,83
+Demand Review,fcst_change_qty_r12_wrk_v_prior_all,"meas-meas+calculate(meas-meas,col=str,col=str,col=num)",z_ProductDetails; z_CustomerMaster; z_FiscalCal,251
+Demand Review,orders_qty_cur_req_date_r12_all,"calculate(meas,removefilters(col),col=-num)",z_FiscalCal,119
+Demand Review,fcst_qty_cur,sum(col),Fcst_Current_Published,42
+Demand Review,consumption_rate_cur,"divide(meas,meas)",,56
+Demand Review,consumption_rate_cur_this_month,"calculate(meas,col=num)",z_FiscalCal,71
+Demand Review,consumption_gap_qty_cur,"meas-meas--(switch(true(),meas>meas,meas-meas,meas<meas,meas-meas,num))",,288
+Demand Review,consumption_target_qty_cur,meas*meas,,57
+Demand Review,consumption_gap_rate_cur,"meas-meas--(switch(true(),meas=num,-num,meas>meas,meas-meas,meas<meas,meas-meas,num))",,380
+Demand Review,consumption_gap_abs_qty_cur,abs(meas),,30
+Demand Review,consumption_gap_FOB$_cur,"(meas-meas)*divide(meas,meas)",,134
+Demand Review,consumption_target_indicator_qty_cur,"switch(true(),meas>num,str,str)",,72
+Demand Review,consumption_performance_indicator_rate_cur,"switch(true(),meas=num,str,meas>num,str,meas<-num,str,str)",,159
+Demand Review,fcst_fob$_addd_promo,"calculate(sum(col),removefilters(col),col>num,col<num)-calculate(meas,col>num,col<num)",Fcst_Average_Promo; z_FiscalCal,272
+Demand Review,consumption_title_cur,"max(col)&str&calculate(max(col),removefilters(),col=num)-calculate(min(col),removefilters(),col=num)+num&str&calculate(max(col),removefilters(),col=num)-calculate(min(col),removefilters(),col=num)+num",z_FiscalCal,479
+Demand Review,consumption_futo,"calculate(sum(col),col<>str)--sum(col)--sum(col)--",OrdHist; z_WarehouseMaster; Orders_Current_Month_Futo,180
+Demand Review,orders_qty_cur_req_date_last_year,"calculate(meas,col=-num)",z_FiscalCal,78
+Demand Review,orders_qty_cur_req_date_this_year,"calculate(meas,col=num)",z_FiscalCal,77
+Demand Review,orders_plus_fcst_qty_Cur_req_date_this_year,"calculate(meas,col=num)",z_FiscalCal,89
+Demand Review,consumption_annual_wrk,"divide(meas,meas)",,89
+Demand Review,fcst_qty_r12_logility,"calculate(meas,removefilters(col),col=num)",z_FiscalCal,109
+Demand Review,fcst_qty_container,"abs(calculate(sum(col),col=str,removefilters(col),col>=num,col<num,removefilters(z_warehousemaster))+calculate(sum(col),col>=num,removefilters(z_warehousemaster)))",OrdHist; z_WarehouseMaster; z_FiscalCal; Fcst_Container,371
+Demand Review,fcst_qty_add_promo,"max(calculate(sum(col),col>num,col<num,removefilters(z_warehousemaster))-calculate(meas,col>num,col<num,removefilters(z_warehousemaster)),num)",Fcst_Average_Promo; z_FiscalCal,314
+Demand Review,fcst_qty_wrk_r12_mdc,calculate(meas+meas),,61
+Demand Review,orders_net$_cur_req_date_all,"calculate(sum(col))+calculate(sum(col),col<>str)",OrdHist; RH_Sales,110
+Demand Review,orders_plus_fcst_fob$_cur_req_wrk_all,"calculate(meas,col<num)+calculate(meas,col>=num)",z_FiscalCal,151
+Demand Review,fcst_fob$_wrk_all,"calculate(meas,col=col)",Fcst_Snapshots,100
+Demand Review,fcst_qty_wrk_this_month_logility,"calculate(meas,col=num)",z_FiscalCal,72
+Demand Review,abs Qty Deviation,abs(sum(col)-abs(meas)),z_ProductDetails,70
+Demand Review,Item Ratio Change Validation,"switch(true(),and(meas>num,meas>num),str,str)",,135
+Demand Review,Hdb/Ftb/Rail Alert,"switch(true(),meas<num,str,and(abs(divide(meas,meas)-num)>num,abs(meas-meas)>num),str,and(abs(divide(meas,meas)-num)>num,abs(meas-meas)>num),str,str)",,381
+Demand Review,consumption_target_rate_min,"divide(meas,sum(col))",TargetConsumption,73
+Demand Review,consumption_target_qty_wrk_min,```sum(col)```,TargetConsumption,52
+Demand Review,consumption_target_qty_wrk_max,```sum(col)```,TargetConsumption,52
+Demand Review,consumption_target_rate_max,"divide(meas,sum(col))",TargetConsumption,73
+Demand Review,consumption_target_qty_cur_min,meas*meas,,61
+Demand Review,consumption_target_qty_cur_max,meas*meas,,61
+Demand Review,consumption_gap_abs_qty_wrk,abs(meas),,30
+Demand Review,Item Ext Series Firm Demand Covered,"calculate(sum(col),allexcept(supplyplandetail,col,col),col<>str)+col>=num",SupplyPlanDetail,213
+Demand Review,consumption_performance_indicator_rate_wrk,"switch(true(),meas=num,str,meas>num,str,meas<-num,str,str)",,159
+Demand Review,CC & Series,"```selectedvalue(col)&str&selectedvalue(col,selectedvalue(col,str))```",z_ProductDetails,162
+Demand Review,title_collective_class_category,"selectedvalue(col)&str&switch(true(),selectedvalue(col)=selectedvalue(col),str,selectedvalue(col))",z_ProductDetails,256
+Demand Review,Quarterly Review,"str&selectedvalue(col,selectedvalue(col,str))",z_ProductDetails,135
+Demand Review,Bridge Plan,"selectedvalue(col,str)&selectedvalue(col,str)&str",z_CustomerMaster; z_ProductDetails,123
+Demand Review,Category Review,"str&selectedvalue(col,selectedvalue(col,str))",z_ProductDetails,134
+Demand Review,Monthly Review,"str&selectedvalue(col,selectedvalue(col,str))",z_ProductDetails,133
+Demand Review,Indicator Title,"str&selectedvalue(col,selectedvalue(col,str))&str&selectedvalue(col,str)",z_ProductDetails; z_WarehouseMaster,170
+Demand Review,fcst_qty_wrk_r12_headboard,"calculate(meas,col=num)",Bedroom_Additional_Detail,83
+Demand Review,fcst_qty_wrk_r12_footboard,"calculate(meas,col=num)",Bedroom_Additional_Detail,83
+Demand Review,fcst_qty_wrk_r12_rail,"calculate(meas,col=num)",Bedroom_Additional_Detail,78
+Demand Review,series_headboard_qty,"calculate(meas,allexcept(z_productdetails,col))",z_ProductDetails,101
+Demand Review,series_footboard_qty,"calculate(meas,allexcept(z_productdetails,col))",z_ProductDetails,101
+Demand Review,series_rail_qty,"calculate(meas,allexcept(z_productdetails,col))",z_ProductDetails,96
+Demand Review,fcst_qty_wrk_r12_sidestorage_rail,"calculate(meas,col=num)/num",Bedroom_Additional_Detail,84
+Demand Review,Bias Threshold Value,"selectedvalue(col,num)",Bias Threshold,52
+Demand Review,Total Firm Demand,calculate(sum(col)),DemandFulfillment,48
+Demand Review,Total Net Forecast,calculate(sum(col)),DemandFulfillment,49
+Demand Review,Total On Hand Qty,calculate(sum(col)),DemandFulfillment,48
+Demand Review,Total SI Negative,calculate(sum(col)),DemandFulfillment,48
+Demand Review,Demand Fulfilment,"iferror(if((meas+meas+meas)/(meas+meas)>num,num,if((meas+meas+meas)/(meas+meas)<num,num,(meas+meas+meas)/(meas+meas))),num)",,376
+Demand Review,Avg 12M Promo,"calculate(sum(col),col>=num,col<num)",Fcst_Average_Promo; z_FiscalCal,124
+Demand Review,fcst_qty_r12_wrk,"calculate(meas,removefilters(col),col=num)",z_FiscalCal,110
+Demand Review,fcst_qty_r12_container,"calculate(sum(col),removefilters(col),col=num)",Fcst_Container; z_FiscalCal,115
+Demand Review,Current 12M Forecast,sum(col),Fcst_Current_Published,42
+Demand Review,fcst_qty_cur_30d_this_month,sum(col),Fcst_Published_CurMonth_30d,47
+Demand Review,LM Actual,"calculate(sum(col),col=str,removefilters(z_fiscalcal),col=-num)",ItWhAccy; z_FiscalCal,141
+Demand Review,Parameter Value,selectedvalue(col),Parameter,37
+Demand Review,FC Change Value,"selectedvalue(col,num)",Parameter_Fcst_Change_Threshold,65
+Demand Review,Excess Qty FG,"calculate(sum(col),col=str)",SupplyPlanDetail; z_ProductDetails,87
+Demand Review,Excess Qty Kit,"calculate(sum(col),col=str,col<>str,col<>str,col<>str)",SupplyPlanDetail; z_ProductDetails,196
+Demand Review,Excess FG $,meas*average(col),z_ProductDetails,54
+Demand Review,FC Covered Date,"calculate(firstdate(col),col,removefilters(z_fiscalcal))",SupplyPlanDetail,123
+Demand Review,Orders Covered Date,"calculate(firstdate(col),col,removefilters(z_fiscalcal))",SupplyPlanDetail,132
+Demand Review,8wk Avg Receipt,"calculate(sum(col),col<num)/num",SupplyPlanDetail; z_FiscalCal,79
+DvC  - WanekMillenium,Overide Cap - No filter Group,"```if(and(notisfiltered(col),notisfiltered(col)),if(((isfiltered(col)&&selectedvalue(col)=str)||isfiltered(col)),sumx(filter('capacityactual',col>today()),col),blank()),blank())```",Item Master; Capacity Actual,358
+DvC  - WanekMillenium,Promise Cap- No filter Group,"```if(and(notisfiltered(col),notisfiltered(col)),if(((isfiltered(col)&&selectedvalue(col)=str)||isfiltered(col)),sumx(filter('capacitypromise',col>today()),col),blank()),blank())```",Item Master; Capacity Promise,354
+DvC  - WanekMillenium,Output,"if(((isfiltered(col)&&(containsstring(concatenatex(values(col),col,str),str)||containsstring(concatenatex(values(col),col,str),str)))||isfiltered(col)||isfiltered(col)||isfiltered(col)||isfiltered(col)||isfiltered(col)),sumx(summarize(filter('fgoutput',col<today()),col,col,str,sum(col)),meas)+sumx(summarize(filter('rpscan',col<today()),col,col,str,sum(col)),meas),blank())",Item Master; FG Output; RP Scan,727
+DvC  - WanekMillenium,Firm&Ship,sum(col)+sum(col),PSW,43
+DvC  - WanekMillenium,Firm&Ship Cont,sum(col)+sum(col),PSW,41
+DvC  - WanekMillenium,Total PSW,calculate((sum(col)+sum(col)+sum(col))),PSW,76
+DvC  - WanekMillenium,Total PSW C&CNW,"```calculate(sum(col)+sum(col)+sum(col),filter('itemmaster',col<=today()+(num-weekday(today(),num))+num*num))```",PSW; Item Master,182
+DvC  - WanekMillenium,Total PSW Cont,sum(col)+sum(col)+sum(col),PSW,66
+DvC  - WanekMillenium,Total PSW Unconstraint,sum(col)+sum(col)+sum(col),PSW,77
+DvC  - WanekMillenium,Trendline,"```vartemp=linestx(allselected(col),meas,col)varslope=selectcolumns(temp,meas)varintercept=selectcolumns(temp,meas)varx=selectedvalue(col)vary=x*slope+interceptreturny```",Item Master,279
+DvC  - WanekMillenium,Trendline C&CNW,"```vartemp=linestx(filter(allselected(col),col<=today()+(num-weekday(today(),num))+num*num),meas,col)varslope=maxx(temp,meas)varintercept=maxx(temp,meas)varx=selectedvalue(col)vary=x*slope+interceptreturnif(x<=today()+(num-weekday(today(),num))+num*num,y)```",Item Master,395
+DvC  - WanekMillenium,Trendline C&CNW Full ETD,"```vartemp=linestx(filter(allselected(col),col<today()+num),meas,col)varslope=selectcolumns(temp,meas)varintercept=selectcolumns(temp,meas)varx=selectedvalue(col)vary=x*slope+interceptreturny```",Item Master,323
+DvC  - WanekMillenium,Trendline Cont,"```vartemp=linestx(allselected(col),meas,col)varslope=selectcolumns(temp,meas)varintercept=selectcolumns(temp,meas)varx=selectedvalue(col)vary=x*slope+interceptreturny```",Item Master,285
+DvC  - WanekMillenium,Trendline Unconstraint,"```vartemp=linestx(allselected(col),meas,col)varslope=selectcolumns(temp,meas)varintercept=selectcolumns(temp,meas)varx=selectedvalue(col)vary=x*slope+interceptreturny```",Item Master,293
+Forecast Accuracy (Cust_ItWh),Total Forecast,calculate(sum(col)),CustItWHAccy,44
+Forecast Accuracy (Cust_ItWh),Total Demand,calculate(sum(col)),CustItWHAccy,43
+Forecast Accuracy (Cust_ItWh),Error Qty,meas-meas,,33
+Forecast Accuracy (Cust_ItWh),Bias %,"divide(meas,meas)",,34
+Forecast Accuracy (Cust_ItWh),Mean ABS Dev_CIW,"averagex(custitwhaccy,meas)",,35
+Forecast Accuracy (Cust_ItWh),Mean Act Demand_CIW,"averagex(custitwhaccy,meas)",,42
+Forecast Accuracy (Cust_ItWh),wMAPE,"divide(meas,meas)",,48
+Forecast Accuracy (Cust_ItWh),(N)Mean ABS Dev_CIW,"averagex(custitwhaccy,meas)",,38
+Forecast Accuracy (Cust_ItWh),(N)wMAPE,"divide(meas,meas)",,51
+Forecast Accuracy (Cust_ItWh),ABS Percent Error_CIW,"divide(abs(meas-meas),meas)",,59
+Forecast Accuracy (Cust_ItWh),MAPE_CIW,"averagex(custitwhaccy,meas)",,34
+Forecast Accuracy (Cust_ItWh),(N)Forecast_CIW,calculate(sum(col)),CustItWHAccy,39
+Forecast Accuracy (Cust_ItWh),(N)Bias %_CIW,"divide(meas,meas)",,37
+Forecast Accuracy (Cust_ItWh),(N)Error_CIW,calculate(sum(col)),CustItWHAccy,38
+Forecast Accuracy (Cust_ItWh),NaiveFcst_CIW,calculate(sum(col)),CustItWHAccy,39
+Forecast Accuracy (Cust_ItWh),Bias Threshold_CIW,num,,4
+Forecast Accuracy (Cust_ItWh),(B)Error_CIW,calculate(sum(col)),CustItWHAccy,38
+Forecast Accuracy (Cust_ItWh),(B)Bias %_CIW,"divide(meas,meas)",,37
+Forecast Accuracy (Cust_ItWh),(B)Mean ABS Dev_CIW,"averagex(custitwhaccy,meas)",,38
+Forecast Accuracy (Cust_ItWh),(B)wMAPE_CIW,"divide(meas,meas)",,51
+Forecast Accuracy (Cust_ItWh),wMAPE Value Add_CIW,meas-meas,,24
+Forecast Accuracy (Cust_ItWh),Error Value Add_CIW,abs(meas)-abs(meas),,36
+Forecast Accuracy (Cust_ItWh),Error vs Naive_CIW,abs(meas)-abs(meas),,36
+Forecast Accuracy (Cust_ItWh),wMAPE Value Add,meas-meas,,20
+Forecast Accuracy (Cust_ItWh),Refresh Date,"calculate(min(col),removefilters(z_fiscalcal),col=num)",z_FiscalCal,110
+Forecast Accuracy (Cust_ItWh),Abs Error Qty,sum(col),CustItWHAccy,29
+Forecast Accuracy (Cust_ItWh),Parameter Value,selectedvalue(col),Acceptable Abs Bias,47
+Forecast Accuracy (ItWh),Forecast,calculate(sum(col)),ItWHAccy,40
+Forecast Accuracy (ItWh),Actuals,calculate(sum(col)),ItWHAccy,39
+Forecast Accuracy (ItWh),Error Qty,meas-meas,,22
+Forecast Accuracy (ItWh),Bias %,"divide(meas,meas)",,29
+Forecast Accuracy (ItWh),Mean ABS Dev,"averagex(itwhaccy,meas)",,31
+Forecast Accuracy (ItWh),Mean Act Dmd,"averagex(itwhaccy,meas)",,34
+Forecast Accuracy (ItWh),wMAPE,"divide(meas,meas)",,37
+Forecast Accuracy (ItWh),(N)Mean ABS Dev,"averagex(itwhaccy,meas)",,34
+Forecast Accuracy (ItWh),Naive wMAPE,"divide(meas,meas)",,40
+Forecast Accuracy (ItWh),ABS Percent Error,"divide(abs(meas-meas),meas)",,43
+Forecast Accuracy (ItWh),MAPE,"averagex(itwhaccy,meas)",,30
+Forecast Accuracy (ItWh),(N)Forecast,calculate(sum(col)),ItWHAccy,35
+Forecast Accuracy (ItWh),(N)Error %,"divide(meas,meas)",,28
+Forecast Accuracy (ItWh),(N)Error,calculate(sum(col)),ItWHAccy,34
+Forecast Accuracy (ItWh),NaiveFcst,calculate(sum(col)),ItWHAccy,35
+Forecast Accuracy (ItWh),Bias Threshold,num,,4
+Forecast Accuracy (ItWh),wMAPE Value Add,meas-meas,,23
+Forecast Accuracy (ItWh),wMAPE vs Naive,meas-meas,,23
+Forecast Accuracy (ItWh),Error vs Naive,abs(meas)-abs(meas),,33
+Forecast Accuracy (ItWh),Refresh Date,"calculate(min(col),removefilters(z_fiscalcal),col=num)",z_FiscalCal,110
+Forecast Accuracy (ItWh),Abs Error (It_wh),sum(col),ItWHAccy,25
+Forecast Accuracy (ItWh),Abs Error (It),sum(col),ItErr,21
+Forecast Accuracy (ItWh),Parameter Value,selectedvalue(col),Acceptable Abs Bias,47
+GF Act+Fcst,ACTD Qty,calculate(sum(col)),L1ACTD,27
+GF Act+Fcst,FCST Qty,meas+meas,,21
+GF Act+Fcst,RSLF Qty,"calculate(sum(col),col=str,col>-num)",L1Fcst; z_FiscalCal,90
+GF Act+Fcst,PROL Qty,"calculate(sum(col),col=str,col>-num)",L1Fcst; z_FiscalCal,90
+GF Act+Fcst,Ord Qty,calculate(sum(col)),OrderHist,36
+GF Act+Fcst,Ord Amt,calculate(sum(col)),OrderHist,39
+GF Act+Fcst,OrdFcst,"calculate(meas,filter(z_fiscalcal,col<num))+meas",z_FiscalCal,90
+GF Act+Fcst,Fcst Consumption,"calculate(divide(meas,meas))",,40
+GF Act+Fcst,ActFcst,meas+meas,,22
+GF Act+Fcst,Disco Qty,"calculate(meas,col=str)",z_ProductDetails,57
+GF Act+Fcst,P.Drop Qty,"calculate(meas,or(col=str,col=str))",z_ProductDetails,96
+GF Act+Fcst,P.Drop+Disco Qty,meas+meas,,24
+GF Act+Fcst,New Qty,"calculate(meas,col=str,col=str)",z_ProductDetails,112
+GF Act+Fcst,Drop+New,meas+meas,,28
+GF Act+Fcst,Coll Class Total,"calculate(sum(col),allexcept(z_productdetails,col),allexcept(z_fiscalcal,col))",OrderHist; z_ProductDetails; z_FiscalCal,158
+GF Act+Fcst,z_ACTD(excWH),"calculate(sum(col),all(col))",L1ACTD; z_WarehouseMaster,63
+GF Act+Fcst,Ord WH Split,"divide(meas,meas)",,33
+GF Act+Fcst,z_Fcst(exc WH),"calculate(sum(col),col=str,all(col))",L1Fcst; z_WarehouseMaster,87
+GF Act+Fcst,RSLF WH Split,"divide(meas,meas)",,35
+GF Act+Fcst,ACTD WH Split,"divide(meas,meas)",,34
+GF Act+Fcst,ActFcstRoll,"calculate((meas+meas),filter(z_fiscalcal,col>-num))",z_FiscalCal,93
+GF Act+Fcst,Ord Qty (all Cust),"calculate(meas,allcrossfiltered(z_customermaster_afi))",,59
+GF Act+Fcst,Customer % of Demand,"divide(meas,meas)",,38
+GF Act+Fcst,FUTO Qty,"calculate(sum(col),col=str)",L1Fcst,51
+GF Act+Fcst,Fcst Gap,meas-meas,,21
+GF Act+Fcst,ActFcst $,"sumx(z_productdetails,col*meas)",z_ProductDetails,60
+GF Act+Fcst,OrdFcst $,"sumx(z_productdetails,col*meas)",z_ProductDetails,60
+GF Act+Fcst,Ord Qty YoY%,"var__prev_year=calculate(meas,col=-num)returndivide(meas-__prev_year,__prev_year)extendedpropertymeasuretemplate={str:num,str:str}",z_FiscalCal,216
+GF Act+Fcst,Ord Qty YoY% 2,"var__prev_year=calculate(meas,dateadd(col,-num,year))returndivide(meas-__prev_year,__prev_year)extendedpropertymeasuretemplate={str:num,str:str}",z_FiscalCal,229
+GF Act+Fcst,Ord Qty (Y+0),"calculate(meas,col=num)",z_FiscalCal,60
+GF Act+Fcst,Ord Qty (Y-1),"calculate(meas,col=-num)",z_FiscalCal,61
+GF Act+Fcst,Ord Qty YTD,"var__currmonum=lookupvalue(col,col,today())returncalculate(meas,col<__currmonum)",z_FiscalCal,176
+GF Act+Fcst,Ord Qty YTD (Y-1),"var__currmonum=lookupvalue(col,col,today())returncalculate(meas,col<__currmonum)",z_FiscalCal,176
+GF Act+Fcst,Ord Qty YTD YoY %,"divide(meas,meas)-num",,43
+GF Act+Fcst,Ord Qty YTD Growth,meas-meas,,35
+GF Act+Fcst,z_OrdQty(excWH),"calculate(sum(col),all(col))",OrderHist; z_WarehouseMaster,72
+GF Act+Fcst,Ord Qty WH Split,"divide(meas,meas)",,35
+GF Act+Fcst,Ord Qty YTG (Y-1),"var__currmonum=lookupvalue(col,col,today())returncalculate(meas,col>=__currmonum)",z_FiscalCal,177
+GF Act+Fcst,Fcst Qty YTG,"calculate(meas,col=num)",z_FiscalCal,60
+GF Act+Fcst,FCST YTG YOY,"divide(meas,meas)-num",,44
+GF Act+Fcst,OrdFcst Y0,"calculate(meas,col=num)",z_FiscalCal,57
+GF Act+Fcst,OrdFcst Y0 %,"divide(meas,meas)-num",,38
+Inv Management,MOS Case 1,"averagex(summarize('inventory',col,str,sum(col),str,sum(col),str,sum(col),str,sum(col),str,sum(col)),if((meas-meas)<num,num,if(meas=num,(meas-meas),(meas-meas)/meas)))",Inventory,455
+Inv Management,MOS Case 2,"```averagex(summarize('inventory',col,str,sum(col),str,sum(col)),if(meas=num,meas,meas/meas))```",Inventory,248
+Inv Management,Open Capacity,"if(selectedvalue(col)=str,num-sum(col)-sum(col)-sum(col)-sum(col)-sum(col),if(selectedvalue(col)=str,num-sum(col)-sum(col)-sum(col)-sum(col)-sum(col),num-sum(col)-sum(col)-sum(col)-sum(col)-sum(col)))",Inventory,598
+Inv Management,New True Excess,"if(selectedvalue(col)>selectedvalue(col),num,selectedvalue(col)-selectedvalue(col))",W2 SS Change; Inventory,174
+Inv Management,MOS Case 11,"averagex(summarize('inventory',col,str,sum(col),str,sum(col),str,sum(col),str,sum(col),str,sum(col)),if((meas-meas)<num,num,if(meas=num,(meas-meas),(meas-meas)/meas)))",Inventory,455
+Inv Management,MOS Case 111,"averagex(summarize('inventory',col,str,sum(col),str,sum(col),str,sum(col),str,sum(col),str,sum(col)),if(meas>num,if((meas-meas)>num,(meas-meas)/meas,num),if(meas=num,meas-meas,if(meas<num,if(meas=num,meas-meas,meas/meas),num))))",Inventory,603
+Inv Management,MOS Case6 1,"averagex(summarize('inventory',col,str,sum(col),str,sum(col),str,sum(col),str,sum(col),str,sum(col)),if((meas-meas)<num,num,if(meas=num,(meas-meas),(meas-meas)/meas)))",Inventory,457
+Inv Management,MOS Case6 2,"```averagex(summarize('inventory',col,str,sum(col),str,sum(col)),if(meas=num,meas,meas/meas))```",Inventory,249
+Inv Management,Whse ECR - SI,"sumx(summarize('siatuswarehouse',col,str,calculate(sum(col),col=str)),meas)",SI at US Warehouse,185
+Inv Management,Whse 1 - SI,"sumx(summarize('siatuswarehouse',col,str,calculate(sum(col),col=str)),meas)",SI at US Warehouse,183
+Inv Management,Whse 15 - SI,"sumx(summarize('siatuswarehouse',col,str,calculate(sum(col),col=str)),meas)",SI at US Warehouse,184
+Inv Management,Whse 17 - SI,"sumx(summarize('siatuswarehouse',col,str,calculate(sum(col),col=str)),meas)",SI at US Warehouse,184
+Inv Management,Whse 28 - SI,"sumx(summarize('siatuswarehouse',col,str,calculate(sum(col),col=str)),meas)",SI at US Warehouse,184
+Inv Management,Whse 42 - SI,"sumx(summarize('siatuswarehouse',col,str,calculate(sum(col),col=str)),meas)",SI at US Warehouse,184
+Inv Management,Whse 5 - SI,"sumx(summarize('siatuswarehouse',col,str,calculate(sum(col),col=str)),meas)",SI at US Warehouse,183
+Inventory Health,Distinct Series Count,distinctcount(col),z_ProductDetails,57
+Inventory Health,Distinct Item SKU Count,distinctcount(col),z_ProductDetails,43
+Inventory Health,Total On Hand Qty,sum(col),InvHealth,25
+Inventory Health,Total On Hand $,sum(col),InvHealth,23
+Inventory Health,Total Safety Stock $,sum(col),InvHealth,22
+Inventory Health,Total Below Max $,sum(col),InvHealth,28
+Inventory Health,Total Over $,sum(col),InvHealth,24
+Inventory Health,Total Excess $,sum(col),InvHealth,26
+Inventory Health,Total High Excess $,sum(col),InvHealth,27
+Inventory Health,Total TIB $,sum(col),InvHealth,23
+Inventory Health,Average Days of Supply,"divide(meas,meas)",,48
+Inventory Health,Total Daily Demand,calculate(sum(col)),InvHealth,35
+Inventory Health,ATP In Stock Rate,"divide(calculate(sum(col)),calculate(sum(col)))",ATPInStock,90
+Inventory Health,ATP In Stock (LW),"calculate(meas,col=-num)",z_FiscalCal,70
+Inventory Health,ATP In Stock (W-52),"calculate(meas,col=-num)",z_FiscalCal,71
+Inventory Health,ATP In Stock (3mo),"calculate(meas,col>=-num)",z_FiscalCal,72
+Inventory Transactions and Item Balance Detail,Issuing Transfer,"calculate(sum(col),col=str)",Inventory Transaction History,149
+Inventory Transactions and Item Balance Detail,Receiving Transfer,"calculate(sum(col),col=str)",Inventory Transaction History,151
+Inventory Transactions and Item Balance Detail,Sales Shipments,"calculate(sum(col),col=str)",Inventory Transaction History,134
+Inventory Transactions and Item Balance Detail,Receipts in to WH,"calculate(sum(col),col=str)+calculate(sum(col),col=str)",Inventory Transaction History,306
+Inventory Transactions and Item Balance Detail,Net Inv Change,meas+meas+meas-meas,,83
+Inventory Transactions and Item Balance Detail,Purchase Order,"calculate(sum(col),col=str)",Inventory Transaction History,120
+Inventory Transactions and Item Balance Detail,On Hand Qty,calculate(sum(col)),Item Balance,48
+Inventory Transactions and Item Balance Detail,On Hand Cubes,"sumx(z_productdetails,col*meas)",z_ProductDetails,60
+Inventory Transactions and Item Balance Detail,Manufacturing Receipt,"calculate(sum(col),col=str)",Inventory Transaction History,120
+Inventory Transactions and Item Balance Detail,L2 Cubes % of Storage Type,"divide(meas,calculate(meas,allselected(z_productdetails)))",,80
+Inventory Transactions and Item Balance Detail,L2 Unit % of Storage Type,"divide(meas,calculate(meas,allselected(z_productdetails)))",,76
+JadeTeam Inventory Health,SS (qty),"```sumx('inventoryhealth',varavailableqty=col-col-colvarmaxss_adjustment=col*col/numreturnif(availableqty>=maxss_adjustment,maxss_adjustment,if(availableqty<maxss_adjustment&&availableqty>num,availableqty,num)))```",Inventory Health; SS % Adjustment,404
+JadeTeam Inventory Health,Sold (qty),calculate(sum(col)),Inventory Health,48
+JadeTeam Inventory Health,Net forecast (qty),```calculate(sum(col))```,Inventory Health,63
+JadeTeam Inventory Health,Excess (qty),"if(col-col-col-col>num,col-col-col-col,num)",Inventory Health,295
+JadeTeam Inventory Health,Inventory (qty),calculate(sum(col)),Inventory Health,54
+JadeTeam Inventory Health,% Excess (qty),col/col,Inventory Health,70
+JadeTeam Inventory Health,% to Sold (qty),col/col,Inventory Health,68
+JadeTeam Inventory Health,% to Net Forecast (qty),col/col,Inventory Health,76
+JadeTeam Inventory Health,% to Safety Stock (qty),col/col,Inventory Health,66
+JadeTeam Inventory Health,Sold (cube),```calculate(sum(col))```,Inventory Health,63
+JadeTeam Inventory Health,Sold (dollar),```calculate(sum(col))```,Inventory Health,65
+JadeTeam Inventory Health,Net forecast (cube),```calculate(sum(col))```,Inventory Health,70
+JadeTeam Inventory Health,Net forecast (dollar),```calculate(sum(col))```,Inventory Health,72
+JadeTeam Inventory Health,SS (cube),"```sumx('inventoryhealth',varavailableqty=col-col-colvarmaxss_adjustment=col*col/numreturnif(availableqty>=maxss_adjustment,maxss_adjustment,if(availableqty<maxss_adjustment&&availableqty>num,availableqty,num)))```",Inventory Health; SS % Adjustment,433
+JadeTeam Inventory Health,SS (dollar),"```sumx('inventoryhealth',varavailableqty=col-col-colvarmaxss_adjustment=col*col/numreturnif(availableqty>=maxss_adjustment,maxss_adjustment,if(availableqty<maxss_adjustment&&availableqty>num,availableqty,num)))```",Inventory Health; SS % Adjustment,440
+JadeTeam Inventory Health,Inventory (cube),```calculate(sum(col))```,Inventory Health,68
+JadeTeam Inventory Health,Inventory (dollar),```calculate(sum(col))```,Inventory Health,70
+JadeTeam Inventory Health,Excess (cube),"if(col-col-col-col>num,col-col-col-col,num)",Inventory Health,301
+JadeTeam Inventory Health,Excess (dollar),"if(col-col-col-col>num,col-col-col-col,num)",Inventory Health,317
+JadeTeam Inventory Health,% Excess (cube),col/col,Inventory Health,72
+JadeTeam Inventory Health,% Excess (dollar),col/col,Inventory Health,76
+JadeTeam Inventory Health,% to Net Forecast (cube),col/col,Inventory Health,78
+JadeTeam Inventory Health,% to Net Forecast (dollar),col/col,Inventory Health,82
+JadeTeam Inventory Health,% to Safety Stock (cube),col/col,Inventory Health,68
+JadeTeam Inventory Health,% to Safety Stock (dollar),col/col,Inventory Health,72
+JadeTeam Inventory Health,% to Sold (cube),col/col,Inventory Health,70
+JadeTeam Inventory Health,% to Sold (dollar),col/col,Inventory Health,74
+JadeTeam Inventory Health,Tooltip_category_qty,"```vardivision=selectedvalue(col)returnswitch(true(),selectedvalue(col)=division,calculate(concatenatex(values(col),col&str&format(meas,str),unichar(num),meas,desc)),num)```",Inventory Health,370
+JadeTeam Inventory Health,Tooltip_category_dollar,"```vardivision=selectedvalue(col)returnswitch(true(),selectedvalue(col)=division,calculate(concatenatex(values(col),col&str&str&format(meas,str),unichar(num),meas,desc)),num)```",Inventory Health,383
+JadeTeam Inventory Health,Tooltip_category_cubes,"```vardivision=selectedvalue(col)returnswitch(true(),selectedvalue(col)=division,calculate(concatenatex(values(col),col&str&format(meas,str),unichar(num),meas,desc)),num)```",Inventory Health,373
+JadeTeam Inventory Health,SS % Adjustment Value,selectedvalue(col),SS % Adjustment,49
+On Time % by Customer,Total Shipped Qty,calculate(sum(col)),On Time (day),49
+On Time % by Customer,Total On-Time % - Original Request Day,"divide(calculate(sum(col)),meas)",On Time (day),91
+On Time % by Customer,Total On-Time % - Original Promise Day,"divide(calculate(sum(col)),meas)",On Time (day),91
+On Time % by Customer,Total Avg Days - Original Promise Day,"divide(calculate(sum(col)),meas)",On Time (day),85
+On Time % by Customer,Total Avg Days - Original Request Day,"divide(calculate(sum(col)),meas)",On Time (day),85
+On Time % by Customer,Total On-Time % - Current Promise Day,"divide(calculate(sum(col)),meas)",On Time (day),90
+On Time % by Customer,Total On-Time % - Current Request Day,"divide(calculate(sum(col)),meas)",On Time (day),90
+On Time % by Customer,Total Avg Days - Current Promise Day,"divide(calculate(sum(col)),meas)",On Time (day),84
+On Time % by Customer,Total Avg Days - Current Request Day,"divide(calculate(sum(col)),meas)",On Time (day),84
+On Time % by Customer,Total Shipped Quantity,calculate(sum(col)),On Time (week),50
+On Time % by Customer,Total On-Time % - Original Request Wk,"divide(calculate(sum(col)),meas)",On Time (week),98
+On Time % by Customer,Total On-Time % - Original Promise Wk,"divide(calculate(sum(col)),meas)",On Time (week),98
+On Time % by Customer,Total On-Time % - Current Promise Wk,"divide(calculate(sum(col)),meas)",On Time (week),97
+On Time % by Customer,Total On-Time % - Current Request Wk,"divide(calculate(sum(col)),meas)",On Time (week),97
+On Time % by Customer,Total Inv Qty,calculate(sum(col)),WH335OnTime,48
+On Time % by Customer,On Time Req,calculate(sum(col)),WH335OnTime,44
+On Time % by Customer,On Time Prom,calculate(sum(col)),WH335OnTime,45
+On Time % by Customer,On Time % - Promised,"divide(col,col)",WH335OnTime,60
+On Time % by Customer,On Time % - Requested,"divide(col,col)",WH335OnTime,59
+Product Review (NEW),FC Bias - 90d - last 3 Mo,"calculate(meas,col>=-num)",z_FiscalCal,66
+Product Review (NEW),FC Bias - 30d - last 3 Mo,"calculate(meas,col>=-num)",z_FiscalCal,66
+Product Review (NEW),FC Bias - 90d,"calculate(meas,col=str)",CustItAccy,58
+Product Review (NEW),Req Order,calculate(sum(col)),OrdHist,39
+Product Review (NEW),In Stock,"calculate(divide(sum(col),sum(col)),col<>str)",Week_2_ATP; z_ProductDetails,118
+Product Review (NEW),In Stock - Last 3 Mo,"calculate(meas,col>=-num)",z_FiscalCal,64
+Product Review (NEW),Fut FC,calculate(sum(col)),FC by Customer Group,43
+Product Review (NEW),Act + FC,"calculate(meas,col<num)+meas",z_FiscalCal,72
+Product Review (NEW),Avg WHC Demand,"divide(calculate(sum(col),filter(all(z_warehousemaster),col=str),filter(all(z_fiscalcal),and(col>=-num,col<=num))),num)",OrdHist; z_WarehouseMaster; z_FiscalCal,234
+Product Review (NEW),Annl C/CNW Demand,meas*num,,19
+Product Review (NEW),Demand Fulfillment - last 3 Mo,"calculate(meas,col>-num)",z_FiscalCal,71
+Product Review (NEW),Cons Rate,"divide(meas,meas)",,28
+Product Review (NEW),Cur Cons Rate,"divide(calculate(meas,removefilters(z_fiscalcal),col=num),calculate(sum(col),col=num))",z_FiscalCal; FC by Customer Group,179
+Product Review (NEW),FC Bias - 30d,"calculate(meas,col=str)",CustItAccy,60
+Product Review (NEW),Last 12 Month Req,"calculate(meas,col>=-num,col<num)",z_FiscalCal,101
+Product Review (NEW),Current Placements,"(calculate(sum(col),col=-num))",PlacementsOverTime; z_FiscalCal,99
+Product Review (NEW),Demand Fulfillment - last 6 Mo,"calculate(meas,col>=-num,col<=-num)",z_FiscalCal,114
+Product Review (NEW),In Stock - last 6 Mo,"calculate(meas,col>=-num)",z_FiscalCal,63
+Product Review (NEW),At Risk Placements,"calculate(sum(col),col=num)",PlacementsOverTime; z_FiscalCal,95
+Product Review (NEW),Placements,calculate(sum(col)),PlacementsOverTime,56
+Product Review (NEW),Req Order -1,"calculate(sum(col),col=-num)",OrdHist; z_FiscalCal,79
+Product Review (NEW),Req Order -2,"calculate(sum(col),col=-num)",OrdHist; z_FiscalCal,79
+Product Review (NEW),Req Order 0,"calculate(sum(col),col=num,col<num)",OrdHist; z_FiscalCal,118
+Product Review (NEW),Act + FC Y0,"calculate(meas,col<num,col=num)+calculate(meas,col=num)",z_FiscalCal,160
+Product Review (NEW),Cons Rate TY,"calculate(divide(meas,meas),col=num,col>=num)",z_FiscalCal,118
+Product Review (NEW),WHC Demand TY,"calculate(sum(col),filter(all(z_warehousemaster),or(col=str,col=str)),col=num)",OrdHist; z_WarehouseMaster; z_FiscalCal,181
+Product Review (NEW),WHC Demand LY,"calculate(sum(col),filter(all(z_warehousemaster),or(col=str,col=str)),col=-num)",OrdHist; z_WarehouseMaster; z_FiscalCal,182
+Product Review (NEW),Demand Fulfillment LY,"calculate(meas,col=-num)",z_FiscalCal,70
+Product Review (NEW),Demand Fulfillment TY,"calculate(meas,col=num)",z_FiscalCal,69
+Product Review (NEW),Req Order Future,"calculate(sum(col),col=num,col>=num)",OrdHist; z_FiscalCal,119
+Product Review (NEW),FC TY,"calculate(meas,col=num)",z_FiscalCal,56
+Product Review (NEW),On Hand,"calculate(sum(col),col<num)",DemandFulfillment; z_FiscalCal,85
+Product Review (NEW),SI,"calculate(sum(col),col>=num)",SupplyPlanDetail; z_FiscalCal,74
+Product Review (NEW),OH + SI,meas+meas,,16
+Product Review (NEW),Rolling 12 Mo Order Value,"calculate(sum(col),col<num,col>=-num)",OrdHist; z_FiscalCal,118
+Product Review (NEW),Weekly Cur Req,"calculate(sum(col),col=str)",Actuals,70
+Product Review (NEW),Weekly Inv Qty,"calculate(sum(col),col=str,filter(z_fiscalcal,col<num))",Actuals; z_FiscalCal,116
+Product Review (NEW),Weekly Writ Qty,"calculate(sum(col),col=str,filter(z_fiscalcal,col<num))",Actuals; z_FiscalCal,115
+Product Review (NEW),Weekly 90d FC,"calculate(sum(col),col=str)",Hist Weekly FC,85
+Product Review (NEW),Weekly Current Forecast,calculate(sum(col)),WeeklyForecast,37
+Product Review (NEW),Placements Last 6 Mo,"calculate(sum(col),col>=-num,col<=-num)",PlacementsOverTime; z_FiscalCal,136
+Product Review (NEW),Weekly SI,"divide(calculate(sum(col),col>=num),distinctcountnoblank(col))",SupplyPlanDetail; z_FiscalCal,139
+Product Review (NEW),avg Wrk Fcst,calculate(sum(col))/num,AnnualWrkFcst_Snapshots,78
+Product Review (NEW),WHC Demand,"calculate(sum(col),filter(all(z_warehousemaster),or(col=str,col=str)))",OrdHist; z_WarehouseMaster,142
+Product Review (NEW),UTC Refresh Time,utcnow(),,8
+Product Review (NEW),Fut RSLF,"calculate(sum(col),col=str)",FC by Customer Group,83
+Product Review (NEW),PROL Y0,"calculate(sum(col),col=str,removefilters(col),col=num)",FC by Customer Group; z_FiscalCal,170
+Product Review (NEW),FG Excess Current Week,"calculate(meas,col=num)",z_FiscalCal,65
+Product Review (NEW),Act Y-1,"calculate(meas,removefilters(col),col=-num)",z_FiscalCal,101
+Product Review (NEW),Act Y-2,"calculate(meas,removefilters(col),col=-num)",z_FiscalCal,101
+Product Review (NEW),Act Y-1 Growth,(meas-meas)/meas,,33
+Product Review (NEW),Act + FC Y0 Growth,(meas-meas)/meas,,37
+Product Review (NEW),In Stock This Year,"calculate(meas,col=num)",z_FiscalCal,60
+Product Review (NEW),WHC Demand Growth,"divide(calculate(meas,col<num)-calculate(meas,col<-num),calculate(meas,col<-num))",z_FiscalCal,206
+Product Review (NEW),WHC Demand Hist TY,"calculate(sum(col),filter(all(z_warehousemaster),or(col=str,col=str)),col=num,col<num)",OrdHist; z_WarehouseMaster; z_FiscalCal,219
+Product Review (NEW),YTD Growth,"divide(meas-meas,meas)",,41
+Product Review (NEW),$ Req Order,calculate(sum(col)),OrdHist,37
+Product Review (NEW),$ Fut FC,calculate(sum(col)),FC by Customer Group,47
+Product Review (NEW),$ Act + FC,"calculate(meas,col<num)+meas",z_FiscalCal,76
+Product Review (NEW),$ Act + FC Y0,"calculate(meas,removefilters(z_fiscalcal),col<num,col=num)+calculate(meas,col=num)",z_FiscalCal,191
+Product Review (NEW),$ Act Y-1,"calculate(meas,removefilters(col),col=-num)",z_FiscalCal,103
+Product Review (NEW),$ Act + FC Y0 Growth,(meas-meas)/meas,,43
+Product Review (NEW),Seas Monthly,meas,,19
+Product Review (NEW),Act 3 M,"calculate(meas,removefilters(col),col>=-num,col<=-num)",z_FiscalCal,143
+Product Review (NEW),Seas Annualized 3 M Hist,"calculate(sum(col),col<num,col>=-num)*num",OrdHist; z_FiscalCal,133
+Product Review (NEW),FC 3M,"calculate(meas,col=num,col<num)",z_FiscalCal,94
+Product Review (NEW),Seas Annualized 3 M FC,"calculate(meas,col>=num,col<num)",z_FiscalCal,107
+Product Review (NEW),FC R12,"calculate(meas,col>=num,col<num)",z_FiscalCal,97
+Product Review (NEW),Seas Adj TY,"calculate(meas,col=num)",z_FiscalCal,69
+Product Review (NEW),Act + FC M-3-12,"calculate(meas,col<num,col>=-num)+calculate(meas,col<num)",z_FiscalCal,164
+Product Review (NEW),Snapshot,max(col),FC by Customer Group,41
+Product Review (NEW),Act Y0 Avg 2Y Growth,"divide((meas-meas)/meas,num)",,47
+Product Review (NEW),Seas Annualized,meas*num,,24
+Product Review (NEW),Seas Adj Act + FC,"calculate(sum(col),col<num)+sum(col)",OrdHist; z_FiscalCal; FC by Customer Group,131
+Product Review (NEW),YTG Growth,"divide(meas-meas,meas)",,40
+Product Review (NEW),YTD ACT,"calculate(meas,col=num,col<num)",z_FiscalCal,98
+Product Review (NEW),YTD-1 ACT,"calculate(meas,col=-num,col<-num)",z_FiscalCal,101
+Product Review (NEW),YTG-1 ACT,"calculate(meas,col=-num,col>=-num)",z_FiscalCal,102
+Product Review (NEW),YTG FC,"calculate(meas,col=num,col>=num)",z_FiscalCal,96
+Product Review (NEW),FC Y+1,"calculate(meas,removefilters(col),col=num)",z_FiscalCal,98
+Product Review (NEW),Seas Calc,"divide(calculate(sum(col),allexcept(z_fiscalcal,col),col<num,col<num,allexcept('z_productdetails',col)),calculate(sum(col),removefilters(z_fiscalcal),col<num,allexcept(z_productdetails,col)))",OrdHist; z_FiscalCal; z_ProductDetails,413
+Product Review (NEW),YTD-2 ACT,"calculate(meas,col=-num,col<-num)",z_FiscalCal,101
+Product Review (NEW),YTG-2 ACT,"calculate(meas,col=-num,col>=-num)",z_FiscalCal,102
+Product Review (NEW),YTD-1 Growth,"divide(meas-meas,meas)",,43
+Product Review (NEW),YTG-1 Growth,"divide(meas-meas,meas)",,43
+Product Review (NEW),YTD Qty Growth,meas-meas,,21
+Product Review (NEW),YTG Qty Growth,meas-meas,,20
+Product Review (NEW),YTG % of Growth by Lifecycle Status Grp,"divide(meas-meas,abs(calculate(meas,removefilters(col))))",z_ProductDetails,116
+Product Review (NEW),YTD % of Growth by Lifecycle Status Grp,"divide(meas-meas,abs(calculate(meas,removefilters(col))))",z_ProductDetails,117
+Product Review (NEW),avg Cur Fcst,calculate(sum(col))/num,AnnualCurFcst,68
+Product Review (NEW),FC Bias,"divide(sum(col)-sum(col),sum(col))",CustItAccy,101
+Product Review (NEW),FC Bias - 90d - last 12 Mo,"calculate(meas,col>=-num)",z_FiscalCal,67
+Product Review (NEW),FC - 30d,"calculate(sum(col),col=str)",CustItAccy,80
+Product Review (NEW),FC Error - 30d,"calculate(sum(col)-sum(col),col=str)",CustItAccy,111
+Product Review (NEW),Act,"calculate(sum(col),col=str)",CustItAccy,78
+Product Review (NEW),Last Cycle 12M,calculate(sum(col)),AnnualCurFcst,65
+Product Review (NEW),FC Error - 90d,"calculate(sum(col)-sum(col),col=str)",CustItAccy,111
+Product Review (NEW),$ Fcst Y1,"calculate(meas,removefilters(z_fiscalcal),col=num)",z_FiscalCal,87
+Product Review (NEW),$ Act + FC Y1 Growth,(meas-meas)/meas,,47
+Product Review (NEW),FC Y1 Growth,(meas-meas)/meas,,40
+Product Review (NEW),FC Bias - 90d - Y0,"calculate(meas,removefilters(col),col=num)",z_FiscalCal,113
+Product Review (NEW),PROL Y1,"calculate(sum(col),col=str,removefilters(col),col=num)",FC by Customer Group; z_FiscalCal,170
+Product Review (NEW),FC Y+1 (exclude Y0 months),"calculate(meas,col<num)",z_FiscalCal,58
+Product Review (NEW),Demand Fulfillment - last Mo,"calculate(meas,col=-num)",z_FiscalCal,70
+Product Review (NEW),Projected Demand Coverage %,"divide(meas,meas)",,54
+Product Review (NEW),Projected Demand Coverage,calculate(sum(col)),SupplyPlanDetail,44
+Product Review (NEW),RollingCumDemand,calculate(sum(col)),SupplyPlanDetail,48
+Product Review (NEW),Projected Demand Gap,meas-meas,,46
+Product Review (NEW),SI Neg,calculate(sum(col)),SupplyPlanDetail,40
+Product Review (NEW),Selected Values,"```selectedvalue(col)&str&selectedvalue(col,selectedvalue(col,str))```",z_ProductDetails,169
+Product Review (NEW),Collective Class,"selectedvalue(col,str)&str&selectedvalue(col,str)&str",z_ProductDetails,135
+Product Review (NEW),Pre-DRM,"selectedvalue(col,str)&str&selectedvalue(col,str)&str",z_CustomerMaster; z_ProductDetails,123
+Product Review (NEW),Bridge Plan,"selectedvalue(col,str)&selectedvalue(col,str)&str",z_CustomerMaster; z_ProductDetails,123
+Product Review (NEW),Total 12M Fc,sum(col),AnnualWrkFcst_Snapshots,64
+Product Review (NEW),Working 12M Fc,"calculate(sum(col),removefilters('cycledates'),col=col)",AnnualWrkFcst_Snapshots,182
+Product Review (NEW),Plan Change,```meas-meas```,,41
+Product Review (NEW),Change %,"divide(meas,meas)",,36
+Product Review (NEW),YoY%,"divide(meas-calculate(meas,removefilters(z_fiscalcal)),calculate(meas,removefilters(z_fiscalcal)))",,122
+Product Review (NEW),Total Firm Demand,calculate(sum(col)),DemandFulfillment,48
+Product Review (NEW),Total Net Forecast,calculate(sum(col)),DemandFulfillment,49
+Product Review (NEW),Total On Hand Qty,calculate(sum(col)),DemandFulfillment,48
+Product Review (NEW),Total SI Negative,calculate(sum(col)),DemandFulfillment,48
+Product Review (NEW),Demand Fulfilment,"iferror(if((meas+meas+meas)/(meas+meas)>num,num,if((meas+meas+meas)/(meas+meas)<num,num,(meas+meas+meas)/(meas+meas))),num)",,376
+Product Review (NEW),Excess Qty FG,"calculate(sum(col),col=str)",SupplyPlanDetail; z_ProductDetails,87
+Product Review (NEW),Excess Qty Kit,"calculate(sum(col),col=str,col<>str,col<>str,col<>str)",SupplyPlanDetail; z_ProductDetails,196
+Product Review (NEW),Excess FG $,meas*average(col),z_ProductDetails,54
+Product Review (NEW),FC Covered Date,"calculate(firstdate(col),col,removefilters(z_fiscalcal))",SupplyPlanDetail,123
+Product Review (NEW),Orders Covered Date,"calculate(firstdate(col),col,removefilters(z_fiscalcal))",SupplyPlanDetail,132
+Product Review (NEW),8wk Avg Receipt,"calculate(sum(col),col<num)/num",SupplyPlanDetail; z_FiscalCal,79
+Production Capacity Vs Forecast,Receipts,calculate(sum(col)),Receipts,35
+Production Capacity Vs Forecast,PO Receipts,"calculate(sum(col),col=str)",Receipts,59
+Production Capacity Vs Forecast,MO Receipts,"calculate(sum(col),col=str)",Receipts,59
+Production Capacity Vs Forecast,Firm MO,calculate(sum(col)),MOrds,29
+Production Capacity Vs Forecast,Firm PO,calculate(sum(col)),POrds,29
+Production Capacity Vs Forecast,Plan MO,"calculate(sum(col),col=str)",PlandSupply,65
+Production Capacity Vs Forecast,Plan PO,"calculate(sum(col),col=str)",PlandSupply,64
+Production Capacity Vs Forecast,Fcst,calculate(sum(col)),Forecast,33
+Production Capacity Vs Forecast,MO Total,meas+meas+meas,,33
+Production Capacity Vs Forecast,Total PO Qty,meas+meas+meas,,33
+Receipts,Containers,sum(col)/num,Query2,23
+Rolling Report - Wanek Millen,%Rolled,"averagex(summarize('firmandroll',col,col,str,sum(col),str,sum(col)),if(meas=num,num,if(meas>meas,num,divide(meas,meas))))",Firm and Roll,268
+Rolling Report - Wanek Millen,RollafterLateASN,"```varsummarizedtable=summarize('firmandroll',col,col,str,sum(col),str,sum(col),str,sum(col))returnsumx(summarizedtable,meas-meas-meas)```",Firm and Roll; Late ASN,298
+Rolling Report - Wanek Millen,%Roll Average,"```averagex(summarize('firmandroll',col,col,str,sum(col),str,sum(col)),if(meas=num,num,if(meas>meas,num,divide(meas,meas))))```",Firm and Roll,280
+Rolling Report - Wanek Millen,%RolledASN,"```averagex(summarize('firmandroll',col,col,str,meas,str,sum(col)),if(meas=num,num,if(meas>meas,num,divide(meas,meas))))```",Firm and Roll,268
+Rolling Report - Wanek Millen,SS% Average,"```averagex(summarize('firmandroll',col,col,col,str,sum(col)),meas/num)```",Firm and Roll,182
+Safety Stock Analysis,Opt Qty,```calculate(sum(col))```,InvHist,42
+Safety Stock Analysis,Opt Max Qty,calculate(sum(col)),InvHist,31
+Safety Stock Analysis,Opt Min Qty,calculate(sum(col)),InvHist,31
+Safety Stock Analysis,Build+SS Qty,calculate(sum(col)),InvHist,35
+Safety Stock Analysis,Build+SS Max Qty,calculate(sum(col)),InvHist,37
+Safety Stock Analysis,Build+SS Min Qty,calculate(sum(col)),InvHist,37
+Safety Stock Analysis,Hist OH,"calculate(sum(col),filter(z_fiscalcal,col<num))",InvHist; z_FiscalCal,89
+Safety Stock Analysis,OH Qty,calculate(sum(col)),InvHist,33
+Safety Stock Analysis,Overage Qty,calculate(sum(col)),InvHist,32
+Safety Stock Analysis,Build Qty,calculate(sum(col)),InvHist,34
+Safety Stock Analysis,OH/SI Qty,calculate(sum(col)),InvHist,33
+Safety Stock Analysis,OH $,"productx(z_productdetails,col*meas)",z_ProductDetails,63
+Safety Stock Analysis,$ Build,calculate(sum(col)),InvHist,32
+Safety Stock Analysis,$ Build+SS Max,calculate(sum(col)),InvHist,39
+Safety Stock Analysis,$ Build+SS Min,calculate(sum(col)),InvHist,39
+Safety Stock Analysis,$ Build+SS,calculate(sum(col)),InvHist,37
+Safety Stock Analysis,$ Inventory,calculate(sum(col)),InvHist,30
+Safety Stock Analysis,$ OH,calculate(sum(col)),InvHist,31
+Safety Stock Analysis,$ Opt Max,calculate(sum(col)),InvHist,33
+Safety Stock Analysis,$ Opt Min,calculate(sum(col)),InvHist,33
+Safety Stock Analysis,$ Opt,calculate(sum(col)),InvHist,36
+Safety Stock Analysis,$ Overage (Cost),calculate(sum(col)),InvHist,36
+Safety Stock Analysis,$ OH (TW),"calculate(sum(col),col=num)",InvHist; z_FiscalCal,68
+Safety Stock Analysis,$ Overage (TW),"calculate(sum(col),col=num)",InvHist; z_FiscalCal,73
+Safety Stock Analysis,OH Qty (TW),"calculate(sum(col),col=num)",InvHist; z_FiscalCal,70
+Safety Stock Analysis,Overage Qty (TW),"calculate(sum(col),col=num)",InvHist; z_FiscalCal,69
+Safety Stock Analysis,Total DOS (TW),"divide((meas+meas),calculate(sum(col),col=num))",GFIO; z_FiscalCal,111
+Safety Stock Analysis,Daily Avg,"calculate(sum(col),col=num)",GFIO; z_FiscalCal,68
+Safety Stock Analysis,Target DOS,"divide((meas),calculate(sum(col),col=num))",GFIO; z_FiscalCal,91
+Safety Stock Analysis,Target Qty,"calculate(sum(col),col=num)",GFIO; z_FiscalCal,74
+Safety Stock Analysis,Suggested Qty,"calculate(sum(col),col=num)",GFIO; z_FiscalCal,76
+Safety Stock Analysis,Suggested DOS,"divide((meas),calculate(sum(col),col=num))",GFIO; z_FiscalCal,94
+Safety Stock Analysis,OH Qty (W9),"calculate(sum(col),col=num)",InvHist; z_FiscalCal,70
+Safety Stock Analysis,Overage Qty (W9),"calculate(sum(col),col=num)",InvHist; z_FiscalCal,69
+Safety Stock Analysis,Total DOS (W9),"divide((meas+meas),calculate(sum(col),col=num))",GFIO; z_FiscalCal,111
+Safety Stock Analysis,Total Qty,meas+meas,,22
+Safety Stock Analysis,Count All Item-WH,calculate(count(col)),InvHist,35
+Safety Stock Analysis,SS Qty Last Week,"calculate(sum(col),col=-num)",InvHist; z_FiscalCal,72
+Safety Stock Analysis,SS Qty This Week,"calculate(sum(col),col=num)",InvHist; z_FiscalCal,71
+Safety Stock Analysis,SS Qty Change,meas-meas,,39
+Safety Stock Analysis,$ Overage (FOB),calculate(sum(col)),InvHist,35
+Safety Stock Analysis,Total $,meas+meas,,26
+Safety Stock Analysis,% In Control,"divide(calculate(count(col),col=str),calculate(count(col)))",InvHist,112
+Safety Stock Analysis,% Over,"divide(calculate(count(col),col=str),calculate(count(col)))",InvHist,106
+Safety Stock Analysis,% Under,"divide(calculate(count(col),col=str),calculate(count(col)))",InvHist,107
+Safety Stock Analysis,% In Control (TW),"calculate(meas,col=num)",z_FiscalCal,62
+Safety Stock Analysis,% Over (TW),"calculate(meas,col=num)",z_FiscalCal,56
+Safety Stock Analysis,% Under (TW),"calculate(meas,col=num)",z_FiscalCal,57
+Safety Stock Analysis,Count Over Item-WH,"calculate(count(col),col=str)",InvHist,62
+Safety Stock Analysis,In Control Qty,"calculate(sum(col),col=str)",InvHist,68
+Safety Stock Analysis,BucketsVariability,"if(hasonevalue(col),countrows(filter(gfio,col>=values(col)&&col<=values(col))),countrows(gfio))",z_CoVRanges; GFIO,182
+Safety Stock Analysis,zDiscoQty,"calculate(meas,col=str)",z_ProductDetails,60
+Safety Stock Analysis,zLiquidateQty,"calculate(meas,col=str)",z_ProductDetails,64
+Safety Stock Analysis,zNewGOsQty,"calculate(meas,col=str)",z_ProductDetails,62
+Safety Stock Analysis,zPlanDropQty,"calculate(meas,col=str)",z_ProductDetails,63
+Safety Stock Analysis,zScrapQty,"calculate(meas,col=str)",z_ProductDetails,60
+Safety Stock Analysis,zCurrentQty,"calculate(meas,col=str)",z_ProductDetails,62
+Safety Stock Analysis,zTotalQty,meas+meas,,25
+Safety Stock Analysis,zCycleStock,calculate(sum(col)),z_ItemWHMaster,46
+Safety Stock Analysis,zNon-CurrQty,"calculate(meas,col<>str)",z_ProductDetails,64
+Safety Stock Analysis,Total Cubes,"sumx(z_productdetails,col*meas)",z_ProductDetails,58
+Safety Stock Analysis,Total Avg Cubes,"divide(meas,meas)",,33
+Safety Stock Analysis,Over SS Qty,calculate(sum(col)),InvHist,31
+Safety Stock Analysis,Qty Over SS,"max(num,calculate(sum(col))-calculate(sum(col)))",InvHist,74
+Safety Stock Analysis,Qty Over SS (LW),"calculate(meas,col=-num)",z_FiscalCal,62
+Safety Stock Analysis,InvQty % of Total,"divide(meas,calculate(meas,allselected(z_productdetails)))",,72
+Safety Stock Analysis,OverSSQty % of Total,"divide(meas,calculate(meas,allselected(z_productdetails)))",,76
+Safety Stock Analysis,CountofItems,count(col),z_ProductDetails,33
+Safety Stock Analysis,Count Of PD w/i 12Mo,calculate(sum(col)),z_ProductDetails,44
+Safety Stock Analysis,Count Of PD w/i 18Mo,calculate(sum(col)),z_ProductDetails,44
+Safety Stock Analysis,Count Of PD w/i 24Mo,calculate(sum(col)),z_ProductDetails,44
+Safety Stock Analysis,FOB $,calculate(sum(col)),InvHist,30
+Safety Stock Analysis,$ Inv Investment,calculate(sum(col)),InvHist,39
+Safety Stock Analysis,GF SS Qty Suggested,calculate(sum(col)),GFIO,38
+Safety Stock Analysis,GF SS Qty Constrained,calculate(sum(col)),GFIO,37
+Safety Stock Analysis,DP SS Qty Constrained,calculate(sum(col)),DPIO,37
+Safety Stock Analysis,DP SS Qty Suggested,calculate(sum(col)),DPIO,38
+Safety Stock Analysis,DP WOS,calculate(sum(col)),DPIO,32
+Safety Stock Analysis,DP SS DOS,"divide(calculate(sum(col)),calculate(sum(col)))",DPIO,76
+Safety Stock Analysis,GF SS DOS,"divide(calculate(sum(col)),calculate(sum(col)))",GFIO,76
+Safety Stock Analysis,FcastCOGS,calculate(sum(col)),InvGoal,34
+Safety Stock Analysis,GoalInvCost,calculate(sum(col)),InvGoal,38
+Safety Stock Analysis,GoalInvTurns,"divide(meas,meas)",,33
+Safety Stock Analysis,Rolling 12 COGS,calculate(sum(col)),InvTurns,46
+Safety Stock Analysis,Avg Inv $,calculate(sum(col)),InvTurns,41
+Safety Stock Analysis,Inv Turns,"divide(meas,meas)",,37
+Safety Stock Analysis,NewItemAdjRollingCOGS,calculate(sum(col)),InvTurns,39
+Safety Stock Analysis,Adj Inv Turns,"divide(meas,meas)",,43
+Safety Stock Analysis,_% of SKUs,"divide(calculate(count(col),col=true()),calculate(count(col),allexcept(z_productdetails,col,col,col)))",z_ProductDetails,249
+Safety Stock Analysis,_Eligible Items Count,"calculate(count(col),allexcept(z_productdetails,col,col,col))",z_ProductDetails,158
+Safety Stock Analysis,_Count of items,calculate(count(col)),z_ProductDetails,44
+Supplier On-Time Performance,Ontime_Overall,"varontime=calculate(count(col),col=str)varlate=calculate(count(col),col=str)returnif(ontime=num&&late=num,blank(),coalesce(ontime/(ontime+late),num))",Ashton_Ontime By Vendor,289
+Supplier On-Time Performance,Combined_OnTime%,"switch(selectedvalue(col),str,meas,str,meas)",TableSelection,129
+Supplier On-Time Performance,Combined_Shipment%,"switch(selectedvalue(col),str,meas,str,meas)",TableSelection,133
+Supplier On-Time Performance,Combined_Excess Ship,"switch(selectedvalue(col),str,meas,str,meas)",TableSelection,115
+Supplier On-Time Performance,Combined_FirmedQty,"switch(selectedvalue(col),str,meas,str,meas)",TableSelection,125
+Supplier On-Time Performance,MeasureW3OnTime%,"```var_firmqty=sum(meas)var_shipfollowdemand=sum(meas)returnswitch(true(),isblank(_firmqty),blank(),_firmqty=num&&_shipfollowdemand=num,str,divide(_shipfollowdemand,_firmqty))```",,242
+Supplier On-Time Performance,MeasureW3Shipment%,"```var_firmqty=sum(meas)var_totalshipqty=sum(meas)returnswitch(true(),(isblank(_firmqty)||_firmqty=num)&&notisblank(_totalshipqty),str,divide(_totalshipqty,_firmqty))```",,221
+Supplier On-Time Performance,MeasureW4OnTime%,"```var_firmqty=sum(meas)var_shipfollowdemand=sum(meas)returnswitch(true(),isblank(_firmqty),blank(),_firmqty=num&&_shipfollowdemand=num,str,divide(_shipfollowdemand,_firmqty))```",,242
+Supplier On-Time Performance,MeasureW4Shipment%,"```var_firmqty=sum(meas)var_totalshipqty=sum(meas)returnswitch(true(),(isblank(_firmqty)||_firmqty=num)&&notisblank(_totalshipqty),str,divide(_totalshipqty,_firmqty))```",,221
+Supplier On-Time Performance,Combined_ShippedQty,"switch(selectedvalue(col),str,meas,str,meas)",TableSelection,127
+Supplier On-Time Performance,Combined_ShipQty No Excess,"switch(selectedvalue(col),str,meas,str,meas)",TableSelection,133
+Supplier On-Time Performance,W3_Excess,sum(col),OnTime,28
+Supplier On-Time Performance,W3Total_Firmed,sum(col),OnTime,21
+Supplier On-Time Performance,W3Total_ShipDemand,sum(col),OnTime,37
+Supplier On-Time Performance,W3Total_Shipped,sum(col),OnTime,22
+Supplier On-Time Performance,W4_Excess,sum(col),OnTime,28
+Supplier On-Time Performance,W4Total_Firmed,sum(col),OnTime,21
+Supplier On-Time Performance,W4Total_ShipDemand,sum(col),OnTime,37
+Supplier On-Time Performance,W4Total_Shipped,sum(col),OnTime,22
+Supplier On-Time Performance,ShowHideCombined_OnTime%,"if(isnumber(meas),str,str)",,48
+Supplier On-Time Performance,MeasureDelayedW3,sum(col),OnTime,22
+Supplier On-Time Performance,MeasureDelayedW4,sum(col),OnTime,22
+Supplier On-Time Performance,Combined_DelayedQTY,"switch(selectedvalue(col),str,meas,str,meas)",TableSelection,129
+Supplier On-Time Performance,MeasureDelayed_1Week_W3_Container,sum(col),OnTime,39
+Supplier On-Time Performance,MeasureDelayed_1Week_W4_Container,sum(col),OnTime,39
+Supplier On-Time Performance,Combined_Delayed_1Week_Container,"switch(selectedvalue(col),str,meas,str,meas)",TableSelection,163
+Supplier On-Time Performance,MeasureDelayed_2Week_W3_Container,sum(col),OnTime,39
+Supplier On-Time Performance,MeasureDelayed_3Week_W3_Container,sum(col),OnTime,39
+Supplier On-Time Performance,MeasureDelayed_2Week_W4_Container,sum(col),OnTime,39
+Supplier On-Time Performance,MeasureDelayed_3Week_W4_Container,sum(col),OnTime,39
+Supplier On-Time Performance,MeasureDelayW3_Container,sum(col),OnTime,30
+Supplier On-Time Performance,MeasureDelayW4_Container,sum(col),OnTime,30
+Supplier On-Time Performance,Combined_DelayedContainer,"switch(selectedvalue(col),str,meas,str,meas)",TableSelection,145
+Supplier On-Time Performance,Combined_Delayed_2Week_Container,"switch(selectedvalue(col),str,meas,str,meas)",TableSelection,163
+Supplier On-Time Performance,Combined_Delayed_3Week_Container,"switch(selectedvalue(col),str,meas,str,meas)",TableSelection,163
+Supplier On-Time Performance,MeasureShippedFollowDemandW3_Container,"sumx(ontime,(col*col)/num)",OnTime,73
+Supplier On-Time Performance,MeasureShippedFollowDemandW4_Container,"sumx(ontime,(col*col)/num)",OnTime,73
+Supplier On-Time Performance,Combined_ShippedQty_Container,"switch(selectedvalue(col),str,meas,str,meas)",TableSelection,173
+Supplier On-Time Performance,Delay_Ratio_1Week,"divide(meas,meas)",,77
+Supplier On-Time Performance,Delay_Ratio_2Week,"divide(meas,meas)",,77
+Supplier On-Time Performance,Delay_Ratio_3Week,"divide(meas,meas)",,77
+Supplier On-Time Performance,Combined_Delayed_1Week,"switch(selectedvalue(col),str,sum(col),str,sum(col))",TableSelection; OnTime,151
+Supplier On-Time Performance,Combined_Delayed_2Week,"switch(selectedvalue(col),str,sum(col),str,sum(col))",TableSelection; OnTime,151
+Supplier On-Time Performance,Combined_Delayed_3Week,"switch(selectedvalue(col),str,sum(col),str,sum(col))",TableSelection; OnTime,151
+Supplier On-Time Performance,Penalty_2Week_Delay,"sumx(ontime,num*meas*col)",OnTime,66
+Supplier On-Time Performance,Penalty_3Week_Delay,"sumx(ontime,num*meas*col)",OnTime,66
+Supplier On-Time Performance,PenaltyPercent,"divide(meas,meas)",,40
+Supplier On-Time Performance,PenaltyAmount,meas+meas,,45
+Supplier On-Time Performance,ShippedAmount,"sumx(ontime,meas*col)",OnTime,56
+Supplier On-Time Performance,Combined_OnTime% FYTD,"```--str:ngàylớnnhấttrongfiltercontexthiệntại(tôntrọngslicer/reportfilters)var_asofdate=calculate(max(col),lastnonblank(col,meas+meas))--fiscalyeartươngứngvới_asofdate(đểtránhcasechọnnhiềufy)var_fy=coalesce(selectedvalue(col),lookupvalue(col,col,_asofdate))--tậpngàytừđầufyđến_asofdatevar_fytddates=filter(all('dimdate'),col=_fy&&col<=_asofdate)var_firmqtyfytd=calculate(meas,_fytddates)var_shipqtyfytd=calculate(meas,_fytddates)returndivide(_shipqtyfytd,_firmqtyfytd)```",DimDate,778
+Supplier On-Time Performance,Delayed_3Week_PcsRatio,"divide(meas,meas)",,64
+Supplier On-Time Performance,Delayed_1Week_PcsRatio,"divide(meas,meas)",,64
+Supplier On-Time Performance,Delayed_2Week_PcsRatio,"divide(meas,meas)",,64
+Supplier On-Time Performance,SelectedValue,"selectedvalue(col,str)//mặcđịnhlàstr",TableSelection,84
+Supply Plan Detail Accuracy,Target Prod,calculate(sum(col)),SPDsnapshots,39
+Supply Plan Detail Accuracy,Target PO,calculate(sum(col)),SPDsnapshots,38
+Supply Plan Detail Accuracy,Target TI,calculate(sum(col)),SPDsnapshots,37
+Supply Plan Detail Accuracy,Target TO,calculate(sum(col)),SPDsnapshots,37
+Supply Plan Detail Accuracy,Target Fulfillment,calculate(sum(col)),SPDsnapshots,47
+Supply Plan Detail Accuracy,Target Demand,calculate(sum(col)),SPDsnapshots,41
+Supply Plan Detail Accuracy,Act Invoiced,calculate(sum(col)),SPDsnapshots,42
+Supply Plan Detail Accuracy,Act PO,calculate(sum(col)),SPDsnapshots,36
+Supply Plan Detail Accuracy,Act Prod,calculate(sum(col)),SPDsnapshots,38
+Supply Plan Detail Accuracy,Act TI,calculate(sum(col)),SPDsnapshots,36
+Supply Plan Detail Accuracy,Act TO,calculate(sum(col)),SPDsnapshots,36
+Supply Plan Detail Accuracy,Error Fulfillment,calculate(sum(col)),SPDsnapshots,38
+Supply Plan Detail Accuracy,Error Fcast,calculate(sum(col)),SPDsnapshots,41
+Supply Plan Detail Accuracy,Error PO,calculate(sum(col)),SPDsnapshots,38
+Supply Plan Detail Accuracy,Error Prod,calculate(sum(col)),SPDsnapshots,40
+Supply Plan Detail Accuracy,Error TI,calculate(sum(col)),SPDsnapshots,38
+Supply Plan Detail Accuracy,Error TO,calculate(sum(col)),SPDsnapshots,38
+Supply Plan Detail Accuracy,Error Receipts,calculate(sum(col)),SPDsnapshots,49
+Supply Plan Detail Accuracy,Target Receipts,calculate(sum(col)),SPDsnapshots,43
+Supply Plan Detail Accuracy,Act Receipts,meas+meas+meas,,28
+Supply Plan Detail,Wk3 SI,"calculate(sum(col),filter(z_fiscalcal,col=num))",SupplyPlanDetail; z_FiscalCal,93
+Supply Plan Detail,Wk4 SI,"calculate(sum(col),filter(z_fiscalcal,col=num))",SupplyPlanDetail; z_FiscalCal,93
+Supply Plan Detail,WK8 SI,"calculate(sum(col),filter(z_fiscalcal,col=num))",SupplyPlanDetail; z_FiscalCal,93
+Supply Plan Detail,WH1 Wk4 SI,"calculate(sum(col),filter(z_fiscalcal,col=num),col=str)",SupplyPlanDetail; z_FiscalCal,127
+Supply Plan Detail,WH15 Wk4 SI,"calculate(sum(col),filter(z_fiscalcal,col=num),col=str)",SupplyPlanDetail; z_FiscalCal,128
+Supply Plan Detail,WH17 Wk4 SI,"calculate(sum(col),filter(z_fiscalcal,col=num),col=str)",SupplyPlanDetail; z_FiscalCal,128
+Supply Plan Detail,WH16 Wk4 SI,"calculate(sum(col),filter(z_fiscalcal,col=num),col=str)",SupplyPlanDetail; z_FiscalCal,128
+Supply Plan Detail,WH42 Wk4 SI,"calculate(sum(col),filter(z_fiscalcal,col=num),col=str)",SupplyPlanDetail; z_FiscalCal,128
+Supply Plan Detail,WH5 Wk4 SI,"calculate(sum(col),filter(z_fiscalcal,col=num),col=str)",SupplyPlanDetail; z_FiscalCal,127
+Supply Plan Detail,WH50 Wk4 SI,"calculate(sum(col),filter(z_fiscalcal,col=num),col=str)",SupplyPlanDetail; z_FiscalCal,128
+Supply Plan Detail,WH70 Wk4 SI,"calculate(sum(col),filter(z_fiscalcal,col=num),col=str)",SupplyPlanDetail; z_FiscalCal,128
+Supply Plan Detail,WHECR Wk4 SI,"calculate(sum(col),filter(z_fiscalcal,col=num),col=str)",SupplyPlanDetail; z_FiscalCal,129
+Supply Plan Detail,WH1 SI,"calculate(sum(col),col=str)",SupplyPlanDetail,70
+Supply Plan Detail,WH15 SI,"calculate(sum(col),col=str)",SupplyPlanDetail,71
+Supply Plan Detail,WH16 SI,"calculate(sum(col),col=str)",SupplyPlanDetail,71
+Supply Plan Detail,WH17 SI,"calculate(sum(col),col=str)",SupplyPlanDetail,71
+Supply Plan Detail,WH42 SI,"calculate(sum(col),col=str)",SupplyPlanDetail,71
+Supply Plan Detail,WH5 SI,"calculate(sum(col),col=str)",SupplyPlanDetail,70
+Supply Plan Detail,WH50 SI,"calculate(sum(col),col=str)",SupplyPlanDetail,71
+Supply Plan Detail,WH70 SI,"calculate(sum(col),col=str)",SupplyPlanDetail,71
+Supply Plan Detail,WHECR SI,"calculate(sum(col),col=str)",SupplyPlanDetail,72
+Supply Plan Detail,Network SI,calculate(sum(col)),SupplyPlanDetail,36
+Supply Plan Detail,WH28 SI,"calculate(sum(col),col=str)",SupplyPlanDetail,71
+Supply Plan Detail,Network SI-SS,calculate(sum(col)),SupplyPlanDetail,40
+Supply Plan Detail,WH1 SI-SS,"calculate(sum(col),col=str)",SupplyPlanDetail,74
+Supply Plan Detail,WH15 SI-SS,"calculate(sum(col),col=str)",SupplyPlanDetail,75
+Supply Plan Detail,WH17 SI-SS,"calculate(sum(col),col=str)",SupplyPlanDetail,75
+Supply Plan Detail,WH28 SI-SS,"calculate(sum(col),col=str)",SupplyPlanDetail,75
+Supply Plan Detail,WH42 SI-SS,"calculate(sum(col),col=str)",SupplyPlanDetail,75
+Supply Plan Detail,WH5 SI-SS,"calculate(sum(col),col=str)",SupplyPlanDetail,74
+Supply Plan Detail,WH70 SI-SS,"calculate(sum(col),col=str)",SupplyPlanDetail,75
+Supply Plan Detail,WHECR SI-SS,"calculate(sum(col),col=str)",SupplyPlanDetail,76
+Supply Plan Detail,Wk3 SI-SS,"calculate(sum(col),col=num)",SupplyPlanDetail; z_FiscalCal,79
+Supply Plan Detail,Wk3 Prod,"calculate(sum(col),col=num)+calculate(sum(col),col=num)",SupplyPlanDetail; z_FiscalCal,165
+Supply Plan Detail,Wk2 Prod,"calculate(sum(col),col=num)+calculate(sum(col),col=num)",SupplyPlanDetail; z_FiscalCal,165
+Supply Plan Detail,Wk1 Prod,"calculate(sum(col),col=num)+calculate(sum(col),col=num)",SupplyPlanDetail; z_FiscalCal,165
+Supply Plan Detail,Wk2 SI-SS,"calculate(sum(col),col=num)",SupplyPlanDetail; z_FiscalCal,79
+Supply Plan Detail,Wk1 SI-SS,"calculate(sum(col),col=num)",SupplyPlanDetail; z_FiscalCal,79
+Supply Plan Detail,Wk4 SI-SS,"calculate(sum(col),col=num)",SupplyPlanDetail; z_FiscalCal,79
+Supply Plan Detail,Wk4 Prod,"calculate(sum(col),col=num)+calculate(sum(col),col=num)",SupplyPlanDetail; z_FiscalCal,165
+Supply Plan Detail,Network SI Wk35,"calculate(sum(col),col=num)",SupplyPlanDetail; z_FiscalCal,74
+Supply Plan Detail,Net Forecast Wk35,"calculate(sum(col),col=num)",SupplyPlanDetail; z_FiscalCal,84
+Supply Plan Detail,Network SI Neg,calculate(sum(col)),SupplyPlanDetail,40
+Supply Plan Detail,SS Qty,calculate(sum(col)),SupplyPlanDetail,36
+Supply Plan Detail,SS Cubes,"calculate(sumx(z_productdetails,col*meas))",z_ProductDetails,66
+Supply Plan Detail,Avg SS Cubes,"divide(meas,meas)",,27
+Supply Plan Detail,Wk1 SI,"calculate(sum(col),filter(z_fiscalcal,col=num))",SupplyPlanDetail; z_FiscalCal,93
+Supply Plan Detail,SI Neg Wk5,"calculate(meas,col=num)",z_FiscalCal,64
+Supply Plan Detail,SI Wk5,"calculate(meas,col=num)",z_FiscalCal,60
+Supply Plan Detail,Network SI Wk3,"calculate(sum(col),col=num)",SupplyPlanDetail; z_FiscalCal,73
+Supply Plan Detail,Wk17 SI-SS,"calculate(sum(col),col=num)",SupplyPlanDetail; z_FiscalCal,78
+Supply Plan Detail,POs Week9-17,"calculate(sum(col),and(col>=num,col<=num))",SupplyPlanDetail; z_FiscalCal,124
+Supply Plan Detail,Network SI (TW),"```calculate(sum(col),col=num)```",SupplyPlanDetail; z_FiscalCal,81
+Supply Plan Detail,Network SI Neg (TW),"calculate(sum(col),col=num)",SupplyPlanDetail; z_FiscalCal,77
+Supply Plan Detail,Network SI Neg (W26),"calculate(sum(col),col=num)",SupplyPlanDetail; z_FiscalCal,78
+Supply Plan Detail,Network SI Neg (W17),"calculate(sum(col),col=num)",SupplyPlanDetail; z_FiscalCal,78
+Supply Plan Detail,Network SI Neg (W08),"calculate(sum(col),col=num)",SupplyPlanDetail; z_FiscalCal,77
+Supply Plan Detail,Cumulative NetFcst,"calculate(sum(col),filter(all(col),col<=max(col)))",SupplyPlanDetail; z_FiscalCal,155
+Supply Plan Detail,Net Fcst,calculate(sum(col)),SupplyPlanDetail,46
+Supply Plan Detail,Capable To Promise,meas+meas,,33
+Supply Plan Detail,ProjFulfillmentQty,calculate(sum(col)),SupplyPlanDetail,44
+Supply Plan Detail,RollingCumDemand,calculate(sum(col)),SupplyPlanDetail,48
+Supply Plan Detail,ProjFulfillment%,"divide(meas,meas)",,47
+Top Negatives,Background color,"if(max(col)=str,str,blank())",SPD2,55
+Top Negatives,Font color,"if(max(col)=str,str,blank())",SPD2,50
+Top Negatives,Background color MP,"if(max(col)=str,str,blank())",SPD2,61
+Top Negatives,Font color MP,"if(max(col)=str,str,blank())",SPD2,59
+Weekly Trend Analysis,ACTD (accy),calculate(sum(col)),FcstAccuracy,40
+Weekly Trend Analysis,Lag Fcst,calculate(sum(col)),FcstAccuracy,38
+Weekly Trend Analysis,90Day Error,meas-meas,,26
+Weekly Trend Analysis,90Day Error %,"divide(calculate(sum(col)),calculate(sum(col)))-num",FcstAccuracy,89
+Weekly Trend Analysis,Working Fcst,calculate(sum(col)),Forecast,29
+Weekly Trend Analysis,FUTO,"calculate(sum(col),col=str,filter(z_fiscalcal,col>=num))",Actuals; z_FiscalCal,124
+Weekly Trend Analysis,Curr Qty,"calculate(sum(col),col=str)",Actuals,66
+Weekly Trend Analysis,Inv Qty,"calculate(sum(col),col=str,filter(z_fiscalcal,col<num))",Actuals; z_FiscalCal,116
+Weekly Trend Analysis,Writ Qty,"calculate(sum(col),col=str,filter(z_fiscalcal,col<num))",Actuals; z_FiscalCal,115
+Weekly Trend Analysis,Curr Req Qty,"calculate(sum(col),col=str)",Actuals,66
+Weekly Trend Analysis,Inv Qty (CS),"calculate(sum(col),col=str,filter(z_fiscalcal,col<num))",Actuals; z_FiscalCal,116
+Weekly Trend Analysis,dfoFUTO,"calculate(sum(col),col=num)",FutOrd; z_FiscalCal,79
+Weekly Trend Analysis,dfoFcst,"calculate(sum(col),col=num)",FutOrd; z_FiscalCal,76
+Weekly Trend Analysis,dfoConsumption,"divide(meas,meas)",,27
+Weekly Trend Analysis,dfoGap,meas-meas,,19
+When to Disco v2,3 MO Avg,calculate(sum(col)),When To Disco,41
+When to Disco v2,Balance Minus Customer Orders 335,calculate(sum(col)),When To Disco,66
+When to Disco v2,Balance OH Minus Customer Orders,calculate(sum(col)),When To Disco,62
+When to Disco v2,Balance On Hand + In Transit & On Order,calculate(sum(col)),When To Disco,64
+When to Disco v2,Customer Allocated Orders,calculate(sum(col)),When To Disco,58
+When to Disco v2,In Transit & On Order,calculate(sum(col)),When To Disco,54
+When to Disco v2,Months of Supply,"divide(meas,meas)",,53
+When to Disco v2,On-Hand Qty,calculate(sum(col)),When To Disco,44
+When to Disco v2,All Inventory Minus Alloc Orders,meas+meas,,72
+When to Disco v2,3 MO Avg ASH,calculate(average(col)),When to Disco,49
+When to Disco v2,Months of Supply ASH,"divide(meas,meas)",,58
+When to Disco v2,MOS ALL,"divide(meas,(meas+meas))",,70

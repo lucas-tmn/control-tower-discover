@@ -1,0 +1,34 @@
+{
+  "formatVersion": "202502",
+  "computeEngineSettings": {
+    "allowModernEvaluationEngine": true
+  },
+  "name": "df_brz_SalesHistory_AFI_InvoiceDetail",
+  "queryGroups": [],
+  "documentLocale": "en-GB",
+  "queriesMetadata": {
+    "Wholesale_SalesHistory_AFI InvoiceDetail": {
+      "queryId": "f430f0c8-2faa-4841-b933-12ac439ef342",
+      "queryName": "Wholesale_SalesHistory_AFI InvoiceDetail",
+      "loadEnabled": false
+    },
+    "Wholesale_SalesHistory_AFI InvoiceDetail_DataDestination": {
+      "queryId": "87ab9a74-7437-4b67-96f2-fe4290c350de",
+      "queryName": "Wholesale_SalesHistory_AFI InvoiceDetail_DataDestination",
+      "isHidden": true,
+      "loadEnabled": false
+    }
+  },
+  "connections": [
+    {
+      "path": "Lakehouse",
+      "kind": "Lakehouse",
+      "connectionId": "{\"ClusterId\":\"e6436dba-643f-44c3-ad6f-51a8cbc45b81\",\"DatasourceId\":\"1a64c7b8-2c7a-445a-bd7f-ca0fc0b98e9b\"}"
+    },
+    {
+      "path": "ashley-edw.database.windows.net;ASHLEY_EDW",
+      "kind": "SQL",
+      "connectionId": "{\"ClusterId\":\"e6436dba-643f-44c3-ad6f-51a8cbc45b81\",\"DatasourceId\":\"179c470b-1f8c-4a73-82b6-5206a4a5a5cc\"}"
+    }
+  ]
+}

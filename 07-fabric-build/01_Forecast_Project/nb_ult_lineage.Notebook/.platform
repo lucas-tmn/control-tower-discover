@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Notebook",
+    "displayName": "nb_ult_lineage"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "4efe3dcd-5822-b920-46c4-6da22dbec528"
+  }
+}

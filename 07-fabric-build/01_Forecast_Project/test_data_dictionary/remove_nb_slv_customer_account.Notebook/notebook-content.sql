@@ -1,0 +1,123 @@
+-- Fabric notebook source
+
+-- METADATA ********************
+
+-- META {
+-- META   "kernel_info": {
+-- META     "name": "synapse_pyspark"
+-- META   },
+-- META   "dependencies": {
+-- META     "lakehouse": {
+-- META       "default_lakehouse": "62a3081e-4093-4f46-856c-f50aa58732fa",
+-- META       "default_lakehouse_name": "SupplyChain_Lakehouse",
+-- META       "default_lakehouse_workspace_id": "c8d9fc83-18b6-4e1d-8264-0b49eed36fe0",
+-- META       "known_lakehouses": [
+-- META         {
+-- META           "id": "62a3081e-4093-4f46-856c-f50aa58732fa"
+-- META         }
+-- META       ]
+-- META     }
+-- META   }
+-- META }
+
+-- CELL ********************
+
+-- MAGIC %%sql
+-- MAGIC /* SILVER LAYER: CUSTOMER ACCOUNT - DIM TABLE
+-- MAGIC    Target: dbo.slv_customer_account
+-- MAGIC    Logic: CUSTOMER ACCOUNT - DIM TABLE
+-- MAGIC */
+-- MAGIC 
+-- MAGIC CREATE OR REPLACE TABLE dbo.slv_customer_account AS
+-- MAGIC SELECT
+-- MAGIC     -- Keys & Identifiers
+-- MAGIC     TRIM(cmaCustomerNumber)                              AS id_customer,
+-- MAGIC     TRIM(cmaCustomerName)                                AS name_customer,
+-- MAGIC     TRIM(cmaDBAName)                                     AS name_dba,
+-- MAGIC 
+-- MAGIC     -- Contact
+-- MAGIC     TRIM(cmaContact)                                     AS name_contact,
+-- MAGIC     TRIM(cmaPhone)                                       AS code_phone,
+-- MAGIC     TRIM(cmaFaxtn)                                       AS code_fax,
+-- MAGIC     TRIM(cmaEmail)                                       AS code_email,
+-- MAGIC 
+-- MAGIC     -- Territory & Sales
+-- MAGIC     TRIM(cmaPrimaryTerritory)                             AS code_territory,
+-- MAGIC     TRIM(cmaCreditTerritoryID)                            AS id_credit_territory,
+-- MAGIC     TRIM(cmaDeductTerritoryID)                            AS id_deduct_territory,
+-- MAGIC     TRIM(cmaCustomerChannelID)                            AS code_customer_channel,
+-- MAGIC     TRIM(cmaCustomerClassCode)                            AS code_customer_class,
+-- MAGIC 
+-- MAGIC     -- Credit & Terms
+-- MAGIC     CAST(cmaCreditLimitAmount AS DECIMAL(14,2))          AS amt_credit_limit,
+-- MAGIC     TRIM(cmaTermsCode)                                   AS code_terms,
+-- MAGIC     CAST(cmaTermsDays AS INT)                            AS num_terms_days,
+-- MAGIC     CAST(cmaPercentAvailableCredit AS DECIMAL(10,2))     AS pct_available_credit,
+-- MAGIC     TRIM(cmaCreditAuthorizationCode)                      AS code_credit_authorization,
+-- MAGIC     TRIM(cmaMinimumFreightCode)                           AS code_minimum_freight,
+-- MAGIC     CAST(cmaMinPreapprovalAmount AS DECIMAL(14,2))       AS amt_min_preapproval,
+-- MAGIC     TRIM(cmaCreditAddessCode)                             AS code_credit_address,
+-- MAGIC     CAST(cmaLateChargePercent AS DECIMAL(10,4))          AS pct_late_charge,
+-- MAGIC 
+-- MAGIC     -- Flags
+-- MAGIC     CASE WHEN TRIM(cmaCancelBackOrders) = '1' THEN true ELSE false END AS is_cancel_backorders,
+-- MAGIC     CASE WHEN TRIM(cmaAllowPartialShipment) = '1' THEN true ELSE false END AS is_allow_partial_shipment,
+-- MAGIC     CASE WHEN TRIM(cmaAllowAllowanceCredits) = '1' THEN true ELSE false END AS is_allow_allowance_credits,
+-- MAGIC     CASE WHEN TRIM(cmaDocumentationHold) = 'Y' THEN true ELSE false END AS is_documentation_hold,
+-- MAGIC     CASE WHEN TRIM(cmaPARSByPurchaser) = 'Y' THEN true ELSE false END AS is_pars_by_purchaser,
+-- MAGIC     CASE WHEN TRIM(cma10DigitScheduleB) = 'Y' THEN true ELSE false END AS is_10_digit_schedule_b,
+-- MAGIC     CASE WHEN TRIM(cmaInheritBlocking) = '1' THEN true ELSE false END AS is_inherit_blocking,
+-- MAGIC 
+-- MAGIC     -- Codes
+-- MAGIC     TRIM(cmaLanguageCode)                                AS code_language,
+-- MAGIC     TRIM(cmaStatementCode)                               AS code_statement,
+-- MAGIC     TRIM(cmaItemCrossReferenceCode)                      AS code_item_cross_reference,
+-- MAGIC     TRIM(cmaCurrencyCode)                                AS code_currency,
+-- MAGIC     TRIM(cmaRFCTaxIdNumber)                              AS code_tax_id,
+-- MAGIC     TRIM(cmaAppcd)                                       AS code_app,
+-- MAGIC     TRIM(cmaHomestoreFacingWhse)                          AS code_homestore_facing_warehouse,
+-- MAGIC 
+-- MAGIC     -- Insurance
+-- MAGIC     TRIM(cmaTypeOfInsurance)                              AS code_insurance_type,
+-- MAGIC     CASE WHEN CAST(cmaInsExpirationDate AS TIMESTAMP) < TIMESTAMP '1900-01-01T00:00:01' THEN NULL
+-- MAGIC      ELSE CAST(cmaInsExpirationDate AS TIMESTAMP) END   AS dt_insurance_expiration,
+-- MAGIC     CAST(cmaInsCoverageRequested AS DECIMAL(14,2))       AS amt_insurance_coverage_requested,
+-- MAGIC     CAST(cmaInsCoverageApproved AS DECIMAL(14,2))        AS amt_insurance_coverage_approved,
+-- MAGIC     TRIM(cmaInsuranceStatus)                             AS code_insurance_status,
+-- MAGIC 
+-- MAGIC     -- Status & Record
+-- MAGIC     TRIM(acrec)                                          AS code_record_status,
+-- MAGIC     TRIM(cmaBillingAddressID)                             AS id_billing_address,
+-- MAGIC 
+-- MAGIC     -- Memo / Notes
+-- MAGIC     TRIM(cmaMemo)                                         AS name_memo,
+-- MAGIC 
+-- MAGIC     -- Audit flags
+-- MAGIC     CAST(cmaChgCustAr AS INT)                            AS num_change_customer_ar,
+-- MAGIC     CAST(cmaChgCust AS INT)                              AS num_change_customer,
+-- MAGIC     CAST(cmaChgCustExt AS INT)                           AS num_change_customer_ext,
+-- MAGIC     CAST(cmaCommAudit AS INT)                            AS num_commission_audit,
+-- MAGIC 
+-- MAGIC     -- Dates
+-- MAGIC     CASE WHEN CAST(cmaTerritoryChangeDate AS TIMESTAMP) < TIMESTAMP '1900-01-01T00:00:01' THEN NULL
+-- MAGIC      ELSE CAST(cmaTerritoryChangeDate AS TIMESTAMP) END  AS dt_territory_change,
+-- MAGIC     CASE WHEN CAST(cmaLastStatusChangeDate AS TIMESTAMP) < TIMESTAMP '1900-01-01T00:00:01' THEN NULL
+-- MAGIC      ELSE CAST(cmaLastStatusChangeDate AS TIMESTAMP) END AS dt_last_status_change,
+-- MAGIC 
+-- MAGIC     -- Source audit
+-- MAGIC     TRIM(usra)                                           AS name_created_by,
+-- MAGIC     CASE WHEN CAST(dtea AS TIMESTAMP) < TIMESTAMP '1900-01-01T00:00:01' THEN NULL
+-- MAGIC      ELSE CAST(dtea AS TIMESTAMP) END                    AS ts_created,
+-- MAGIC     TRIM(usrc)                                           AS name_modified_by,
+-- MAGIC     CASE WHEN CAST(dtec AS TIMESTAMP) < TIMESTAMP '1900-01-01T00:00:01' THEN NULL
+-- MAGIC      ELSE CAST(dtec AS TIMESTAMP) END                    AS ts_modified
+-- MAGIC 
+-- MAGIC FROM dbo.brz_customers__accountmaster
+-- MAGIC WHERE cmaCustomerNumber IS NOT NULL
+
+-- METADATA ********************
+
+-- META {
+-- META   "language": "sparksql",
+-- META   "language_group": "synapse_pyspark"
+-- META }

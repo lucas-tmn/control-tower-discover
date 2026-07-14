@@ -1,0 +1,149 @@
+-- Fabric notebook source
+
+-- METADATA ********************
+
+-- META {
+-- META   "kernel_info": {
+-- META     "name": "synapse_pyspark"
+-- META   },
+-- META   "dependencies": {
+-- META     "lakehouse": {
+-- META       "default_lakehouse": "62a3081e-4093-4f46-856c-f50aa58732fa",
+-- META       "default_lakehouse_name": "SupplyChain_Lakehouse",
+-- META       "default_lakehouse_workspace_id": "c8d9fc83-18b6-4e1d-8264-0b49eed36fe0",
+-- META       "known_lakehouses": [
+-- META         {
+-- META           "id": "62a3081e-4093-4f46-856c-f50aa58732fa"
+-- META         }
+-- META       ]
+-- META     }
+-- META   }
+-- META }
+
+-- CELL ********************
+
+-- MAGIC %%sql
+-- MAGIC /* SILVER LAYER: INVOICE DETAIL - FACT TABLE
+-- MAGIC    Target: dbo.slv_invoice_detail
+-- MAGIC    Logic: NVOICE DETAIL - FACT TABLE
+-- MAGIC */
+-- MAGIC 
+-- MAGIC CREATE OR REPLACE TABLE dbo.slv_invoice_detail AS
+-- MAGIC SELECT
+-- MAGIC     -- Keys & Identifiers
+-- MAGIC     TRIM(CustomerNumber)                                 AS id_customer,
+-- MAGIC     TRIM(InvoiceNumber)                                  AS id_invoice,
+-- MAGIC     TRIM(ExtendedInvoiceNumber)                          AS id_invoice_extended,
+-- MAGIC     TRIM(ItemSKU)                                        AS id_item_sku,
+-- MAGIC     CAST(ItemSequence AS INT)                            AS num_item_sequence,
+-- MAGIC     TRIM(OrderNumber)                                    AS id_order,
+-- MAGIC     TRIM(ShiptoNumber)                                   AS code_ship_to,
+-- MAGIC     TRIM(Warehouse)                                      AS code_warehouse,
+-- MAGIC     TRIM(CurrencyCode)                                   AS code_currency,
+-- MAGIC 
+-- MAGIC     -- Quantities
+-- MAGIC     CAST(QuantityShipped AS DECIMAL(12,3))               AS qty_shipped,
+-- MAGIC     CAST(QuantityOrdered AS DECIMAL(12,3))               AS qty_ordered,
+-- MAGIC     CAST(QuantityBackOrdered AS DECIMAL(12,3))           AS qty_backordered,
+-- MAGIC 
+-- MAGIC     -- Pricing & Amounts
+-- MAGIC     CAST(InvoiceAmount AS DECIMAL(14,2))                 AS amt_invoice,
+-- MAGIC     CAST(Price AS DECIMAL(14,2))                         AS amt_price,
+-- MAGIC     CAST(StandardPrice AS DECIMAL(14,2))                 AS amt_standard_price,
+-- MAGIC     CAST(ContractPrice AS DECIMAL(14,2))                 AS amt_contract_price,
+-- MAGIC     CAST(NetSales AS DECIMAL(14,3))                      AS amt_net_sales,
+-- MAGIC     CAST(Discount AS DECIMAL(12,2))                      AS amt_discount,
+-- MAGIC     CAST(PriceAdjustment AS DECIMAL(12,2))               AS amt_price_adjustment,
+-- MAGIC     CAST(Freight AS DECIMAL(12,2))                       AS amt_freight,
+-- MAGIC     CAST(AdvertisingAccrual AS DECIMAL(12,2))            AS amt_advertising_accrual,
+-- MAGIC     CAST(DFIDiscount AS DECIMAL(12,2))                   AS amt_dfi_discount,
+-- MAGIC 
+-- MAGIC     -- Dates
+-- MAGIC     CAST(InvoiceDate AS DATE)                            AS dt_invoice,
+-- MAGIC     CAST(OrderDate AS DATE)                              AS dt_order,
+-- MAGIC     CAST(RequestDate AS DATE)                            AS dt_request,
+-- MAGIC     CAST(OrderEntry AS DATE)                             AS dt_order_entry,
+-- MAGIC     CAST(PromisedDelivery AS DATE)                       AS dt_promised_delivery,
+-- MAGIC     CAST(OriginalRequestDate AS DATE)                    AS dt_original_request,
+-- MAGIC     CAST(OriginalPromiseDate AS DATE)                    AS dt_original_promise,
+-- MAGIC     CAST(CurrentRequestDate AS DATE)                     AS dt_current_request,
+-- MAGIC     CAST(CurrentPromiseDate AS DATE)                     AS dt_current_promise,
+-- MAGIC     CAST(DeliveryDate AS DATE)                           AS dt_delivery,
+-- MAGIC     CAST(ActualDelivery AS DATE)                         AS dt_actual_delivery,
+-- MAGIC     CAST(TripCloseDate AS DATE)                          AS dt_trip_close,
+-- MAGIC     CAST(FirstScanDate AS DATE)                          AS dt_first_scan,
+-- MAGIC     CAST(TripCreateDate AS DATE)                         AS dt_trip_create,
+-- MAGIC     CAST(OriginalInvoiceDate AS DATE)                    AS dt_original_invoice,
+-- MAGIC     CAST(OriginalOrderDate AS DATE)                      AS dt_original_order,
+-- MAGIC 
+-- MAGIC     -- Delivery Days
+-- MAGIC     TRIM(CAST(DefaultDeliveryDays AS STRING))            AS code_default_delivery_days,
+-- MAGIC     TRIM(CAST(DeliveryDays AS STRING))                   AS val_delivery_days,
+-- MAGIC     TRIM(CAST(DeliveryDaysOriginalPromiseDate AS STRING)) AS val_delivery_days_original_promise,
+-- MAGIC     TRIM(CAST(DeliveryDaysRaw AS STRING))                AS val_delivery_days_raw,
+-- MAGIC     TRIM(CAST(DeliveryDaysOriginalPromiseDateRaw AS STRING)) AS val_delivery_days_original_promise_raw,
+-- MAGIC 
+-- MAGIC     -- Salesperson
+-- MAGIC     TRIM(CAST(BilltoSalesman AS STRING))                 AS id_salesperson_billto,
+-- MAGIC     TRIM(CAST(ShiptoSalesman AS STRING))                 AS id_salesperson_shipto,
+-- MAGIC 
+-- MAGIC     -- Trip & Routing
+-- MAGIC     CAST(TripNumber AS INT)                              AS num_trip,
+-- MAGIC     CAST(DropNumber AS INT)                              AS num_drop,
+-- MAGIC 
+-- MAGIC     -- Item Attributes
+-- MAGIC     TRIM(ItemClass)                                      AS code_item_class,
+-- MAGIC     TRIM(CustomerSku)                                    AS name_customer_sku,
+-- MAGIC     TRIM(PurchaseOrder)                                  AS id_purchase_order,
+-- MAGIC     TRIM(CAST(PostingMonth AS STRING))                   AS code_posting_month,
+-- MAGIC 
+-- MAGIC     -- Credit & Status
+-- MAGIC     TRIM(CreditCode)                                     AS code_credit,
+-- MAGIC     TRIM(CAST(PriorityCode AS STRING))                   AS code_priority,
+-- MAGIC     TRIM(OrderItemStatus)                                AS code_order_item_status,
+-- MAGIC     CAST(OrderPriority AS INT)                           AS num_order_priority,
+-- MAGIC     TRIM(LineReleaseNumber)                              AS code_line_release,
+-- MAGIC 
+-- MAGIC     -- Order Type & Codes
+-- MAGIC     TRIM(OrderType)                                      AS code_order_type,
+-- MAGIC     TRIM(OrderType3)                                     AS code_order_type_3,
+-- MAGIC     TRIM(PriceCode)                                      AS code_price,
+-- MAGIC     TRIM(ItemDiscountCode)                               AS code_item_discount,
+-- MAGIC     TRIM(commissioncode)                                 AS code_commission,
+-- MAGIC     TRIM(FreightCode)                                    AS code_freight,
+-- MAGIC     TRIM(DiscountSalesClass)                             AS code_discount_sales_class,
+-- MAGIC     TRIM(FreightSalesClass)                              AS code_freight_sales_class,
+-- MAGIC     TRIM(BuyGroupCode)                                   AS code_buy_group,
+-- MAGIC 
+-- MAGIC     -- Exception & Pricing IDs
+-- MAGIC     CAST(ExceptionID AS INT)                             AS id_exception,
+-- MAGIC     CAST(GroupPricingExceptionID AS INT)                  AS id_group_pricing_exception,
+-- MAGIC 
+-- MAGIC     -- Percentages
+-- MAGIC     CAST(WarehouseOperationPercent AS DECIMAL(10,4))     AS pct_warehouse_operation,
+-- MAGIC     CAST(PriceAdderPercent AS DECIMAL(10,4))             AS pct_price_adder,
+-- MAGIC     CAST(CalculatedAllowancePercent AS DECIMAL(10,4))    AS pct_calculated_allowance,
+-- MAGIC     CAST(PackageDiscountAllocationPercent AS DECIMAL(10,4)) AS pct_package_discount_allocation,
+-- MAGIC 
+-- MAGIC     -- Package
+-- MAGIC     TRIM(PackageDescription)                             AS name_package_description,
+-- MAGIC     TRIM(PackageID)                                      AS id_package,
+-- MAGIC     CAST(PackagePrice AS DECIMAL(12,2))                  AS amt_package_price,
+-- MAGIC     CAST(PackageItemPrice AS DECIMAL(12,2))              AS amt_package_item_price,
+-- MAGIC     CAST(PackageItemDiscount AS DECIMAL(12,3))           AS val_package_item_discount,
+-- MAGIC 
+-- MAGIC     -- Original References
+-- MAGIC     TRIM(CAST(OriginalInvoiceNumber AS STRING))          AS id_original_invoice,
+-- MAGIC     TRIM(CAST(OriginalOrderNumber AS STRING))            AS id_original_order,
+-- MAGIC     CAST(OriginalSequenceNumber AS INT)                  AS num_original_sequence,
+-- MAGIC     TRIM(CAST(OriginalDeliveryMethod AS STRING))         AS code_original_delivery_method
+-- MAGIC 
+-- MAGIC FROM dbo.brz_saleshistory_afi__invoicedetail
+-- MAGIC WHERE InvoiceNumber IS NOT NULL
+
+-- METADATA ********************
+
+-- META {
+-- META   "language": "sparksql",
+-- META   "language_group": "synapse_pyspark"
+-- META }

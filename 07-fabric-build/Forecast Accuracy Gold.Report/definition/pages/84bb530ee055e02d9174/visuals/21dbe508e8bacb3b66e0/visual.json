@@ -1,0 +1,94 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.5.0/schema.json",
+  "name": "21dbe508e8bacb3b66e0",
+  "position": {
+    "x": 0,
+    "y": 518.06483840569581,
+    "z": 4000,
+    "height": 90.5989110707804,
+    "width": 279.92740471869325,
+    "tabOrder": 4000
+  },
+  "visual": {
+    "visualType": "slicer",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "DimSCPItemMaster"
+                    }
+                  },
+                  "Property": "Collective Class"
+                }
+              },
+              "queryRef": "DimSCPItemMaster.Collective Class",
+              "nativeQueryRef": "Collective Class",
+              "active": true
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "DimSCPItemMaster"
+                    }
+                  },
+                  "Property": "AFI Sales Division"
+                }
+              },
+              "queryRef": "DimSCPItemMaster.AFI Sales Division",
+              "nativeQueryRef": "AFI Sales Division",
+              "active": false
+            }
+          ]
+        }
+      }
+    },
+    "objects": {
+      "data": [
+        {
+          "properties": {
+            "mode": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Dropdown'"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "selection": [
+        {
+          "properties": {
+            "strictSingleSelect": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            },
+            "selectAllCheckboxEnabled": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "general": [
+        {
+          "properties": {}
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

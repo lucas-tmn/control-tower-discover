@@ -1,0 +1,34 @@
+{
+  "formatVersion": "202502",
+  "computeEngineSettings": {
+    "allowModernEvaluationEngine": true
+  },
+  "name": "df_SupplyChain_DW__DimCurrentProductDetails",
+  "queryGroups": [],
+  "documentLocale": "en-US",
+  "queriesMetadata": {
+    "DimCurrentProductDetails(SupplyChain_DW)": {
+      "queryId": "14d7da5c-fb38-4891-8661-3bc8327a0488",
+      "queryName": "DimCurrentProductDetails(SupplyChain_DW)",
+      "loadEnabled": false
+    },
+    "DimCurrentProductDetails(SupplyChain_DW)_DataDestination": {
+      "queryId": "ef1b9e67-8567-43f6-bb71-f94474916a62",
+      "queryName": "DimCurrentProductDetails(SupplyChain_DW)_DataDestination",
+      "isHidden": true,
+      "loadEnabled": false
+    }
+  },
+  "connections": [
+    {
+      "path": "ashley-edw.database.windows.net;ASHLEY_EDW",
+      "kind": "SQL",
+      "connectionId": "{\"ClusterId\":\"e6436dba-643f-44c3-ad6f-51a8cbc45b81\",\"DatasourceId\":\"67192c57-5e5c-4ad4-8801-858e75656fe4\"}"
+    },
+    {
+      "path": "Lakehouse",
+      "kind": "Lakehouse",
+      "connectionId": "{\"ClusterId\":\"e6436dba-643f-44c3-ad6f-51a8cbc45b81\",\"DatasourceId\":\"b4311980-3d3b-49be-bd11-7e2f8e424e19\"}"
+    }
+  ]
+}

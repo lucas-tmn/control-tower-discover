@@ -1,0 +1,71 @@
+-- Fabric notebook source
+
+-- METADATA ********************
+
+-- META {
+-- META   "kernel_info": {
+-- META     "name": "synapse_pyspark"
+-- META   },
+-- META   "dependencies": {
+-- META     "lakehouse": {
+-- META       "default_lakehouse": "62a3081e-4093-4f46-856c-f50aa58732fa",
+-- META       "default_lakehouse_name": "SupplyChain_Lakehouse",
+-- META       "default_lakehouse_workspace_id": "c8d9fc83-18b6-4e1d-8264-0b49eed36fe0",
+-- META       "known_lakehouses": [
+-- META         {
+-- META           "id": "62a3081e-4093-4f46-856c-f50aa58732fa"
+-- META         }
+-- META       ]
+-- META     },
+-- META     "warehouse": {
+-- META       "default_warehouse": "cf6f1c4a-43ab-4e95-a78e-d99897be56da",
+-- META       "known_warehouses": [
+-- META         {
+-- META           "id": "cf6f1c4a-43ab-4e95-a78e-d99897be56da",
+-- META           "type": "Lakewarehouse"
+-- META         }
+-- META       ]
+-- META     }
+-- META   }
+-- META }
+
+-- CELL ********************
+
+-- MAGIC %%sql
+-- MAGIC /* SILVER LAYER: SALES ORDER TYPE MASTER - MASTER TABLE
+-- MAGIC    Target: dbo.slv_order_type
+-- MAGIC    Source: dbo.brz_wholesale_codis_afi__aaordtyp
+-- MAGIC    Logic:SALES ORDER TYPE MASTER TABLE
+-- MAGIC */
+-- MAGIC 
+-- MAGIC CREATE OR REPLACE TABLE dbo.slv_order_type AS
+-- MAGIC SELECT
+-- MAGIC     TRIM(OTCODE)                                    AS code_order_type,
+-- MAGIC     TRIM(OTDES1)                                    AS name_order_type,
+-- MAGIC     TRIM(OTDES2)                                    AS name_order_type_short,
+-- MAGIC     TRIM(OORDCL)                                    AS code_order_class,
+-- MAGIC     CAST(OOTCAT AS INT)                             AS num_order_category,
+-- MAGIC     CASE WHEN TRIM(OROUTE) = 'Y' THEN true ELSE false END    AS is_route_eligible,
+-- MAGIC     CASE WHEN TRIM(OADCHG) = 'Y' THEN true ELSE false END    AS is_additional_charge,
+-- MAGIC     CASE WHEN TRIM(OARFLG) = 'Y' THEN true ELSE false END    AS is_auto_replenish,
+-- MAGIC     CASE WHEN TRIM(OWNEXP) = 'Y' THEN true ELSE false END    AS is_will_notify_expedite,
+-- MAGIC     CASE WHEN TRIM(OMINEXC) = 'Y' THEN true ELSE false END   AS is_minimum_exception,
+-- MAGIC     TRIM(OREQMNT)                                  AS code_requirement_type,
+-- MAGIC     CASE WHEN TRIM(OFDESCH) = 'Y' THEN true ELSE false END   AS is_force_delivery_schedule,
+-- MAGIC     CASE WHEN TRIM(OFDRIMS) = 'Y' THEN true ELSE false END   AS is_force_delivery_rims,
+-- MAGIC     TRIM(OTRPTYP)                                   AS code_transport_type,
+-- MAGIC     CAST(OZNLTIM AS INT)                            AS num_zone_lead_time_days,
+-- MAGIC     CASE WHEN TRIM(OSPECHND) = 'Y' THEN true ELSE false END  AS is_special_handling,
+-- MAGIC     CASE WHEN TRIM(OAUTORSCH) = 'Y' THEN true ELSE false END AS is_auto_reschedule,
+-- MAGIC     CASE WHEN TRIM(OUSRDFN) = 'Y' THEN true ELSE false END   AS is_user_defined,
+-- MAGIC     TRIM(OTUSER)                                    AS name_modified_by,
+-- MAGIC     to_date(CAST(OTDATE AS STRING), 'yyyyMMdd')     AS dt_modified
+-- MAGIC FROM dbo.brz_wholesale_codis_afi__aaordtyp
+-- MAGIC WHERE OTCODE IS NOT NULL
+
+-- METADATA ********************
+
+-- META {
+-- META   "language": "sparksql",
+-- META   "language_group": "synapse_pyspark"
+-- META }

@@ -1,0 +1,120 @@
+-- Fabric notebook source
+
+-- METADATA ********************
+
+-- META {
+-- META   "kernel_info": {
+-- META     "name": "synapse_pyspark"
+-- META   },
+-- META   "dependencies": {
+-- META     "lakehouse": {
+-- META       "default_lakehouse": "62a3081e-4093-4f46-856c-f50aa58732fa",
+-- META       "default_lakehouse_name": "SupplyChain_Lakehouse",
+-- META       "default_lakehouse_workspace_id": "c8d9fc83-18b6-4e1d-8264-0b49eed36fe0",
+-- META       "known_lakehouses": [
+-- META         {
+-- META           "id": "62a3081e-4093-4f46-856c-f50aa58732fa"
+-- META         }
+-- META       ]
+-- META     }
+-- META   }
+-- META }
+
+-- CELL ********************
+
+-- MAGIC %%sql
+-- MAGIC /* SILVER LAYER: FORECAST DEMAND - FACT TABLE
+-- MAGIC    Target: dbo.slv_forecast_demand_monthly
+-- MAGIC    Source: dbo.brz_supplychain_enh_1__demandforecastsnapshotdaily, dbo.ref_calendar, dbo.ref_forecast_cycle
+-- MAGIC    Logic: Aggregate forecast demand by Item/Warehouse/CustomerGroup/FiscalMonth/Snapshot,
+-- MAGIC           compute Horizon buckets and Version labels from bronze tables.
+-- MAGIC           Filter: fiscal month from 3 fiscal years ago to 1 fiscal year ahead
+-- MAGIC */
+-- MAGIC 
+-- MAGIC CREATE OR REPLACE TABLE dbo.slv_forecast_demand_monthly AS
+-- MAGIC 
+-- MAGIC WITH RawForecast AS (
+-- MAGIC     SELECT 
+-- MAGIC         f.id_item_sku,
+-- MAGIC         f.code_warehouse,
+-- MAGIC         f.code_customer_group,
+-- MAGIC         -- Convert YYYYMM (int) to DATE (1st of month)
+-- MAGIC         make_date(
+-- MAGIC             CAST(f.num_fiscal_month / 100 AS INT), 
+-- MAGIC             CAST(f.num_fiscal_month % 100 AS INT), 
+-- MAGIC             1
+-- MAGIC         )                                                   AS dt_fiscal_month,
+-- MAGIC         CAST(f.ts_snapshot AS DATE)                         AS dt_snapshot,
+-- MAGIC         f.qty_resultant_forecast,
+-- MAGIC         f.qty_promotional_lift
+-- MAGIC     FROM dbo.brz_supplychain_enh_1__demandforecastsnapshotdaily  f
+-- MAGIC     INNER JOIN dbo.ref_forecast_cycle      c
+-- MAGIC         ON CAST(f.ts_snapshot AS DATE) = c.dt_forecast_snapshot
+-- MAGIC ),
+-- MAGIC 
+-- MAGIC CalculatedForecast AS (
+-- MAGIC     SELECT 
+-- MAGIC         FC.id_item_sku,
+-- MAGIC         FC.code_warehouse,
+-- MAGIC         FC.code_customer_group,
+-- MAGIC         CAL.dt_fsc_month_first,
+-- MAGIC         CAL.dt_fsc_month_last,
+-- MAGIC         FC.dt_snapshot,
+-- MAGIC 
+-- MAGIC         -- Horizon = month difference between FiscalMonth and SnapshotDate
+-- MAGIC         CASE 
+-- MAGIC             WHEN (year(FC.dt_fiscal_month)*12 + month(FC.dt_fiscal_month))
+-- MAGIC                - (year(FC.dt_snapshot)*12 + month(FC.dt_snapshot)) = 0  THEN '2W'
+-- MAGIC             WHEN (year(FC.dt_fiscal_month)*12 + month(FC.dt_fiscal_month))
+-- MAGIC                - (year(FC.dt_snapshot)*12 + month(FC.dt_snapshot)) = 1  THEN '30Days'
+-- MAGIC             WHEN (year(FC.dt_fiscal_month)*12 + month(FC.dt_fiscal_month))
+-- MAGIC                - (year(FC.dt_snapshot)*12 + month(FC.dt_snapshot)) = 2  THEN '60Days'
+-- MAGIC             WHEN (year(FC.dt_fiscal_month)*12 + month(FC.dt_fiscal_month))
+-- MAGIC                - (year(FC.dt_snapshot)*12 + month(FC.dt_snapshot)) = 3  THEN '90Days'
+-- MAGIC             WHEN (year(FC.dt_fiscal_month)*12 + month(FC.dt_fiscal_month))
+-- MAGIC                - (year(FC.dt_snapshot)*12 + month(FC.dt_snapshot)) = 4  THEN '120Days'
+-- MAGIC             WHEN (year(FC.dt_fiscal_month)*12 + month(FC.dt_fiscal_month))
+-- MAGIC                - (year(FC.dt_snapshot)*12 + month(FC.dt_snapshot)) > 4  THEN '>120Days'
+-- MAGIC         END                                                 AS code_horizon,
+-- MAGIC 
+-- MAGIC         CAST(SUM(FC.qty_resultant_forecast + FC.qty_promotional_lift) AS DOUBLE) 
+-- MAGIC                                                             AS qty_forecast,
+-- MAGIC 
+-- MAGIC         concat('V ', date_format(FC.dt_snapshot, 'yyyy.MM'))   AS code_version,
+-- MAGIC         'Forecast'                                          AS code_status
+-- MAGIC 
+-- MAGIC     FROM RawForecast                                        AS FC
+-- MAGIC     INNER JOIN dbo.ref_calendar                              AS CAL
+-- MAGIC         ON  CAL.dt_date = FC.dt_fiscal_month
+-- MAGIC     WHERE 
+-- MAGIC         -- Filter: fiscal month from 3 fiscal years ago to 1 fiscal year ahead
+-- MAGIC         FC.dt_fiscal_month >= add_months(
+-- MAGIC             date_trunc('year', add_months(current_date(), -6)), -36
+-- MAGIC         )
+-- MAGIC         AND FC.dt_fiscal_month <= add_months(
+-- MAGIC             date_trunc('year', add_months(current_date(), 6)), 12
+-- MAGIC         )
+-- MAGIC     GROUP BY 
+-- MAGIC         FC.id_item_sku, FC.code_warehouse, FC.code_customer_group, 
+-- MAGIC         CAL.dt_fsc_month_first, CAL.dt_fsc_month_last, FC.dt_snapshot, FC.dt_fiscal_month
+-- MAGIC )
+-- MAGIC 
+-- MAGIC SELECT 
+-- MAGIC     id_item_sku,
+-- MAGIC     code_warehouse,
+-- MAGIC     code_customer_group,
+-- MAGIC     dt_fsc_month_first,
+-- MAGIC     dt_fsc_month_last,
+-- MAGIC     dt_snapshot,
+-- MAGIC     code_horizon,
+-- MAGIC     qty_forecast,
+-- MAGIC     code_version,
+-- MAGIC     code_status
+-- MAGIC FROM CalculatedForecast
+
+-- METADATA ********************
+
+-- META {
+-- META   "language": "sparksql",
+-- META   "language_group": "synapse_pyspark"
+-- META }

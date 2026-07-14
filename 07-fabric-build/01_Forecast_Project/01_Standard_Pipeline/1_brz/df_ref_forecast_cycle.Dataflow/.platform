@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Dataflow",
+    "displayName": "df_ref_forecast_cycle"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "691c0555-b37e-9392-4250-7e27880eb520"
+  }
+}
